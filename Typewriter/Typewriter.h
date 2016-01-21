@@ -3,10 +3,10 @@
 //  Typewriter
 //
 //  Created by Yoshiki Kudo on 2016/01/21.
-//  Copyright © 2016年 Yoshiki Kudo. All rights reserved.
+//  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for Typewriter.
 FOUNDATION_EXPORT double TypewriterVersionNumber;
