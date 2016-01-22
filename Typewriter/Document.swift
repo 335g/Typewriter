@@ -417,7 +417,7 @@ public extension Array where Element: DocumentType {
 	/// Documents is nested, if not fits.
 	///
 	/// ex) 
-	///   ["100","1000","10000"].encloseSepWithNest(2, sep: .comma, open: .lbracket, close: .rbracket)
+	///   ["100","1000","10000"].encloseSepNest(2, sep: .comma, open: .lbracket, close: .rbracket)
 	///
 	/// ** if fits **
 	///   [100,1000,10000]
@@ -429,7 +429,7 @@ public extension Array where Element: DocumentType {
 	///     10000
 	///   ]\n
 	///
-	public func encloseSepWithNest(i: Int, sep: Element, open: Element, close: Element) -> Element {
+	public func encloseSepNest(i: Int, sep: Element, open: Element, close: Element) -> Element {
 		guard let first = self.first else {
 			return open <> close
 		}
