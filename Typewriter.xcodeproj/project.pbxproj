@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840607D31C52CC03000F0B22 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607D21C52CC03000F0B22 /* Prelude.framework */; };
+		840607D41C52CC0C000F0B22 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607D21C52CC03000F0B22 /* Prelude.framework */; };
+		840607D61C52CC30000F0B22 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607D21C52CC03000F0B22 /* Prelude.framework */; };
+		840607D81C52CC31000F0B22 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607D71C52CC31000F0B22 /* Assertions.framework */; };
+		840607D91C52CC39000F0B22 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607D21C52CC03000F0B22 /* Prelude.framework */; };
+		840607DB1C52CC39000F0B22 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607DA1C52CC39000F0B22 /* Assertions.framework */; };
 		84C57F321C51190F00A9C6D6 /* Typewriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C57F311C51190F00A9C6D6 /* Typewriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */; };
 		84C57F3E1C51190F00A9C6D6 /* TypewriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C57F3D1C51190F00A9C6D6 /* TypewriterTests.swift */; };
@@ -34,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		840607D21C52CC03000F0B22 /* Prelude.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Prelude.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Typewriter-druehqgxehofaqgqftypqkjwrrwx/Build/Products/Debug/Prelude.framework"; sourceTree = "<group>"; };
+		840607D71C52CC31000F0B22 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Assertions.framework; path = Carthage/Checkouts/Assertions/build/Debug/Assertions.framework; sourceTree = "<group>"; };
+		840607DA1C52CC39000F0B22 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Assertions.framework; path = "Carthage/Checkouts/Assertions/build/Debug-iphoneos/Assertions.framework"; sourceTree = "<group>"; };
 		84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Typewriter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C57F311C51190F00A9C6D6 /* Typewriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Typewriter.h; sourceTree = "<group>"; };
 		84C57F331C51190F00A9C6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840607D31C52CC03000F0B22 /* Prelude.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840607D81C52CC31000F0B22 /* Assertions.framework in Frameworks */,
+				840607D61C52CC30000F0B22 /* Prelude.framework in Frameworks */,
 				84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840607D41C52CC0C000F0B22 /* Prelude.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +85,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840607DB1C52CC39000F0B22 /* Assertions.framework in Frameworks */,
+				840607D91C52CC39000F0B22 /* Prelude.framework in Frameworks */,
 				84C57F571C511A5800A9C6D6 /* Typewriter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,9 +94,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840607D51C52CC14000F0B22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				840607DA1C52CC39000F0B22 /* Assertions.framework */,
+				840607D71C52CC31000F0B22 /* Assertions.framework */,
+				840607D21C52CC03000F0B22 /* Prelude.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		84C57F241C51190F00A9C6D6 = {
 			isa = PBXGroup;
 			children = (
+				840607D51C52CC14000F0B22 /* Frameworks */,
 				84C57F301C51190F00A9C6D6 /* Typewriter */,
 				84C57F3C1C51190F00A9C6D6 /* TypewriterTests */,
 				84C57F2F1C51190F00A9C6D6 /* Products */,
@@ -464,6 +490,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug",
+				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.TypewriterTests;
@@ -475,6 +505,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug",
+				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.TypewriterTests;
@@ -530,6 +564,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -543,6 +581,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

@@ -1,0 +1,29 @@
+{
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : 0,
+    "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1C04D8E5-18DB-4533-B7D7-D8C8FBBA014F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : "Typewriter\/Carthage\/Checkouts\/Assertions\/",
+    "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : "Typewriter\/Carthage\/Checkouts\/Prelude\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Typewriter",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Typewriter.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/antitypical\/Assertions.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/335g\/Prelude.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9"
+    }
+  ]
+}
