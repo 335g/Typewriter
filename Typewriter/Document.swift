@@ -357,6 +357,41 @@ public extension Array where Element: DocumentType {
 	public func fillSep() -> Element {
 		return fold(<+/+>)
 	}
+	
+	///
+	/// `separator` separates the documents.
+	/// And encloses them in `open`(`close`).
+	///
+	public func encloseSep(separator: Element, open: Element, close: Element) -> Element {
+		guard let first = self.first else {
+			return open <> close
+		}
+		
+		guard self.count != 1 else {
+			return open <> first <> close
+		}
+		
+		var separators = Array(count: self.count - 1, repeatedValue: separator)
+		separators.insert(open, atIndex: 0)
+		
+		return (zipWith(curry(<>))(separators)(self).cat() <> close).align()
+	}
+	
+	///
+	/// comma separates the documents.
+	/// And encloses them in square brackets.
+	///
+	public func list() -> Element {
+		return encloseSep(.comma, open: .lbracket, close: .rbracket)
+	}
+	
+	///
+	/// comma separates the documents.
+	/// And encloses them in parenthesis.
+	///
+	public func tupled() -> Element {
+		return encloseSep(.comma, open: .lparen, close: .rparen)
+	}
 }
 
 // MARK: - Operators
