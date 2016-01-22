@@ -81,9 +81,23 @@ extension Document {
 // MARK: DocumentType (Constructor)
 
 extension DocumentType {
-	public static var space: Self { return .char(" ") }
-	
-	
+	public static var space: Self		{ return .char(" ") }
+	public static var comma: Self		{ return .char(",") }
+	public static var lparen: Self		{ return .char("(") }
+	public static var rparen: Self		{ return .char(")") }
+	public static var lbracket: Self	{ return .char("[") }
+	public static var rbracket: Self	{ return .char("]") }
+	public static var langle: Self		{ return .char("<") }
+	public static var rangle: Self		{ return .char(">") }
+	public static var lbrace: Self		{ return .char("{") }
+	public static var rbrace: Self		{ return .char("}") }
+	public static var semi: Self		{ return .char(";") }
+	public static var squote: Self		{ return .char("'") }
+	public static var dquote: Self		{ return .char("\"") }
+	public static var colon: Self		{ return .char(":") }
+	public static var dot: Self			{ return .char(".") }
+	public static var backslash: Self	{ return .char("\\") }
+	public static var equals: Self		{ return .char("=") }
 }
 
 // MARK: - extension CollectionType where Index: RandomAccessIndexType
