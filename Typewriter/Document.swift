@@ -10,6 +10,8 @@ public protocol DocumentType: Monoid {
 	static var hardline: Self { get }
 	static var line: Self { get }
 	static var linebreak: Self { get }
+	static func union(x: Self, _ y: Self) -> Self
+	
 	func beside(other: Self) -> Self
 }
 
@@ -35,6 +37,7 @@ public indirect enum Document: DocumentType {
 	case Line
 	case Cat(Document, Document)
 	case FlatAlt(Document, Document)
+	case Union(Document, Document)
 }
 
 // MARK: Document : DocumentType
@@ -66,6 +69,10 @@ extension Document {
 		return .FlatAlt(.hardline, .empty)
 	}
 	
+	public static func union(x: Document, _ y: Document) -> Document {
+		return .Union(x, y)
+	}
+	
 	public func beside(doc: Document) -> Document {
 		return .Cat(self, doc)
 	}
@@ -75,6 +82,8 @@ extension Document {
 
 extension DocumentType {
 	public static var space: Self { return .char(" ") }
+	
+	
 }
 
 // MARK: - extension CollectionType where Index: RandomAccessIndexType
