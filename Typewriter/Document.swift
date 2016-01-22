@@ -7,6 +7,9 @@ import Prelude
 public protocol DocumentType: Monoid {
 	static var empty: Self { get }
 	static func char(x: Character) -> Self
+	static var hardline: Self { get }
+	static var line: Self { get }
+	static var linebreak: Self { get }
 	func beside(other: Self) -> Self
 }
 
@@ -31,6 +34,7 @@ public indirect enum Document: DocumentType {
 	case Text(String)
 	case Line
 	case Cat(Document, Document)
+	case FlatAlt(Document, Document)
 }
 
 // MARK: Document : DocumentType
@@ -50,9 +54,27 @@ extension Document {
 		}
 	}
 	
+	public static var hardline: Document {
+		return .Line
+	}
+	
+	public static var line: Document {
+		return .FlatAlt(.hardline, .space)
+	}
+	
+	public static var linebreak: Document {
+		return .FlatAlt(.hardline, .empty)
+	}
+	
 	public func beside(doc: Document) -> Document {
 		return .Cat(self, doc)
 	}
+}
+
+// MARK: DocumentType (Constructor)
+
+extension DocumentType {
+	public static var space: Self { return .char(" ") }
 }
 
 // MARK: - extension CollectionType where Index: RandomAccessIndexType
@@ -103,4 +125,6 @@ public extension Array where Element: DocumentType {
 			return first
 		}
 	}
+	
+	
 }
