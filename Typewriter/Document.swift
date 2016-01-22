@@ -195,6 +195,24 @@ extension DocumentType {
 	}
 	
 	///
+	/// `encloseNest` enclose document in `open` and `close` with nest, if not fits.
+	///
+	/// ex) 
+	///   "abc".encloseNest(2, open: .lbracket, close: .rbracket)
+	///
+	/// ** if fits **
+	///   [abc]
+	///
+	/// ** if not fits **
+	///   [\n
+	///     abc\n
+	///   ]
+	///
+	public func encloseNest(i: Int, open: Self, close: Self) -> Self {
+		return (open <-/-> self).hang(i) <-/-> close
+	}
+	
+	///
 	/// `align` renders document with the nesting level set to current column.
 	///
 	public func align() -> Self {
@@ -389,8 +407,38 @@ public extension Array where Element: DocumentType {
 	/// comma separates the documents.
 	/// And encloses them in parenthesis.
 	///
-	public func tupled() -> Element {
+	public func tuple() -> Element {
 		return encloseSep(.comma, open: .lparen, close: .rparen)
+	}
+	
+	///
+	/// comma separates the documents.
+	/// And encloses them in `open`(`close`).
+	/// Documents is nested, if not fits.
+	///
+	/// ex) 
+	///   ["100","1000","10000"].encloseSepWithNest(2, sep: .comma, open: .lbracket, close: .rbracket)
+	///
+	/// ** if fits **
+	///   [100,1000,10000]
+	///
+	/// ** if not fits **
+	///   [\n
+	///     100,\n
+	///     1000,\n
+	///     10000
+	///   ]\n
+	///
+	public func encloseSepWithNest(i: Int, sep: Element, open: Element, close: Element) -> Element {
+		guard let first = self.first else {
+			return open <> close
+		}
+		
+		guard self.count != 1 else {
+			return first.encloseNest(i, open: open, close: close)
+		}
+		
+		return self.fold({ $0 <> sep <-/-> $1 }).encloseNest(i, open: open, close: close)
 	}
 }
 
