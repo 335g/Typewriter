@@ -17,6 +17,8 @@
 		840607DE1C52D2F7000F0B22 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DC1C52D2F7000F0B22 /* Operators.swift */; };
 		840607E01C52E7C0000F0B22 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DF1C52E7C0000F0B22 /* Util.swift */; };
 		840607E11C52E7C0000F0B22 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DF1C52E7C0000F0B22 /* Util.swift */; };
+		840607E31C52F406000F0B22 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E21C52F406000F0B22 /* Rendering.swift */; };
+		840607E41C52F406000F0B22 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E21C52F406000F0B22 /* Rendering.swift */; };
 		84C57F321C51190F00A9C6D6 /* Typewriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C57F311C51190F00A9C6D6 /* Typewriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */; };
 		84C57F3E1C51190F00A9C6D6 /* TypewriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C57F3D1C51190F00A9C6D6 /* TypewriterTests.swift */; };
@@ -49,6 +51,7 @@
 		840607DA1C52CC39000F0B22 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Assertions.framework; path = "Carthage/Checkouts/Assertions/build/Debug-iphoneos/Assertions.framework"; sourceTree = "<group>"; };
 		840607DC1C52D2F7000F0B22 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		840607DF1C52E7C0000F0B22 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		840607E21C52F406000F0B22 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
 		84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Typewriter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C57F311C51190F00A9C6D6 /* Typewriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Typewriter.h; sourceTree = "<group>"; };
 		84C57F331C51190F00A9C6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -136,6 +139,7 @@
 			children = (
 				84C57F311C51190F00A9C6D6 /* Typewriter.h */,
 				84C57F651C511ADF00A9C6D6 /* Document.swift */,
+				840607E21C52F406000F0B22 /* Rendering.swift */,
 				840607DC1C52D2F7000F0B22 /* Operators.swift */,
 				840607DF1C52E7C0000F0B22 /* Util.swift */,
 				84C57F331C51190F00A9C6D6 /* Info.plist */,
@@ -327,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84C57F661C511ADF00A9C6D6 /* Document.swift in Sources */,
+				840607E31C52F406000F0B22 /* Rendering.swift in Sources */,
 				840607E01C52E7C0000F0B22 /* Util.swift in Sources */,
 				840607DD1C52D2F7000F0B22 /* Operators.swift in Sources */,
 			);
@@ -345,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84C57F671C511ADF00A9C6D6 /* Document.swift in Sources */,
+				840607E41C52F406000F0B22 /* Rendering.swift in Sources */,
 				840607E11C52E7C0000F0B22 /* Util.swift in Sources */,
 				840607DE1C52D2F7000F0B22 /* Operators.swift in Sources */,
 			);
