@@ -34,7 +34,7 @@ extension DocumentType {
 
 // MARK: - Document
 
-public indirect enum Document: DocumentType {
+public indirect enum Document: DocumentType, StringLiteralConvertible {
 	case Fail
 	case Empty
 	case Char(Character)
@@ -46,6 +46,22 @@ public indirect enum Document: DocumentType {
 	case Nest(Int, Document)
 	case Nesting(Int -> Document)
 	case Column(Int -> Document)
+}
+
+// MARK: Document : StringLiteralConvertible
+
+extension Document {
+	public init(stringLiteral value: StringLiteralType) {
+		self = .string(value)
+	}
+	
+	public init(unicodeScalarLiteral value: String) {
+		self = .string(value)
+	}
+	
+	public init(extendedGraphemeClusterLiteral value: String) {
+		self = .string(value)
+	}
 }
 
 // MARK: - DocumentConstructError
