@@ -10,3 +10,15 @@ public protocol DocumentType: Monoid {
 	func beside(other: Self) -> Self
 }
 
+// MARK: DocumentType : Monoid
+
+extension DocumentType {
+	public static var mempty: Self {
+		return .empty
+	}
+	
+	public func mappend(other: Self) -> Self {
+		return self.beside(other)
+	}
+}
+
