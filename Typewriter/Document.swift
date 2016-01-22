@@ -7,6 +7,7 @@ import Prelude
 public protocol DocumentType: Monoid {
 	static var empty: Self { get }
 	static func char(x: Character) -> Self
+	static func text(x: String) throws -> Self
 	static var hardline: Self { get }
 	static var line: Self { get }
 	static var linebreak: Self { get }
@@ -41,6 +42,12 @@ public indirect enum Document: DocumentType {
 	case Union(Document, Document)
 }
 
+// MARK: - DocumentConstructError
+
+public enum DocumentConstructError: ErrorType {
+	case ContainsLinebreak
+}
+
 // MARK: Document : DocumentType
 
 extension Document {
@@ -55,6 +62,19 @@ extension Document {
 			
 		default:
 			return .Char(x)
+		}
+	}
+	
+	public static func text(x: String) throws -> Document {
+		switch x {
+		case "":
+			return .empty
+		default:
+			if x.characters.contains("\n") {
+				throw DocumentConstructError.ContainsLinebreak
+			}else {
+				return .Text(x)
+			}
 		}
 	}
 	
@@ -114,6 +134,13 @@ extension DocumentType {
 	public static var dot: Self			{ return .char(".") }
 	public static var backslash: Self	{ return .char("\\") }
 	public static var equals: Self		{ return .char("=") }
+	
+	public static func string(str: String) -> Self {
+		return str.characters
+			.split{ $0 == "\n" }
+			.map{ try! Self.text(String($0)) }
+			.vsep()
+	}
 }
 
 // MARK: DocumentType (Rendering Rule Dependence)
