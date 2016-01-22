@@ -88,3 +88,19 @@ extension CollectionType where Index: RandomAccessIndexType {
 enum CollectionTypeFoldError: ErrorType {
 	case OnlyOne
 }
+
+// MARK: - extension Array where Element: DocumentType
+
+public extension Array where Element: DocumentType {
+	func fold(f: (Element, Element) -> Element) -> Element {
+		guard let first = self.first else {
+			return .empty
+		}
+		
+		if let result = try? foldr1(curry(f)) {
+			return result
+		}else {
+			return first
+		}
+	}
+}
