@@ -225,6 +225,13 @@ extension DocumentType {
 		return open <> self <> close
 	}
 	
+	public func squotes() -> Self { return self.enclose(open: .squote, close: .squote) }
+	public func dquotes() -> Self { return self.enclose(open: .dquote, close: .dquote) }
+	public func parens() -> Self { return self.enclose(open: .lparen, close: .rparen) }
+	public func braces() -> Self { return self.enclose(open: .lbrace, close: .rbrace) }
+	public func angles() -> Self { return self.enclose(open: .langle, close: .rangle) }
+	public func brackets() -> Self { return self.enclose(open: .lbracket, close: .rbracket) }
+	
 	///
 	/// `encloseNest` enclose document in `open` and `close` with nest, if not fits.
 	///
@@ -242,6 +249,13 @@ extension DocumentType {
 	public func encloseNest(i: Int, open: Self, close: Self) -> Self {
 		return (open <-/-> self).hang(i) <-/-> close
 	}
+	
+	public func squotesNest(i: Int) -> Self { return self.encloseNest(i, open: .squote, close: .squote) }
+	public func dquotesNest(i: Int) -> Self { return self.encloseNest(i, open: .dquote, close: .dquote) }
+	public func parensNest(i: Int) -> Self { return self.encloseNest(i, open: .lparen, close: .rparen) }
+	public func bracesNest(i: Int) -> Self { return self.encloseNest(i, open: .lbrace, close: .rbrace) }
+	public func anglesNest(i: Int) -> Self { return self.encloseNest(i, open: .langle, close: .rangle) }
+	public func bracketsNest(i: Int) -> Self { return self.encloseNest(i, open: .lbracket, close: .rbracket) }
 	
 	///
 	/// `align` renders document with the nesting level set to current column.
