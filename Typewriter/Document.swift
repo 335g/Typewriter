@@ -21,7 +21,7 @@ extension DocumentType {
 	}
 	
 	public func mappend(other: Self) -> Self {
-		return self.beside(other)
+		return beside(other)
 	}
 }
 
