@@ -30,4 +30,28 @@ public indirect enum Document: DocumentType {
 	case Char(Character)
 	case Text(String)
 	case Line
+	case Cat(Document, Document)
 }
+
+// MARK: Document : DocumentType
+
+extension Document {
+	public static var empty: Document {
+		return .Empty
+	}
+	
+	public static func char(x: Character) -> Document {
+		switch x {
+		case "\n":
+			return .Line
+			
+		default:
+			return .Char(x)
+		}
+	}
+	
+	public func beside(doc: Document) -> Document {
+		return .Cat(self, doc)
+	}
+}
+
