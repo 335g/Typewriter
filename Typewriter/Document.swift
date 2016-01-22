@@ -12,6 +12,9 @@ public protocol DocumentType: Monoid {
 	static var line: Self { get }
 	static var linebreak: Self { get }
 	static func union(x: Self, _ y: Self) -> Self
+	static func column(f: Int -> Self) -> Self
+	static func nesting(f: Int -> Self) -> Self
+	func nest(i: Int) -> Self
 	
 	func flatten() -> Self
 	func beside(other: Self) -> Self
@@ -40,6 +43,9 @@ public indirect enum Document: DocumentType {
 	case Cat(Document, Document)
 	case FlatAlt(Document, Document)
 	case Union(Document, Document)
+	case Nest(Int, Document)
+	case Nesting(Int -> Document)
+	case Column(Int -> Document)
 }
 
 // MARK: - DocumentConstructError
@@ -94,6 +100,18 @@ extension Document {
 		return .Union(x, y)
 	}
 	
+	public static func column(f: Int -> Document) -> Document {
+		return .Column(f)
+	}
+	
+	public static func nesting(f: Int -> Document) -> Document {
+		return .Nesting(f)
+	}
+	
+	public func nest(i: Int) -> Document {
+		return .Nest(i, self)
+	}
+	
 	public func flatten() -> Document {
 		switch self {
 		case let .Cat(x, y):
@@ -146,6 +164,42 @@ extension DocumentType {
 		return str.characters
 			.split{ $0 == " " }
 			.map{ Self.string(String($0)) }
+	}
+}
+
+// MARK: DocumentType (Combinator)
+
+extension DocumentType {
+	
+	///
+	/// `enclose` enclose document in `open` and `close`
+	///
+	public func enclose(open open: Self, close: Self) -> Self {
+		return open <> self <> close
+	}
+	
+	///
+	/// `align` renders document with the nesting level set to current column.
+	///
+	public func align() -> Self {
+		return .column({ k in
+			.nesting({ i in self.nest(k - i) })
+		})
+	}
+	
+	///
+	/// `hang` implements hanging indentation.
+	/// Document obtained renders document with a nesting level set to the indentation for some text.
+	///
+	public func hang(i: Int) -> Self {
+		return self.nest(i).align()
+	}
+	
+	///
+	/// `indent` indents document with `i` spaces.
+	///
+	public func indent(i: Int) -> Self {
+		return (.string(spaces(i)) <> self).hang(i)
 	}
 }
 
