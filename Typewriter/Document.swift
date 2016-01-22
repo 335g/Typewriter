@@ -12,6 +12,7 @@ public protocol DocumentType: Monoid {
 	static var linebreak: Self { get }
 	static func union(x: Self, _ y: Self) -> Self
 	
+	func flatten() -> Self
 	func beside(other: Self) -> Self
 }
 
@@ -73,6 +74,21 @@ extension Document {
 		return .Union(x, y)
 	}
 	
+	public func flatten() -> Document {
+		switch self {
+		case let .Cat(x, y):
+			return .Cat(x.flatten(), y.flatten())
+		case let .FlatAlt(_, x):
+			return x
+		case .Line:
+			return .Fail
+		case let .Union(x, _):
+			return x.flatten()
+		default:
+			return self
+		}
+	}
+	
 	public func beside(doc: Document) -> Document {
 		return .Cat(self, doc)
 	}
@@ -98,6 +114,36 @@ extension DocumentType {
 	public static var dot: Self			{ return .char(".") }
 	public static var backslash: Self	{ return .char("\\") }
 	public static var equals: Self		{ return .char("=") }
+}
+
+// MARK: DocumentType (Combinator)
+
+extension DocumentType {
+	
+	///
+	/// `group` selects the document by fitting.
+	/// `self.flatten` is selected if the resulting output fits the page,
+	/// otherwise `self` is selected.
+	///
+	public func group() -> Self {
+		return .union(self.flatten(), self)
+	}
+	
+	///
+	/// `softline` behaves like `space` if the retsulting output fits the page,
+	/// otherwise it behaves like `line`.
+	///
+	public static var softline: Self {
+		return Self.line.group()
+	}
+	
+	///
+	/// `softbreak` behaves like `empty` if the resulting output fits the page,
+	/// otherwise it behaves like `line`.
+	///
+	public static var softbreak: Self {
+		return Self.linebreak.group()
+	}
 }
 
 // MARK: - extension CollectionType where Index: RandomAccessIndexType
