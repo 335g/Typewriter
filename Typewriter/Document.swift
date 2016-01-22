@@ -197,3 +197,63 @@ public extension Array where Element: DocumentType {
 	
 	
 }
+
+// MARK: - Operators
+
+///
+/// + : space
+/// - : empty
+/// / : line break
+///
+/// ** left side has a priority higher than right side **
+///
+
+///
+/// concat
+///
+public func <> <D: DocumentType>(lhs: D, rhs: D) -> D {
+	return lhs.beside(rhs)
+}
+
+///
+/// `<+>` space(: +) encloses in `lhs` and `rhs`.
+///
+public func <+> <D: DocumentType>(lhs: D, rhs: D) -> D {
+	return lhs <> D.space <> rhs
+}
+
+///
+/// `</+>` `.line` encloses in `lhs` and `rhs`.
+/// `.line` behaves like a line break (/).
+/// `.line` behaves like a space (+), if the line break is undone by `group`.
+///
+public func </+> <D: DocumentType>(lhs: D, rhs: D) -> D {
+	return lhs <> D.line <> rhs
+}
+
+///
+/// `</->` `.linebreak` encloses in `lhs` and `rhs`.
+/// `.linebreak` behaves like a line break (/).
+/// `.linebreak` behaves like a empty (-), if the line break is undone by `group`.
+///
+public func </-> <D: DocumentType>(lhs: D, rhs: D) -> D {
+	return lhs <> D.linebreak <> rhs
+}
+
+///
+/// `<+/+>` `.softline` encloses in `lhs` and `rhs`.
+/// `.softline` behaves like a space (+), if the resulting output fits the page,
+/// otherwise it behaves like a `line` (/+)
+///
+public func <+/+> <D: DocumentType>(lhs: D, rhs: D) -> D {
+	return lhs <> D.softline <> rhs
+}
+
+///
+/// `<-/->` `.softbreak` encloses in `lhs` and `rhs`.
+/// `.softbreak` behaves like a empty (-), if the resulting output fits the page,
+/// otherwise it behaves like a `linebreak` (/-)
+///
+public func <-/-> <D: DocumentType>(lhs: D, rhs: D) -> D {
+	return lhs <> D.softbreak <> rhs
+}
