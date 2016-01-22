@@ -22,3 +22,12 @@ extension DocumentType {
 	}
 }
 
+// MARK: - Document
+
+public indirect enum Document: DocumentType {
+	case Fail
+	case Empty
+	case Char(Character)
+	case Text(String)
+	case Line
+}
