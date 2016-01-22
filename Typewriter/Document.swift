@@ -34,7 +34,7 @@ extension DocumentType {
 
 // MARK: - Document
 
-public indirect enum Document: DocumentType, StringLiteralConvertible {
+public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable {
 	case Fail
 	case Empty
 	case Char(Character)
@@ -61,6 +61,37 @@ extension Document {
 	
 	public init(extendedGraphemeClusterLiteral value: String) {
 		self = .string(value)
+	}
+}
+
+// MARK: Document : Equatable
+
+public func == (lhs: Document, rhs: Document) -> Bool {
+	switch (lhs, rhs) {
+	case (.Fail, .Fail):
+		return true
+	case (.Empty, .Empty):
+		return true
+	case let (.Char(l), .Char(r)):
+		return l == r
+	case let (.Text(l), .Text(r)):
+		return l == r
+	case (.Line, .Line):
+		return true
+	case let (.Nest(li, ldoc), .Nest(ri, rdoc)):
+		return li == ri && ldoc == rdoc
+	case let (.Cat(lx, ly), .Cat(rx, ry)):
+		return lx == rx && ly == ry
+	case let (.FlatAlt(lx, ly), .FlatAlt(rx, ry)):
+		return lx == rx && ly == ry
+	case let (.Union(lx, ly), .Union(rx, ry)):
+		return lx == rx && ly == ry
+	case let (.Column(lf), .Column(rf)):
+		return lf(4) == rf(4)
+	case let (.Nesting(lf), .Nesting(rf)):
+		return lf(4) == rf(4)
+	default:
+		return false
 	}
 }
 
