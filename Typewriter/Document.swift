@@ -116,7 +116,7 @@ extension DocumentType {
 	public static var equals: Self		{ return .char("=") }
 }
 
-// MARK: DocumentType (Combinator)
+// MARK: DocumentType (Rendering Rule Dependence)
 
 extension DocumentType {
 	
