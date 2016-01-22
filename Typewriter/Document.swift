@@ -195,7 +195,65 @@ public extension Array where Element: DocumentType {
 		}
 	}
 	
+	///
+	/// 'hcat()` concatenates all documents.
+	///
+	public func hcat() -> Element {
+		return fold(<>)
+	}
 	
+	///
+	/// `vcat()` concatenates all documents vertically with `</-> .linebreak`.
+	///
+	public func vcat() -> Element {
+		return fold(</->)
+	}
+	
+	///
+	/// `cat()` concatenates all documents horizontally with `<>`, if it fits the page,
+	/// or vertically with `</-> .linebreak`
+	///
+	public func cat() -> Element {
+		return vcat().group()
+	}
+	
+	///
+	/// `fillCat()` concatenates all documents horizontally with `<>` as long as it fits the page,
+	/// than inserts a `</-> .linebreak` and continues doing that for all documents.
+	///
+	public func fillCat() -> Element {
+		return fold(<-/->)
+	}
+	
+	///
+	/// `hsep()` concatenates all documents with `<+> .space`.
+	///
+	public func hsep() -> Element {
+		return fold(<+>)
+	}
+	
+	///
+	/// `vsep()` concatenates all documents vertically with `</+> .line`
+	///
+	public func vsep() -> Element {
+		return fold(</+>)
+	}
+	
+	///
+	/// `sep()` concatenates all documents horizontally with `<+> .space`, if it fits the page,
+	/// or vertically with `</+> .line`
+	///
+	public func sep() -> Element {
+		return vsep().group()
+	}
+	
+	///
+	/// `fillSep()` concatenates all documents horizontally with `<+> .space` as long as if it fits the page,
+	/// than inserts a `</+> .line` and continues doing that for all documents.
+	///
+	public func fillSep() -> Element {
+		return fold(<+/+>)
+	}
 }
 
 // MARK: - Operators
