@@ -141,6 +141,12 @@ extension DocumentType {
 			.map{ try! Self.text(String($0)) }
 			.vsep()
 	}
+	
+	public static func texts(str: String) -> [Self] {
+		return str.characters
+			.split{ $0 == " " }
+			.map{ Self.string(String($0)) }
+	}
 }
 
 // MARK: DocumentType (Rendering Rule Dependence)
