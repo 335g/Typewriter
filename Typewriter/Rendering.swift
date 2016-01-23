@@ -1,5 +1,7 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
+import Prelude
+
 // MARK: - RenderedDocument
 
 indirect enum RenderedDocument: CustomStringConvertible {
@@ -64,18 +66,72 @@ public enum RenderingRule {
 
 // MARK: - Rendering
 
-public func prettyString(rule: RenderingRule, width: Int, doc: () -> Document) -> String {
-	return prettyDocument(rule, width: width, doc: doc).description
+enum Docs {
+	case Nil
+	indirect case Cons(Int, Document, Docs)
 }
 
-public func prettyString(rule: RenderingRule, width: Int, doc: Document) -> String {
-	return prettyDocument(rule, width: width, doc: doc).description
+extension Document {
+	public func prettyString(rule: RenderingRule, width: Int) -> String {
+		return self.prettyDocument(rule, width: width).description
+	}
+	
+	internal func prettyDocument(rule: RenderingRule, width: Int) -> RenderedDocument {
+		let nicest: (Int, Int, RenderedDocument, RenderedDocument) -> RenderedDocument = { indentation, column, doc1, doc2 in
+			if rule.fits(width, nesting: min(indentation, column), rest: width, document: doc1) {
+				return doc1
+			}else {
+				return doc2
+			}
+		}
+		let best: (Int, Int, Docs) -> RenderedDocument = fix{ best in
+			{ indentation, column, docs in
+				switch docs {
+				case .Nil:
+					return .Empty
+				case let .Cons(i, d, ds):
+					switch d {
+					case .Fail:
+						return .Fail
+					case .Empty:
+						return best(indentation, column, ds)
+					case let .Char(c):
+						return .Char(c, best(indentation, column + 1, ds))
+					case let .Text(str):
+						return .Text(str, best(indentation, column + str.characters.count, ds))
+					case .Line:
+						return .Line(i, best(i, i, ds))
+					case let .FlatAlt(x, _):
+						return best(indentation, column, .Cons(i, x, ds))
+					case let .Cat(x, y):
+						return best(indentation, column, .Cons(i, x, .Cons(i, y, ds)))
+					case let .Nest(j, x):
+						return best(indentation, column, .Cons(i+j, x, ds))
+					case let .Union(x, y):
+						return nicest(
+							indentation,
+							column,
+							best(indentation, column, .Cons(i, x, ds)),
+							best(indentation, column, .Cons(i, y, ds))
+						)
+					case let .Column(f):
+						return best(indentation, column, .Cons(i, f(column), ds))
+					case let .Nesting(f):
+						return best(indentation, column, .Cons(i, f(i), ds))
+					}
+				}
+			}
+		}
+		
+		return best(0, 0, .Cons(0, self, .Nil))
+	}
+}
+
+public func prettyString(rule: RenderingRule, width: Int, doc: () -> Document) -> String {
+	return doc().prettyString(rule, width: width)
 }
 
 internal func prettyDocument(rule: RenderingRule, width: Int, doc: () -> Document) -> RenderedDocument {
-	return prettyDocument(rule, width: width, doc: doc())
+	return doc().prettyDocument(rule, width: width)
 }
 
-internal func prettyDocument(rule: RenderingRule, width: Int, doc: Document) -> RenderedDocument {
-	fatalError()
-}
