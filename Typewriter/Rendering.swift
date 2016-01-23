@@ -32,6 +32,34 @@ extension RenderedDocument {
 public enum RenderingRule {
 	case Oneline
 	case EndIndentation
+	
+	internal func fits(width: Int, nesting: Int, rest: Int, document: RenderedDocument) -> Bool {
+		guard rest >= 0 else {
+			return false
+		}
+		
+		switch document {
+		case .Fail:
+			return false
+		case .Empty:
+			return true
+		case let .Char(_, doc):
+			return fits(width, nesting: nesting, rest: rest - 1, document: doc)
+		case let .Text(s, doc):
+			return fits(width, nesting: nesting, rest: rest - s.characters.count, document: doc)
+		case let .Line(i, doc):
+			switch self {
+			case .Oneline:
+				return true
+			case .EndIndentation:
+				if nesting < i {
+					return fits(width, nesting: nesting, rest: width - i, document: doc)
+				}else {
+					return true
+				}
+			}
+		}
+	}
 }
 
 // MARK: - Rendering
