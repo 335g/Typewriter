@@ -101,4 +101,251 @@ final class DocumentTests: XCTestCase {
 		assertEqual(a, b)
 	}
 
+	// MARK: - extension Array where Element: DocumentType
+	
+	// MARK: hcat
+	func testDocumentArrayHcatProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		let c: Document = .char("c")
+		
+		let a0: Document = [].hcat()
+		assertEqual(a0, empty)
+		
+		let b1: Document = [a].hcat()
+		let b2: Document = a
+		assertEqual(b1, b2)
+		
+		let c1: Document = [a, b].hcat()
+		let c2: Document = a <> b
+		let c3: Document = a.beside(b)
+		assertEqual(c1, c2)
+		assertEqual(c1, c3)
+		
+		let d1: Document = [a, b, c].hcat()
+		let d2: Document = a <> b <> c
+		let d3: Document = a.beside(b.beside(c))
+		assertEqual(d1, d2)
+		assertEqual(d1, d3)
+	}
+	
+	// MARK: vcat
+	func testDocumentArrayVcatProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		let c: Document = .char("c")
+		
+		let a0: Document = [].vcat()
+		assertEqual(a0, empty)
+		
+		let b1: Document = [a].vcat()
+		let b2: Document = a
+		assertEqual(b1, b2)
+		
+		let c1: Document = [a, b].vcat()
+		let c2: Document = a </-> b
+		let c3: Document = a.beside(
+			Document.FlatAlt(.hardline, empty).beside(b)
+		)
+		assertEqual(c1, c2)
+		assertEqual(c1, c3)
+		
+		let d1: Document = [a, b, c].vcat()
+		let d2: Document = a </-> b </-> c
+		let d3: Document = a.beside(
+			Document.FlatAlt(.hardline, empty).beside(
+				b.beside(
+					Document.FlatAlt(.hardline, empty).beside(c)
+				)
+			)
+		)
+		assertEqual(d1, d2)
+		assertEqual(d1, d3)
+	}
+	
+	// MARK: cat
+	func testDocumentArrayCatProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		
+		let a1: Document = [].cat()
+		let a2: Document = .Union(empty.flatten(), empty)
+		assertEqual(a1, a2)
+		
+		let b1: Document = [a].cat()
+		let b2: Document = [a].vcat()
+		let b3: Document = .Union(b2.flatten(), b2)
+		assertEqual(b1, b3)
+		
+		let c1: Document = [a, b].cat()
+		let c2: Document = [a, b].vcat()
+		let c3: Document = .Union(c2.flatten(), c2)
+		assertEqual(c1, c3)
+	}
+	
+	// MARK: fillCat
+	func testDocumentArrayFillCatProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		let c: Document = .char("c")
+		let linebreak: Document = .linebreak
+		
+		let a1: Document = [].fillCat()
+		assertEqual(a1, empty)
+		
+		let b1: Document = [a].fillCat()
+		let b2: Document = a
+		assertEqual(b1, b2)
+		
+		let c1: Document = [a, b].fillCat()
+		let c2: Document = a <-/-> b
+		let c3: Document = a.beside(
+			Document.Union(linebreak.flatten(), linebreak).beside(b)
+		)
+		assertEqual(c1, c2)
+		assertEqual(c1, c3)
+		
+		let d1: Document = [a, b, c].fillCat()
+		let d2: Document = a <-/-> b <-/-> c
+		let d3: Document = a.beside(
+			Document.Union(linebreak.flatten(), linebreak).beside(
+				b.beside(
+					Document.Union(linebreak.flatten(), linebreak).beside(c)
+				)
+			)
+		)
+		assertEqual(d1, d2)
+		assertEqual(d1, d3)
+	}
+	
+	// MARK: hsep
+	func testDocumentArrayHsepProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		let c: Document = .char("c")
+		
+		let a1: Document = [].hsep()
+		assertEqual(a1, empty)
+		
+		let b1: Document = [a].hsep()
+		let b2: Document = a
+		assertEqual(b1, b2)
+		
+		let c1: Document = [a, b].hsep()
+		let c2: Document = a <+> b
+		let c3: Document = a.beside(
+			Document.space.beside(b)
+		)
+		assertEqual(c1, c2)
+		assertEqual(c1, c3)
+		
+		let d1: Document = [a, b, c].hsep()
+		let d2: Document = a <+> b <+> c
+		let d3: Document = a.beside(
+			Document.space.beside(
+				b.beside(
+					Document.space.beside(c)
+				)
+			)
+		)
+		assertEqual(d1, d2)
+		assertEqual(d1, d3)
+	}
+	
+	// MARK: vsep
+	func testDocumentArrayVsepProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		let c: Document = .char("c")
+		
+		let a1: Document = [].vsep()
+		assertEqual(a1, empty)
+		
+		let b1: Document = [a].vsep()
+		let b2: Document = a
+		assertEqual(b1, b2)
+		
+		let c1: Document = [a, b].vsep()
+		let c2: Document = a </+> b
+		let c3: Document = a.beside(
+			Document.FlatAlt(.hardline, .space).beside(b)
+		)
+		assertEqual(c1, c2)
+		assertEqual(c1, c3)
+		
+		let d1: Document = [a, b, c].vsep()
+		let d2: Document = a </+> b </+> c
+		let d3: Document = a.beside(
+			Document.FlatAlt(.hardline, .space).beside(
+				b.beside(
+					Document.FlatAlt(.hardline, .space).beside(c)
+				)
+			)
+		)
+		assertEqual(d1, d2)
+		assertEqual(d1, d3)
+	}
+	
+	// MARK: sep
+	func testDocumentArraySepProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		
+		let a1: Document = [].sep()
+		let a2: Document = .Union(empty.flatten(), empty)
+		assertEqual(a1, a2)
+		
+		let b1: Document = [a].sep()
+		let b2: Document = [a].vsep()
+		let b3: Document = .Union(b2.flatten(), b2)
+		assertEqual(b1, b3)
+		
+		let c1: Document = [a, b].sep()
+		let c2: Document = [a, b].vsep()
+		let c3: Document = .Union(c2.flatten(), c2)
+		assertEqual(c1, c3)
+	}
+	
+	// MARK: fillSep
+	func testDocumentArrayFillSepProduceFoldedDocument(){
+		let empty: Document = .empty
+		let a: Document = .char("a")
+		let b: Document = .char("b")
+		let c: Document = .char("c")
+		let line: Document = .line
+		
+		let a1: Document = [].fillSep()
+		assertEqual(a1, empty)
+		
+		let b1: Document = [a].fillSep()
+		let b2: Document = a
+		assertEqual(b1, b2)
+		
+		let c1: Document = [a, b].fillSep()
+		let c2: Document = a <+/+> b
+		let c3: Document = a.beside(
+			Document.Union(line.flatten(), line).beside(b)
+		)
+		assertEqual(c1, c2)
+		assertEqual(c1, c3)
+		
+		let d1: Document = [a, b, c].fillSep()
+		let d2: Document = a <+/+> b <+/+> c
+		let d3: Document = a.beside(
+			Document.Union(line.flatten(), line).beside(
+				b.beside(
+					Document.Union(line.flatten(), line).beside(c)
+				)
+			)
+		)
+		assertEqual(d1, d2)
+		assertEqual(d1, d3)
+	}
 }
