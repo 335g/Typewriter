@@ -10,4 +10,11 @@ public indirect enum RenderedDocument {
 	case Line(Int, RenderedDocument)
 }
 
+// MARK: - RenderingRule
+
+public enum RenderingRule {
+	case Oneline
+	case EndIndentation
+}
+
 
