@@ -74,4 +74,62 @@ final class PrettifyTests: XCTestCase {
 		
 		assertEqual(result, str)
 	}
+	
+	// MARK: enclose
+	func testDocumentEncloseProduceEnclosedString(){
+		let result = prettyString(.Oneline, width: 30){
+			return Document.char("a").enclose(open: .lparen, close: .rparen)
+		}
+		
+		let str = "(a)"
+		
+		assertEqual(result, str)
+	}
+	
+	// MARK: beside (<>)
+	func testDocumentBesideProduceCombinedString(){
+		let result1 = prettyString(.Oneline, width: 30){
+			return "a" <> "b"
+		}
+		let result2 = prettyString(.Oneline, width: 30){
+			let a = Document.char("a")
+			return a.beside("b")
+		}
+		
+		let str = "ab"
+		
+		assertEqual(result1, str)
+		assertEqual(result2, str)
+	}
+	
+	// MARK: space (<+>)
+	func testDocumentSpaceProducePutSpaceDocument(){
+		let result1 = prettyString(.Oneline, width: 30){
+			return "a" <+> "b"
+		}
+		let result2 = prettyString(.Oneline, width: 30){
+			return "a" <> .space <> "b"
+		}
+		
+		let str = "a b"
+		
+		assertEqual(result1, str)
+		assertEqual(result2, str)
+	}
+	
+	// MARK: line (</+>)
+	func testDocumentLineProduceWithLineDocument(){
+		let result1 = prettyString(.Oneline, width: 30){
+			return "a" </+> "b"
+		}
+		let str1 = "a\nb"
+		assertEqual(result1, str1)
+		
+		
+		let result2 = prettyString(.Oneline, width: 30){
+			return (Document.char("a") </+> Document.char("b")).group()
+		}
+		let str2 = "a b"
+		assertEqual(result2, str2)
+	}
 }

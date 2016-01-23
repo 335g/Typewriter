@@ -131,7 +131,6 @@ public func prettyString(rule: RenderingRule, width: Int, doc: () -> Document) -
 	return doc().prettyString(rule, width: width)
 }
 
-internal func prettyDocument(rule: RenderingRule, width: Int, doc: () -> Document) -> RenderedDocument {
-	return doc().prettyDocument(rule, width: width)
+public func prettyString(rule: RenderingRule, width: Int, doc: Document) -> String {
+	return doc.prettyString(rule, width: width)
 }
-
