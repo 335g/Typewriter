@@ -88,48 +88,283 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: beside (<>)
 	func testDocumentBesideProduceCombinedString(){
-		let result1 = prettyString(.Oneline, width: 30){
+		let result = prettyString(.Oneline, width: 30){
 			return "a" <> "b"
 		}
-		let result2 = prettyString(.Oneline, width: 30){
-			let a = Document.char("a")
-			return a.beside("b")
-		}
-		
 		let str = "ab"
 		
-		assertEqual(result1, str)
-		assertEqual(result2, str)
+		assertEqual(result, str)
 	}
 	
 	// MARK: space (<+>)
 	func testDocumentSpaceProducePutSpaceDocument(){
-		let result1 = prettyString(.Oneline, width: 30){
+		let result = prettyString(.Oneline, width: 30){
 			return "a" <+> "b"
 		}
-		let result2 = prettyString(.Oneline, width: 30){
-			return "a" <> .space <> "b"
-		}
-		
 		let str = "a b"
-		
-		assertEqual(result1, str)
-		assertEqual(result2, str)
+		assertEqual(result, str)
 	}
 	
 	// MARK: line (</+>)
 	func testDocumentLineProduceWithLineDocument(){
-		let result1 = prettyString(.Oneline, width: 30){
+		var result, str: String
+		
+		result = prettyString(.Oneline, width: 30){
 			return "a" </+> "b"
 		}
-		let str1 = "a\nb"
-		assertEqual(result1, str1)
+		str = "a\nb"
+		assertEqual(result, str)
 		
-		
-		let result2 = prettyString(.Oneline, width: 30){
-			return (Document.char("a") </+> Document.char("b")).group()
+		result = prettyString(.Oneline, width: 30){
+			return ("a" </+> "b").group()
 		}
-		let str2 = "a b"
-		assertEqual(result2, str2)
+		str = "a b"
+		assertEqual(result, str)
+	}
+	
+	// MARK: linebreak (</->)
+	func testDocumentLinebreakProduceWithLinebreakDocument(){
+		var result, str: String
+		
+		result = prettyString(.Oneline, width: 30){
+			return "a" </-> "b"
+		}
+		str = "a\nb"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30){
+			return ("a" </-> "b").group()
+		}
+		str = "ab"
+		assertEqual(result, str)
+	}
+	
+	// MARK: hcat
+	func testDocumentHcatProduceFoldedString(){
+		var result, str: String
+		
+		result = prettyString(.Oneline, width: 30, doc: [].hcat())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].hcat())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].hcat())
+		str = "ab"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].hcat())
+		str = "abc"
+		assertEqual(result, str)
+	}
+	
+	// MARK: vcat
+	func testDocumentVcatProduceFoldedString(){
+		var result, str: String
+		
+		result = prettyString(.Oneline, width: 30, doc: [].vcat())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].vcat())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].vcat())
+		str = "a\nb"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].vcat())
+		str = "a\nb\nc"
+		assertEqual(result, str)
+		
+		// group
+		result = prettyString(.Oneline, width: 30){
+			let folded: Document = ["a", "b", "c"].vcat()
+			return folded.group()
+		}
+		str = "abc"
+		assertEqual(result, str)
+	}
+	
+	// MARK: cat
+	func testDocumentCatProduceFoldedString(){
+		var result, str: String
+		
+		// Yes Fits
+		result = prettyString(.Oneline, width: 30, doc: [].cat())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].cat())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].cat())
+		str = "ab"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].cat())
+		str = "abc"
+		assertEqual(result, str)
+		
+		
+		// No Fits
+		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].cat())
+		str = "a\nb"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 2, doc: ["a", "b", "c"].cat())
+		str = "a\nb\nc"
+		assertEqual(result, str)
+	}
+	
+	// MARK: fillCat
+	func testDocumentFillCatProduceFoldedString(){
+		var result, str: String
+		
+		// Yes Fits
+		result = prettyString(.Oneline, width: 30, doc: [].fillCat())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].fillCat())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].fillCat())
+		str = "ab"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].fillCat())
+		str = "abc"
+		assertEqual(result, str)
+		
+		
+		// No Fits
+		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].fillCat())
+		str = "a\nb"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 2, doc: ["a", "b", "c"].fillCat())
+		str = "ab\nc"
+		assertEqual(result, str)
+	}
+	
+	// MARK: hsep
+	func testDocumentHsepProduceFoldedString(){
+		var result, str: String
+		
+		result = prettyString(.Oneline, width: 30, doc: [].hsep())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].hsep())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].hsep())
+		str = "a b"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].hsep())
+		str = "a b c"
+		assertEqual(result, str)
+	}
+	
+	// MARK: vsep
+	func testDocumentVsepProduceFoldedString(){
+		var result, str: String
+		
+		result = prettyString(.Oneline, width: 30, doc: [].vsep())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].vsep())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].vsep())
+		str = "a\nb"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].vsep())
+		str = "a\nb\nc"
+		assertEqual(result, str)
+		
+		
+		// group
+		result = prettyString(.Oneline, width: 30){
+			let folded: Document = ["a", "b", "c"].vsep()
+			return folded.group()
+		}
+		str = "a b c"
+		assertEqual(result, str)
+	}
+	
+	// MARK: sep
+	func testDocumentSepProduceFoldedString(){
+		var result, str: String
+		
+		// Yes Fits
+		result = prettyString(.Oneline, width: 30, doc: [].sep())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].sep())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].sep())
+		str = "a b"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].sep())
+		str = "a b c"
+		assertEqual(result, str)
+		
+		
+		// No Fits
+		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].sep())
+		str = "a\nb"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 3, doc: ["a", "b", "c"].sep())
+		str = "a\nb\nc"
+		assertEqual(result, str)
+	}
+	
+	// MARK: fillSep
+	func testDocumentFillSepProduceFoldedString(){
+		var result, str: String
+		
+		// Yes Fits
+		result = prettyString(.Oneline, width: 30, doc: [].fillSep())
+		str = ""
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a"].fillSep())
+		str = "a"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].fillSep())
+		str = "a b"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].fillSep())
+		str = "a b c"
+		assertEqual(result, str)
+		
+		
+		// No Fits
+		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].fillSep())
+		str = "a\nb"
+		assertEqual(result, str)
+		
+		result = prettyString(.Oneline, width: 3, doc: ["a", "b", "c"].fillSep())
+		str = "a b\nc"
+		assertEqual(result, str)
 	}
 }
