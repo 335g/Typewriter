@@ -78,7 +78,7 @@ extension Document {
 	
 	internal func prettyDocument(rule: RenderingRule, width: Int) -> RenderedDocument {
 		let nicest: (Int, Int, RenderedDocument, RenderedDocument) -> RenderedDocument = { indentation, column, doc1, doc2 in
-			if rule.fits(width, nesting: min(indentation, column), rest: width, document: doc1) {
+			if rule.fits(width, nesting: min(indentation, column), rest: width - column, document: doc1) {
 				return doc1
 			}else {
 				return doc2

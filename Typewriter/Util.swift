@@ -16,4 +16,3 @@ func spaces(n: Int) -> String {
 func indentation(n: Int) -> String {
 	return spaces(n)
 }
-
