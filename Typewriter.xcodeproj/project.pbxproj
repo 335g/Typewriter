@@ -19,9 +19,10 @@
 		840607E11C52E7C0000F0B22 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DF1C52E7C0000F0B22 /* Util.swift */; };
 		840607E31C52F406000F0B22 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E21C52F406000F0B22 /* Rendering.swift */; };
 		840607E41C52F406000F0B22 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E21C52F406000F0B22 /* Rendering.swift */; };
+		840607E61C532186000F0B22 /* DocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E51C532186000F0B22 /* DocumentTests.swift */; };
+		840607E71C532186000F0B22 /* DocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E51C532186000F0B22 /* DocumentTests.swift */; };
 		84C57F321C51190F00A9C6D6 /* Typewriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C57F311C51190F00A9C6D6 /* Typewriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */; };
-		84C57F3E1C51190F00A9C6D6 /* TypewriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C57F3D1C51190F00A9C6D6 /* TypewriterTests.swift */; };
 		84C57F571C511A5800A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F4D1C511A5800A9C6D6 /* Typewriter.framework */; };
 		84C57F641C511A9D00A9C6D6 /* Typewriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C57F311C51190F00A9C6D6 /* Typewriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84C57F661C511ADF00A9C6D6 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C57F651C511ADF00A9C6D6 /* Document.swift */; };
@@ -52,11 +53,11 @@
 		840607DC1C52D2F7000F0B22 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		840607DF1C52E7C0000F0B22 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		840607E21C52F406000F0B22 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
+		840607E51C532186000F0B22 /* DocumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentTests.swift; sourceTree = "<group>"; };
 		84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Typewriter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C57F311C51190F00A9C6D6 /* Typewriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Typewriter.h; sourceTree = "<group>"; };
 		84C57F331C51190F00A9C6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84C57F381C51190F00A9C6D6 /* Typewriter-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Typewriter-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		84C57F3D1C51190F00A9C6D6 /* TypewriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypewriterTests.swift; sourceTree = "<group>"; };
 		84C57F3F1C51190F00A9C6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84C57F4D1C511A5800A9C6D6 /* Typewriter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Typewriter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C57F561C511A5800A9C6D6 /* Typewriter-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Typewriter-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,8 +151,8 @@
 		84C57F3C1C51190F00A9C6D6 /* TypewriterTests */ = {
 			isa = PBXGroup;
 			children = (
-				84C57F3D1C51190F00A9C6D6 /* TypewriterTests.swift */,
 				84C57F3F1C51190F00A9C6D6 /* Info.plist */,
+				840607E51C532186000F0B22 /* DocumentTests.swift */,
 			);
 			path = TypewriterTests;
 			sourceTree = "<group>";
@@ -341,7 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84C57F3E1C51190F00A9C6D6 /* TypewriterTests.swift in Sources */,
+				840607E61C532186000F0B22 /* DocumentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840607E71C532186000F0B22 /* DocumentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +509,7 @@
 		84C57F461C51190F00A9C6D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -516,12 +519,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.TypewriterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		84C57F471C51190F00A9C6D6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -581,6 +586,7 @@
 		84C57F621C511A5800A9C6D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -592,12 +598,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.335g.Typewriter-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		84C57F631C511A5800A9C6D6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
