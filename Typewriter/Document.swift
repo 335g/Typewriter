@@ -503,12 +503,18 @@ public extension Array where Element: DocumentType {
 public func <> <D: DocumentType>(lhs: D, rhs: D) -> D {
 	return lhs.beside(rhs)
 }
+public func <> (lhs: Document, rhs: Document) -> Document {
+	return lhs.beside(rhs)
+}
 
 ///
 /// `<+>` space(: +) encloses in `lhs` and `rhs`.
 ///
 public func <+> <D: DocumentType>(lhs: D, rhs: D) -> D {
-	return lhs <> D.space <> rhs
+	return lhs <> .space <> rhs
+}
+public func <+> (lhs: Document, rhs: Document) -> Document {
+	return lhs <> .space <> rhs
 }
 
 ///
@@ -517,7 +523,10 @@ public func <+> <D: DocumentType>(lhs: D, rhs: D) -> D {
 /// `.line` behaves like a space (+), if the line break is undone by `group`.
 ///
 public func </+> <D: DocumentType>(lhs: D, rhs: D) -> D {
-	return lhs <> D.line <> rhs
+	return lhs <> .line <> rhs
+}
+public func </+> (lhs: Document, rhs: Document) -> Document {
+	return lhs <> .line <> rhs
 }
 
 ///
@@ -526,7 +535,10 @@ public func </+> <D: DocumentType>(lhs: D, rhs: D) -> D {
 /// `.linebreak` behaves like a empty (-), if the line break is undone by `group`.
 ///
 public func </-> <D: DocumentType>(lhs: D, rhs: D) -> D {
-	return lhs <> D.linebreak <> rhs
+	return lhs <> .linebreak <> rhs
+}
+public func </-> (lhs: Document, rhs: Document) -> Document {
+	return lhs <> .linebreak <> rhs
 }
 
 ///
@@ -535,7 +547,10 @@ public func </-> <D: DocumentType>(lhs: D, rhs: D) -> D {
 /// otherwise it behaves like a `line` (/+)
 ///
 public func <+/+> <D: DocumentType>(lhs: D, rhs: D) -> D {
-	return lhs <> D.softline <> rhs
+	return lhs <> .softline <> rhs
+}
+public func <+/+> (lhs: Document, rhs: Document) -> Document {
+	return lhs <> .softline <> rhs
 }
 
 ///
@@ -544,5 +559,8 @@ public func <+/+> <D: DocumentType>(lhs: D, rhs: D) -> D {
 /// otherwise it behaves like a `linebreak` (/-)
 ///
 public func <-/-> <D: DocumentType>(lhs: D, rhs: D) -> D {
-	return lhs <> D.softbreak <> rhs
+	return lhs <> .softbreak <> rhs
+}
+public func <-/-> (lhs: Document, rhs: Document) -> Document {
+	return lhs <> .softbreak <> rhs
 }
