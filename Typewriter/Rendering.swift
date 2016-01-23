@@ -2,7 +2,7 @@
 
 // MARK: - RenderedDocument
 
-public indirect enum RenderedDocument: CustomStringConvertible {
+indirect enum RenderedDocument: CustomStringConvertible {
 	case Fail
 	case Empty
 	case Char(Character, RenderedDocument)
@@ -13,7 +13,7 @@ public indirect enum RenderedDocument: CustomStringConvertible {
 // MARK: RenderedDocument : CustomStringConvertible
 
 extension RenderedDocument {
-	public var description: String {
+	var description: String {
 		switch self {
 		case .Fail, .Empty:
 			return ""
@@ -34,4 +34,20 @@ public enum RenderingRule {
 	case EndIndentation
 }
 
+// MARK: - Rendering
 
+public func prettyString(rule: RenderingRule, width: Int, doc: () -> Document) -> String {
+	return prettyDocument(rule, width: width, doc: doc).description
+}
+
+public func prettyString(rule: RenderingRule, width: Int, doc: Document) -> String {
+	return prettyDocument(rule, width: width, doc: doc).description
+}
+
+internal func prettyDocument(rule: RenderingRule, width: Int, doc: () -> Document) -> RenderedDocument {
+	return prettyDocument(rule, width: width, doc: doc())
+}
+
+internal func prettyDocument(rule: RenderingRule, width: Int, doc: Document) -> RenderedDocument {
+	fatalError()
+}
