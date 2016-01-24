@@ -7,20 +7,43 @@ import Prelude
 
 final class PrettifyTests: XCTestCase {
 	
-	func testPrettyStringCharProduceChar(){
-		let a = prettyString(width: 40){
-			return .char("a")
+	// MARK: flatten
+	func testPrettyStringFlattenProduceString(){
+		var result, str: String
+		
+		result = prettyString(width: 30){
+			return Document.FlatAlt("a", "b").flatten()
 		}
-		let b = "a"
-		assertEqual(a, b)
+		str = "b"
+		assertEqual(result, str)
+		
+		result = prettyString(width: 30){
+			return ("a" </+> "b" </-> "c").flatten()
+		}
+		str = "a bc"
+		assertEqual(result, str)
 	}
 	
-	func testPrettyStringStringProduceString(){
-		let a = prettyString(width: 40){
-			return "abc"
-		}
-		let b = "abc"
-		assertEqual(a, b)
+	// MARK: group
+	func testPrettyStringGroupProduceString(){
+		var result, str: String
+		let doc: Document = ((("a" </+> "b").group() </+> "c").group() </+> "d").group()
+		
+		result = prettyString(width: 30, doc: doc)
+		str = "a b c d"
+		assertEqual(result, str)
+		
+		result = prettyString(width: 6, doc: doc)
+		str = "a b c\nd"
+		assertEqual(result, str)
+		
+		result = prettyString(width: 4, doc: doc)
+		str = "a b\nc\nd"
+		assertEqual(result, str)
+		
+		result = prettyString(width: 2, doc: doc)
+		str = "a\nb\nc\nd"
+		assertEqual(result, str)
 	}
 	
 	// MARK: align
@@ -57,7 +80,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: indent
-	func testDocumentIndentProduceIndentedString(){
+	func testPrettyStringIndentProduceIndentedString(){
 		let result = prettyString(width: 15){
 			return Document.texts("This is a test for hang combinator.")
 				.fillSep()
@@ -76,7 +99,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: enclose
-	func testDocumentEncloseProduceEnclosedString(){
+	func testPrettyStringEncloseProduceEnclosedString(){
 		let result = prettyString(width: 30){
 			return Document.char("a").enclose(open: .lparen, close: .rparen)
 		}
@@ -87,7 +110,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: beside (<>)
-	func testDocumentBesideProduceCombinedString(){
+	func testPrettyStringBesideProduceCombinedString(){
 		let result = prettyString(width: 30){
 			return "a" <> "b"
 		}
@@ -97,7 +120,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: space (<+>)
-	func testDocumentSpaceProducePutSpaceDocument(){
+	func testPrettyStringSpaceProducePutSpaceDocument(){
 		let result = prettyString(width: 30){
 			return "a" <+> "b"
 		}
@@ -106,7 +129,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: line (</+>)
-	func testDocumentLineProduceWithLineDocument(){
+	func testPrettyStringLineProduceWithLineDocument(){
 		var result, str: String
 		
 		result = prettyString(width: 30){
@@ -123,7 +146,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: linebreak (</->)
-	func testDocumentLinebreakProduceWithLinebreakDocument(){
+	func testPrettyStringLinebreakProduceWithLinebreakDocument(){
 		var result, str: String
 		
 		result = prettyString(width: 30){
@@ -140,7 +163,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: hcat
-	func testDocumentHcatProduceFoldedString(){
+	func testPrettyStringHcatProduceFoldedString(){
 		var result, str: String
 		
 		result = prettyString(width: 30, doc: [].hcat())
@@ -161,7 +184,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: vcat
-	func testDocumentVcatProduceFoldedString(){
+	func testPrettyStringVcatProduceFoldedString(){
 		var result, str: String
 		
 		result = prettyString(width: 30, doc: [].vcat())
@@ -190,7 +213,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: cat
-	func testDocumentCatProduceFoldedString(){
+	func testPrettyStringCatProduceFoldedString(){
 		var result, str: String
 		
 		/// Yes Fits
@@ -222,7 +245,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: fillCat
-	func testDocumentFillCatProduceFoldedString(){
+	func testPrettyStringFillCatProduceFoldedString(){
 		var result, str: String
 		
 		/// Yes Fits
@@ -254,7 +277,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: hsep
-	func testDocumentHsepProduceFoldedString(){
+	func testPrettyStringHsepProduceFoldedString(){
 		var result, str: String
 		
 		result = prettyString(width: 30, doc: [].hsep())
@@ -275,7 +298,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: vsep
-	func testDocumentVsepProduceFoldedString(){
+	func testPrettyStringVsepProduceFoldedString(){
 		var result, str: String
 		
 		result = prettyString(width: 30, doc: [].vsep())
@@ -305,7 +328,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: sep
-	func testDocumentSepProduceFoldedString(){
+	func testPrettyStringSepProduceFoldedString(){
 		var result, str: String
 		
 		/// Yes Fits
@@ -337,7 +360,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: fillSep
-	func testDocumentFillSepProduceFoldedString(){
+	func testPrettyStringFillSepProduceFoldedString(){
 		var result, str: String
 		
 		/// Yes Fits
@@ -369,7 +392,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: encloseSep
-	func testDocumentEncloseSepProduceFoldedString(){
+	func testPrettyStringEncloseSepProduceFoldedString(){
 		var result, str: String
 		
 		/// Yes Fits
@@ -407,7 +430,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	// MARK: encloseSepNest
-	func testDocumentEncloseSepNestProduceFoldedString(){
+	func testPrettyStringEncloseSepNestProduceFoldedString(){
 		var result, str: String
 		
 		/// Yes Fits
