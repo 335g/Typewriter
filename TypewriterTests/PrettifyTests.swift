@@ -162,6 +162,66 @@ final class PrettifyTests: XCTestCase {
 		assertEqual(result, str)
 	}
 	
+	// MARK: softline (<+/+>)
+	func testPrettyStringSoftlineProduceWidthLineDocument(){
+		var result, str: String
+		let doc: Document = "a" <+/+> "b" <+/+> "c" <+/+> "d"
+		
+		result = doc.prettify(width: 30)
+		str = "a b c d"
+		assertEqual(result, str)
+		
+		result = doc.prettify(width: 6)
+		///          | boundary (6)
+		str = "a b c\n"
+			+ "d"
+		assertEqual(result, str)
+		
+		result = doc.prettify(width: 4)
+		///        | boundary (4)
+		str = "a b\n"
+			+ "c d"
+		assertEqual(result, str)
+		
+		result = doc.prettify(width: 2)
+		///      | boundary (2)
+		str = "a\n"
+			+ "b\n"
+			+ "c\n"
+			+ "d"
+		assertEqual(result, str)
+	}
+	
+	// MARK: softbreak (<-/->)
+	func testPrettyStringSoftbreakProduceWidthLinebreakDocument(){
+		var result, str: String
+		let doc: Document = "a" <-/-> "b" <-/-> "c" <-/-> "d"
+		
+		result = doc.prettify(width: 30)
+		str = "abcd"
+		assertEqual(result, str)
+		
+		result = doc.prettify(width: 3)
+		///       | boundary (3)
+		str = "abc\n"
+			+ "d"
+		assertEqual(result, str)
+		
+		result = doc.prettify(width: 2)
+		///      | boundary (2)
+		str = "ab\n"
+			+ "cd"
+		assertEqual(result, str)
+		
+		result = doc.prettify(width: 1)
+		///     | boundary (1)
+		str = "a\n"
+			+ "b\n"
+			+ "c\n"
+			+ "d"
+		assertEqual(result, str)
+	}
+	
 	// MARK: hcat
 	func testPrettyStringHcatProduceFoldedString(){
 		var result, str: String

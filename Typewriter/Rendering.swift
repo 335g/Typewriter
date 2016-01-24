@@ -72,7 +72,7 @@ enum Docs {
 }
 
 extension Document {
-	public func prettyString(rule: RenderingRule = .Oneline, width: Int) -> String {
+	public func prettify(rule: RenderingRule = .Oneline, width: Int) -> String {
 		return self.prettyDocument(rule, width: width).description
 	}
 	
@@ -128,9 +128,9 @@ extension Document {
 }
 
 public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: () -> Document) -> String {
-	return doc().prettyString(rule, width: width)
+	return doc().prettify(rule, width: width)
 }
 
 public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: Document) -> String {
-	return doc.prettyString(rule, width: width)
+	return doc.prettify(rule, width: width)
 }
