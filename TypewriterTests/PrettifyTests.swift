@@ -8,7 +8,7 @@ import Prelude
 final class PrettifyTests: XCTestCase {
 	
 	func testPrettyStringCharProduceChar(){
-		let a = prettyString(.Oneline, width: 40){
+		let a = prettyString(width: 40){
 			return .char("a")
 		}
 		let b = "a"
@@ -16,7 +16,7 @@ final class PrettifyTests: XCTestCase {
 	}
 	
 	func testPrettyStringStringProduceString(){
-		let a = prettyString(.Oneline, width: 40){
+		let a = prettyString(width: 40){
 			return "abc"
 		}
 		let b = "abc"
@@ -25,7 +25,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: align
 	func testPrettyStringAlignProduceAlignedString(){
-		let result = prettyString(.Oneline, width: 40){
+		let result = prettyString(width: 40){
 			return "This is a" <+> Document.texts("test for align combinator.")
 				.vsep()
 				.align()
@@ -40,7 +40,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: hang
 	func testPrettyStringHangProduceHangedString(){
-		let result = prettyString(.Oneline, width: 15){
+		let result = prettyString(width: 15){
 			return Document.texts("This is a test for hang combinator.")
 				.fillSep()
 				.hang(4)
@@ -58,7 +58,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: indent
 	func testDocumentIndentProduceIndentedString(){
-		let result = prettyString(.Oneline, width: 15){
+		let result = prettyString(width: 15){
 			return Document.texts("This is a test for hang combinator.")
 				.fillSep()
 				.indent(4)
@@ -77,7 +77,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: enclose
 	func testDocumentEncloseProduceEnclosedString(){
-		let result = prettyString(.Oneline, width: 30){
+		let result = prettyString(width: 30){
 			return Document.char("a").enclose(open: .lparen, close: .rparen)
 		}
 		
@@ -88,7 +88,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: beside (<>)
 	func testDocumentBesideProduceCombinedString(){
-		let result = prettyString(.Oneline, width: 30){
+		let result = prettyString(width: 30){
 			return "a" <> "b"
 		}
 		let str = "ab"
@@ -98,7 +98,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: space (<+>)
 	func testDocumentSpaceProducePutSpaceDocument(){
-		let result = prettyString(.Oneline, width: 30){
+		let result = prettyString(width: 30){
 			return "a" <+> "b"
 		}
 		let str = "a b"
@@ -109,13 +109,13 @@ final class PrettifyTests: XCTestCase {
 	func testDocumentLineProduceWithLineDocument(){
 		var result, str: String
 		
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			return "a" </+> "b"
 		}
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			return ("a" </+> "b").group()
 		}
 		str = "a b"
@@ -126,13 +126,13 @@ final class PrettifyTests: XCTestCase {
 	func testDocumentLinebreakProduceWithLinebreakDocument(){
 		var result, str: String
 		
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			return "a" </-> "b"
 		}
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			return ("a" </-> "b").group()
 		}
 		str = "ab"
@@ -143,19 +143,19 @@ final class PrettifyTests: XCTestCase {
 	func testDocumentHcatProduceFoldedString(){
 		var result, str: String
 		
-		result = prettyString(.Oneline, width: 30, doc: [].hcat())
+		result = prettyString(width: 30, doc: [].hcat())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].hcat())
+		result = prettyString(width: 30, doc: ["a"].hcat())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].hcat())
+		result = prettyString(width: 30, doc: ["a", "b"].hcat())
 		str = "ab"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].hcat())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].hcat())
 		str = "abc"
 		assertEqual(result, str)
 	}
@@ -164,24 +164,24 @@ final class PrettifyTests: XCTestCase {
 	func testDocumentVcatProduceFoldedString(){
 		var result, str: String
 		
-		result = prettyString(.Oneline, width: 30, doc: [].vcat())
+		result = prettyString(width: 30, doc: [].vcat())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].vcat())
+		result = prettyString(width: 30, doc: ["a"].vcat())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].vcat())
+		result = prettyString(width: 30, doc: ["a", "b"].vcat())
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].vcat())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].vcat())
 		str = "a\nb\nc"
 		assertEqual(result, str)
 		
 		/// group
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			let folded: Document = ["a", "b", "c"].vcat()
 			return folded.group()
 		}
@@ -194,29 +194,29 @@ final class PrettifyTests: XCTestCase {
 		var result, str: String
 		
 		/// Yes Fits
-		result = prettyString(.Oneline, width: 30, doc: [].cat())
+		result = prettyString(width: 30, doc: [].cat())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].cat())
+		result = prettyString(width: 30, doc: ["a"].cat())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].cat())
+		result = prettyString(width: 30, doc: ["a", "b"].cat())
 		str = "ab"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].cat())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].cat())
 		str = "abc"
 		assertEqual(result, str)
 		
 		
 		/// No Fits
-		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].cat())
+		result = prettyString(width: 0, doc: ["a", "b"].cat())
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 2, doc: ["a", "b", "c"].cat())
+		result = prettyString(width: 2, doc: ["a", "b", "c"].cat())
 		str = "a\nb\nc"
 		assertEqual(result, str)
 	}
@@ -226,29 +226,29 @@ final class PrettifyTests: XCTestCase {
 		var result, str: String
 		
 		/// Yes Fits
-		result = prettyString(.Oneline, width: 30, doc: [].fillCat())
+		result = prettyString(width: 30, doc: [].fillCat())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].fillCat())
+		result = prettyString(width: 30, doc: ["a"].fillCat())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].fillCat())
+		result = prettyString(width: 30, doc: ["a", "b"].fillCat())
 		str = "ab"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].fillCat())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].fillCat())
 		str = "abc"
 		assertEqual(result, str)
 		
 		
 		/// No Fits
-		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].fillCat())
+		result = prettyString(width: 0, doc: ["a", "b"].fillCat())
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 2, doc: ["a", "b", "c"].fillCat())
+		result = prettyString(width: 2, doc: ["a", "b", "c"].fillCat())
 		str = "ab\nc"
 		assertEqual(result, str)
 	}
@@ -257,19 +257,19 @@ final class PrettifyTests: XCTestCase {
 	func testDocumentHsepProduceFoldedString(){
 		var result, str: String
 		
-		result = prettyString(.Oneline, width: 30, doc: [].hsep())
+		result = prettyString(width: 30, doc: [].hsep())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].hsep())
+		result = prettyString(width: 30, doc: ["a"].hsep())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].hsep())
+		result = prettyString(width: 30, doc: ["a", "b"].hsep())
 		str = "a b"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].hsep())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].hsep())
 		str = "a b c"
 		assertEqual(result, str)
 	}
@@ -278,25 +278,25 @@ final class PrettifyTests: XCTestCase {
 	func testDocumentVsepProduceFoldedString(){
 		var result, str: String
 		
-		result = prettyString(.Oneline, width: 30, doc: [].vsep())
+		result = prettyString(width: 30, doc: [].vsep())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].vsep())
+		result = prettyString(width: 30, doc: ["a"].vsep())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].vsep())
+		result = prettyString(width: 30, doc: ["a", "b"].vsep())
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].vsep())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].vsep())
 		str = "a\nb\nc"
 		assertEqual(result, str)
 		
 		
 		/// group
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			let folded: Document = ["a", "b", "c"].vsep()
 			return folded.group()
 		}
@@ -309,29 +309,29 @@ final class PrettifyTests: XCTestCase {
 		var result, str: String
 		
 		/// Yes Fits
-		result = prettyString(.Oneline, width: 30, doc: [].sep())
+		result = prettyString(width: 30, doc: [].sep())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].sep())
+		result = prettyString(width: 30, doc: ["a"].sep())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].sep())
+		result = prettyString(width: 30, doc: ["a", "b"].sep())
 		str = "a b"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].sep())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].sep())
 		str = "a b c"
 		assertEqual(result, str)
 		
 		
 		/// No Fits
-		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].sep())
+		result = prettyString(width: 0, doc: ["a", "b"].sep())
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 3, doc: ["a", "b", "c"].sep())
+		result = prettyString(width: 3, doc: ["a", "b", "c"].sep())
 		str = "a\nb\nc"
 		assertEqual(result, str)
 	}
@@ -341,29 +341,29 @@ final class PrettifyTests: XCTestCase {
 		var result, str: String
 		
 		/// Yes Fits
-		result = prettyString(.Oneline, width: 30, doc: [].fillSep())
+		result = prettyString(width: 30, doc: [].fillSep())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a"].fillSep())
+		result = prettyString(width: 30, doc: ["a"].fillSep())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b"].fillSep())
+		result = prettyString(width: 30, doc: ["a", "b"].fillSep())
 		str = "a b"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30, doc: ["a", "b", "c"].fillSep())
+		result = prettyString(width: 30, doc: ["a", "b", "c"].fillSep())
 		str = "a b c"
 		assertEqual(result, str)
 		
 		
 		/// No Fits
-		result = prettyString(.Oneline, width: 0, doc: ["a", "b"].fillSep())
+		result = prettyString(width: 0, doc: ["a", "b"].fillSep())
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 3, doc: ["a", "b", "c"].fillSep())
+		result = prettyString(width: 3, doc: ["a", "b", "c"].fillSep())
 		str = "a b\nc"
 		assertEqual(result, str)
 	}
@@ -373,19 +373,19 @@ final class PrettifyTests: XCTestCase {
 		var result, str: String
 		
 		/// Yes Fits
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			return [].encloseSep(.comma, open: .lparen, close: .rparen)
 		}
 		str = "()"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			return ["a"].encloseSep(.comma, open: .lparen, close: .rparen)
 		}
 		str = "(a)"
 		assertEqual(result, str)
 		
-		result = prettyString(.Oneline, width: 30){
+		result = prettyString(width: 30){
 			return ["a", "b", "c"].encloseSep(.comma, open: .lparen, close: .rparen)
 		}
 		str = "(a,b,c)"
@@ -393,7 +393,7 @@ final class PrettifyTests: XCTestCase {
 		
 		
 		/// No Fits
-		result = prettyString(.Oneline, width: 10){
+		result = prettyString(width: 10){
 			return "prefix" <+> ["100", "1000", "10000"].encloseSep(.comma, open: .lparen, close: .rparen)
 		}
 		
@@ -402,6 +402,46 @@ final class PrettifyTests: XCTestCase {
 		str = "prefix (100\n"
 			+ "       ,1000\n"
 			+ "       ,10000)"
+		
+		assertEqual(result, str)
+	}
+	
+	// MARK: encloseSepNest
+	func testDocumentEncloseSepNestProduceFoldedString(){
+		var result, str: String
+		
+		/// Yes Fits
+		result = prettyString(width: 30){
+			return [].encloseSepNest(4, sep: .comma, open: .lparen, close: .rparen)
+		}
+		str = "()"
+		assertEqual(result, str)
+		
+		result = prettyString(width: 30){
+			return ["a"].encloseSepNest(4, sep: .comma, open: .lparen, close: .rparen)
+		}
+		str = "(a)"
+		assertEqual(result, str)
+		
+		result = prettyString(width: 30){
+			return ["a", "b", "c"].encloseSepNest(4, sep: .comma, open: .lparen, close: .rparen)
+		}
+		str = "(a,b,c)"
+		assertEqual(result, str)
+		
+		
+		/// No Fits
+		result = prettyString(width: 10){
+			return "prefix" <+> ["100", "1000", "10000"].encloseSepNest(2, sep: .comma, open: .lparen, close: .rparen)
+		}
+		
+		///             | boundary (10)
+		///             |
+		str = "prefix (\n"
+			+ "         100,\n"
+			+ "         1000,\n"
+			+ "         10000\n"
+			+ "       )"
 		
 		assertEqual(result, str)
 	}

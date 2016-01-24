@@ -247,7 +247,7 @@ extension DocumentType {
 	///   ]
 	///
 	public func encloseNest(i: Int, open: Self, close: Self) -> Self {
-		return (open <-/-> self).hang(i) <-/-> close
+		return ((open <-/-> self).hang(i) <-/-> close).align()
 	}
 	
 	public func squotesNest(i: Int) -> Self { return self.encloseNest(i, open: .squote, close: .squote) }
