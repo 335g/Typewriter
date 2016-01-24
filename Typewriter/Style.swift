@@ -113,6 +113,13 @@ public struct DocumentStyle: DocumentStyleType {
 	var blink: Blink?
 	var color: Color?
 	
+	init(intensity: Intensity? = nil, underline: Underline? = nil, blink: Blink? = nil, color: Color? = nil) {
+		self.intensity = intensity
+		self.underline = underline
+		self.blink = blink
+		self.color = color
+	}
+	
 	var codes: [UInt8] {
 		let defaultValue: [UInt8]? -> [UInt8] = { x in
 			switch x {
@@ -126,6 +133,17 @@ public struct DocumentStyle: DocumentStyleType {
 			+ defaultValue(underline?.codes)
 			+ defaultValue(blink?.codes)
 			+ defaultValue(color?.codes)
+	}
+	
+	func merge(x: DocumentStyle) -> DocumentStyle {
+		var style = self
+		
+		if let intensity = x.intensity	{ style.intensity = intensity }
+		if let underline = x.underline	{ style.underline = underline }
+		if let blink = x.blink			{ style.blink = blink }
+		if let color = x.color			{ style.color = color }
+		
+		return style
 	}
 }
 

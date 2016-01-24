@@ -285,6 +285,17 @@ extension Document {
 
 extension Document {
 	
+	func style(x: DocumentStyle) -> Document {
+		switch self {
+		case let .Style(s, doc):
+			return .Style(s.merge(x), doc)
+		default:
+			return .Style(x, self)
+		}
+	}
+	
+	public func bold() -> Document { return style(DocumentStyle(intensity: .Bold)) }
+	public func faint() -> Document { return style(DocumentStyle(intensity: .Faint)) }
 	
 }
 
