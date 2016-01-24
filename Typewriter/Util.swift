@@ -16,3 +16,27 @@ func spaces(n: Int) -> String {
 func indentation(n: Int) -> String {
 	return spaces(n)
 }
+
+func fromOptional<T>(x: T) -> T? -> T {
+	return { m in
+		switch m {
+		case .None:
+			return x
+		case let .Some(a):
+			return a
+		}
+	}
+}
+
+func fromOptional<T>(f: (T, T) -> T) -> T -> T? -> T {
+	return { x in
+		{ m in
+			switch m {
+			case .None:
+				return x
+			case let .Some(a):
+				return f(x, a)
+			}
+		}
+	}
+}

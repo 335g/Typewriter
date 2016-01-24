@@ -326,20 +326,8 @@ extension CollectionType where Index: RandomAccessIndexType {
 		return self.reverse().reduce(initial){ f($0.1)($0.0) }
 	}
 	
-	func foldr1(f: Element -> Element -> Element) throws -> Element {
-		let element: Element -> Element? -> Element
-		element = { x in
-			{ m in
-				switch m {
-				case .None:
-					return x
-				case let .Some(a):
-					return f(x)(a)
-				}
-			}
-		}
-		
-		if let result = foldr(nil, element) {
+	func foldr1(f: (Element, Element) -> Element) throws -> Element {
+		if let result = foldr(nil, fromOptional(f)) {
 			return result
 		}else {
 			throw CollectionTypeFoldError.OnlyOne
@@ -359,7 +347,7 @@ public extension Array where Element: DocumentType {
 			return .empty
 		}
 		
-		if let result = try? foldr1(curry(f)) {
+		if let result = try? foldr1(f) {
 			return result
 		}else {
 			return first
