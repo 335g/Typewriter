@@ -534,13 +534,13 @@ final class PrettifyTests: XCTestCase {
 		var doc: Document
 		
 		doc = "a" <+> "b"
-		result = prettyString(width: 30){
-			return doc.intensity(.Bold)
-		}
+		result = doc.intensity(.Bold).prettify(width: 30)
 		str = escape + "1m" + "a b" + suffix
 		assertEqual(result, str)
 		
-		
+		result = doc.intensity(.Faint).prettify(width: 30)
+		str = escape + "2m" + "a b" + suffix
+		assertEqual(result, str)
 	}
 	
 }
