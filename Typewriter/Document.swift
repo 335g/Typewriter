@@ -15,7 +15,6 @@ public protocol DocumentType: Monoid {
 	static func column(f: Int -> Self) -> Self
 	static func nesting(f: Int -> Self) -> Self
 	func nest(i: Int) -> Self
-	func style<D: DocumentStyleType>(style: D) -> Self
 	func flatten() -> Self
 	func beside(other: Self) -> Self
 }
@@ -179,7 +178,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case Nest(Int, Document)
 	case Nesting(Int -> Document)
 	case Column(Int -> Document)
-	case Style(DocumentStyleType, Document)
+	case Style(DocumentStyle, Document)
 }
 
 // MARK: Document : StringLiteralConvertible
@@ -262,10 +261,6 @@ extension Document {
 		return .Nest(i, self)
 	}
 	
-	public func style<D: DocumentStyleType>(style: D) -> Document {
-		return .Style(style, self)
-	}
-	
 	public func flatten() -> Document {
 		switch self {
 		case let .Cat(x, y):
@@ -284,6 +279,13 @@ extension Document {
 	public func beside(doc: Document) -> Document {
 		return .Cat(self, doc)
 	}
+}
+
+// MARK: Document (Style)
+
+extension Document {
+	
+	
 }
 
 // MARK: Document : Equatable
@@ -326,8 +328,19 @@ extension CollectionType where Index: RandomAccessIndexType {
 		return self.reverse().reduce(initial){ f($0.1)($0.0) }
 	}
 	
-	func foldr1(f: (Element, Element) -> Element) throws -> Element {
-		if let result = foldr(nil, fromOptional(f)) {
+	func foldr1(f: Element -> Element -> Element) throws -> Element {
+		let element: Element -> Element? -> Element = { x in
+			{ m in
+				switch m {
+				case .None:
+					return x
+				case let .Some(a):
+					return f(x)(a)
+				}
+			}
+		}
+		
+		if let result = foldr(nil, element) {
 			return result
 		}else {
 			throw CollectionTypeFoldError.OnlyOne
@@ -347,7 +360,7 @@ public extension Array where Element: DocumentType {
 			return .empty
 		}
 		
-		if let result = try? foldr1(f) {
+		if let result = try? foldr1(curry(f)) {
 			return result
 		}else {
 			return first

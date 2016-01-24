@@ -1,6 +1,6 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
-public protocol DocumentStyleType {
+protocol DocumentStyleType {
 	func wrap(str: String) -> String
 }
 
@@ -10,7 +10,7 @@ extension DocumentStyleType {
 	}
 }
 
-struct DocumentStyle: DocumentStyleType {
+public struct DocumentStyle: DocumentStyleType {
 	
 	enum Intensity: UInt8, HasCodes {
 		case Bold = 1
@@ -114,7 +114,14 @@ struct DocumentStyle: DocumentStyleType {
 	var color: Color?
 	
 	var codes: [UInt8] {
-		let defaultValue: [UInt8]? -> [UInt8] = fromOptional([])
+		let defaultValue: [UInt8]? -> [UInt8] = { x in
+			switch x {
+			case .None:
+				return []
+			case let .Some(a):
+				return a
+			}
+		}
 		return defaultValue(intensity?.codes)
 			+ defaultValue(underline?.codes)
 			+ defaultValue(blink?.codes)
