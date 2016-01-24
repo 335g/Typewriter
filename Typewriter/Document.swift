@@ -32,6 +32,139 @@ extension DocumentType {
 	}
 }
 
+// MARK: DocumentType (Constructor)
+
+extension DocumentType {
+	public static var space: Self		{ return .char(" ") }
+	public static var comma: Self		{ return .char(",") }
+	public static var lparen: Self		{ return .char("(") }
+	public static var rparen: Self		{ return .char(")") }
+	public static var lbracket: Self	{ return .char("[") }
+	public static var rbracket: Self	{ return .char("]") }
+	public static var langle: Self		{ return .char("<") }
+	public static var rangle: Self		{ return .char(">") }
+	public static var lbrace: Self		{ return .char("{") }
+	public static var rbrace: Self		{ return .char("}") }
+	public static var semi: Self		{ return .char(";") }
+	public static var squote: Self		{ return .char("'") }
+	public static var dquote: Self		{ return .char("\"") }
+	public static var colon: Self		{ return .char(":") }
+	public static var dot: Self			{ return .char(".") }
+	public static var backslash: Self	{ return .char("\\") }
+	public static var equals: Self		{ return .char("=") }
+	
+	public static func string(str: String) -> Self {
+		return str.characters
+			.split{ $0 == "\n" }
+			.map{ try! Self.text(String($0)) }
+			.vsep()
+	}
+	
+	public static func texts(str: String) -> [Self] {
+		return str.characters
+			.split{ $0 == " " }
+			.map{ Self.string(String($0)) }
+	}
+}
+
+// MARK: DocumentType (Combinator)
+
+extension DocumentType {
+	
+	///
+	/// `enclose` enclose document in `open` and `close`
+	///
+	public func enclose(open open: Self, close: Self) -> Self {
+		return open <> self <> close
+	}
+	
+	public func squotes() -> Self { return self.enclose(open: .squote, close: .squote) }
+	public func dquotes() -> Self { return self.enclose(open: .dquote, close: .dquote) }
+	public func parens() -> Self { return self.enclose(open: .lparen, close: .rparen) }
+	public func braces() -> Self { return self.enclose(open: .lbrace, close: .rbrace) }
+	public func angles() -> Self { return self.enclose(open: .langle, close: .rangle) }
+	public func brackets() -> Self { return self.enclose(open: .lbracket, close: .rbracket) }
+	
+	///
+	/// `encloseNest` enclose document in `open` and `close` with nest, if not fits.
+	///
+	/// ex)
+	///   "abc".encloseNest(2, open: .lbracket, close: .rbracket)
+	///
+	/// ** if fits **
+	///   [abc]
+	///
+	/// ** if not fits **
+	///   [\n
+	///     abc\n
+	///   ]
+	///
+	public func encloseNest(i: Int, open: Self, close: Self) -> Self {
+		return ((open <-/-> self).hang(i) <-/-> close).align()
+	}
+	
+	public func squotesNest(i: Int) -> Self { return self.encloseNest(i, open: .squote, close: .squote) }
+	public func dquotesNest(i: Int) -> Self { return self.encloseNest(i, open: .dquote, close: .dquote) }
+	public func parensNest(i: Int) -> Self { return self.encloseNest(i, open: .lparen, close: .rparen) }
+	public func bracesNest(i: Int) -> Self { return self.encloseNest(i, open: .lbrace, close: .rbrace) }
+	public func anglesNest(i: Int) -> Self { return self.encloseNest(i, open: .langle, close: .rangle) }
+	public func bracketsNest(i: Int) -> Self { return self.encloseNest(i, open: .lbracket, close: .rbracket) }
+	
+	///
+	/// `align` renders document with the nesting level set to current column.
+	///
+	public func align() -> Self {
+		return .column({ k in
+			.nesting({ i in self.nest(k - i) })
+		})
+	}
+	
+	///
+	/// `hang` implements hanging indentation.
+	/// Document obtained renders document with a nesting level set to the indentation for some text.
+	///
+	public func hang(i: Int) -> Self {
+		return self.nest(i).align()
+	}
+	
+	///
+	/// `indent` indents document with `i` spaces.
+	///
+	public func indent(i: Int) -> Self {
+		return (.string(spaces(i)) <> self).hang(i)
+	}
+}
+
+// MARK: DocumentType (Rendering Rule Dependence)
+
+extension DocumentType {
+	
+	///
+	/// `group` selects the document by fitting.
+	/// `self.flatten` is selected if the resulting output fits the page,
+	/// otherwise `self` is selected.
+	///
+	public func group() -> Self {
+		return .union(self.flatten(), self)
+	}
+	
+	///
+	/// `softline` behaves like `space` if the retsulting output fits the page,
+	/// otherwise it behaves like `line`.
+	///
+	public static var softline: Self {
+		return Self.line.group()
+	}
+	
+	///
+	/// `softbreak` behaves like `empty` if the resulting output fits the page,
+	/// otherwise it behaves like `line`.
+	///
+	public static var softbreak: Self {
+		return Self.linebreak.group()
+	}
+}
+
 // MARK: - Document
 
 public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable {
@@ -62,43 +195,6 @@ extension Document {
 	public init(extendedGraphemeClusterLiteral value: String) {
 		self = .string(value)
 	}
-}
-
-// MARK: Document : Equatable
-
-public func == (lhs: Document, rhs: Document) -> Bool {
-	switch (lhs, rhs) {
-	case (.Fail, .Fail):
-		return true
-	case (.Empty, .Empty):
-		return true
-	case let (.Char(l), .Char(r)):
-		return l == r
-	case let (.Text(l), .Text(r)):
-		return l == r
-	case (.Line, .Line):
-		return true
-	case let (.Nest(li, ldoc), .Nest(ri, rdoc)):
-		return li == ri && ldoc == rdoc
-	case let (.Cat(lx, ly), .Cat(rx, ry)):
-		return lx == rx && ly == ry
-	case let (.FlatAlt(lx, ly), .FlatAlt(rx, ry)):
-		return lx == rx && ly == ry
-	case let (.Union(lx, ly), .Union(rx, ry)):
-		return lx == rx && ly == ry
-	case let (.Column(lf), .Column(rf)):
-		return lf(4) == rf(4)
-	case let (.Nesting(lf), .Nesting(rf)):
-		return lf(4) == rf(4)
-	default:
-		return false
-	}
-}
-
-// MARK: - DocumentConstructError
-
-public enum DocumentConstructError: ErrorType {
-	case ContainsLinebreak
 }
 
 // MARK: Document : DocumentType
@@ -179,136 +275,34 @@ extension Document {
 	}
 }
 
-// MARK: DocumentType (Constructor)
+// MARK: Document : Equatable
 
-extension DocumentType {
-	public static var space: Self		{ return .char(" ") }
-	public static var comma: Self		{ return .char(",") }
-	public static var lparen: Self		{ return .char("(") }
-	public static var rparen: Self		{ return .char(")") }
-	public static var lbracket: Self	{ return .char("[") }
-	public static var rbracket: Self	{ return .char("]") }
-	public static var langle: Self		{ return .char("<") }
-	public static var rangle: Self		{ return .char(">") }
-	public static var lbrace: Self		{ return .char("{") }
-	public static var rbrace: Self		{ return .char("}") }
-	public static var semi: Self		{ return .char(";") }
-	public static var squote: Self		{ return .char("'") }
-	public static var dquote: Self		{ return .char("\"") }
-	public static var colon: Self		{ return .char(":") }
-	public static var dot: Self			{ return .char(".") }
-	public static var backslash: Self	{ return .char("\\") }
-	public static var equals: Self		{ return .char("=") }
-	
-	public static func string(str: String) -> Self {
-		return str.characters
-			.split{ $0 == "\n" }
-			.map{ try! Self.text(String($0)) }
-			.vsep()
-	}
-	
-	public static func texts(str: String) -> [Self] {
-		return str.characters
-			.split{ $0 == " " }
-			.map{ Self.string(String($0)) }
-	}
-}
-
-// MARK: DocumentType (Combinator)
-
-extension DocumentType {
-	
-	///
-	/// `enclose` enclose document in `open` and `close`
-	///
-	public func enclose(open open: Self, close: Self) -> Self {
-		return open <> self <> close
-	}
-	
-	public func squotes() -> Self { return self.enclose(open: .squote, close: .squote) }
-	public func dquotes() -> Self { return self.enclose(open: .dquote, close: .dquote) }
-	public func parens() -> Self { return self.enclose(open: .lparen, close: .rparen) }
-	public func braces() -> Self { return self.enclose(open: .lbrace, close: .rbrace) }
-	public func angles() -> Self { return self.enclose(open: .langle, close: .rangle) }
-	public func brackets() -> Self { return self.enclose(open: .lbracket, close: .rbracket) }
-	
-	///
-	/// `encloseNest` enclose document in `open` and `close` with nest, if not fits.
-	///
-	/// ex) 
-	///   "abc".encloseNest(2, open: .lbracket, close: .rbracket)
-	///
-	/// ** if fits **
-	///   [abc]
-	///
-	/// ** if not fits **
-	///   [\n
-	///     abc\n
-	///   ]
-	///
-	public func encloseNest(i: Int, open: Self, close: Self) -> Self {
-		return ((open <-/-> self).hang(i) <-/-> close).align()
-	}
-	
-	public func squotesNest(i: Int) -> Self { return self.encloseNest(i, open: .squote, close: .squote) }
-	public func dquotesNest(i: Int) -> Self { return self.encloseNest(i, open: .dquote, close: .dquote) }
-	public func parensNest(i: Int) -> Self { return self.encloseNest(i, open: .lparen, close: .rparen) }
-	public func bracesNest(i: Int) -> Self { return self.encloseNest(i, open: .lbrace, close: .rbrace) }
-	public func anglesNest(i: Int) -> Self { return self.encloseNest(i, open: .langle, close: .rangle) }
-	public func bracketsNest(i: Int) -> Self { return self.encloseNest(i, open: .lbracket, close: .rbracket) }
-	
-	///
-	/// `align` renders document with the nesting level set to current column.
-	///
-	public func align() -> Self {
-		return .column({ k in
-			.nesting({ i in self.nest(k - i) })
-		})
-	}
-	
-	///
-	/// `hang` implements hanging indentation.
-	/// Document obtained renders document with a nesting level set to the indentation for some text.
-	///
-	public func hang(i: Int) -> Self {
-		return self.nest(i).align()
-	}
-	
-	///
-	/// `indent` indents document with `i` spaces.
-	///
-	public func indent(i: Int) -> Self {
-		return (.string(spaces(i)) <> self).hang(i)
-	}
-}
-
-// MARK: DocumentType (Rendering Rule Dependence)
-
-extension DocumentType {
-	
-	///
-	/// `group` selects the document by fitting.
-	/// `self.flatten` is selected if the resulting output fits the page,
-	/// otherwise `self` is selected.
-	///
-	public func group() -> Self {
-		return .union(self.flatten(), self)
-	}
-	
-	///
-	/// `softline` behaves like `space` if the retsulting output fits the page,
-	/// otherwise it behaves like `line`.
-	///
-	public static var softline: Self {
-		return Self.line.group()
-	}
-	
-	///
-	/// `softbreak` behaves like `empty` if the resulting output fits the page,
-	/// otherwise it behaves like `line`.
-	///
-	public static var softbreak: Self {
-		return Self.linebreak.group()
+public func == (lhs: Document, rhs: Document) -> Bool {
+	switch (lhs, rhs) {
+	case (.Fail, .Fail):
+		return true
+	case (.Empty, .Empty):
+		return true
+	case let (.Char(l), .Char(r)):
+		return l == r
+	case let (.Text(l), .Text(r)):
+		return l == r
+	case (.Line, .Line):
+		return true
+	case let (.Nest(li, ldoc), .Nest(ri, rdoc)):
+		return li == ri && ldoc == rdoc
+	case let (.Cat(lx, ly), .Cat(rx, ry)):
+		return lx == rx && ly == ry
+	case let (.FlatAlt(lx, ly), .FlatAlt(rx, ry)):
+		return lx == rx && ly == ry
+	case let (.Union(lx, ly), .Union(rx, ry)):
+		return lx == rx && ly == ry
+	case let (.Column(lf), .Column(rf)):
+		return lf(4) == rf(4)
+	case let (.Nesting(lf), .Nesting(rf)):
+		return lf(4) == rf(4)
+	default:
+		return false
 	}
 }
 
@@ -486,6 +480,13 @@ public extension Array where Element: DocumentType {
 		return self.fold({ $0 <> sep <-/-> $1 }).encloseNest(i, open: open, close: close)
 	}
 }
+
+// MARK: - DocumentConstructError
+
+public enum DocumentConstructError: ErrorType {
+	case ContainsLinebreak
+}
+
 
 // MARK: - Operators
 
