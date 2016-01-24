@@ -29,19 +29,19 @@ final class PrettifyTests: XCTestCase {
 		var result, str: String
 		let doc: Document = ((("a" </+> "b").group() </+> "c").group() </+> "d").group()
 		
-		result = prettyString(width: 30, doc: doc)
+		result = doc.prettify(width: 30)
 		str = "a b c d"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 6, doc: doc)
+		result = doc.prettify(width: 6)
 		str = "a b c\nd"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 4, doc: doc)
+		result = doc.prettify(width: 4)
 		str = "a b\nc\nd"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 2, doc: doc)
+		result = doc.prettify(width: 2)
 		str = "a\nb\nc\nd"
 		assertEqual(result, str)
 	}
@@ -103,9 +103,7 @@ final class PrettifyTests: XCTestCase {
 		let result = prettyString(width: 30){
 			return Document.char("a").enclose(open: .lparen, close: .rparen)
 		}
-		
 		let str = "(a)"
-		
 		assertEqual(result, str)
 	}
 	
@@ -115,7 +113,6 @@ final class PrettifyTests: XCTestCase {
 			return "a" <> "b"
 		}
 		let str = "ab"
-		
 		assertEqual(result, str)
 	}
 	
