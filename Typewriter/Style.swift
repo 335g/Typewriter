@@ -8,7 +8,7 @@ protocol DocumentStyleType {
 extension DocumentStyleType {
 	func wrap(str: String) -> String {
 		let escape = "\u{001B}["
-		let prefix = escape + codes.map(String.init).joinWithSeparator(";")
+		let prefix = escape + codes.map(String.init).joinWithSeparator(";") + "m"
 		let suffix = escape + "0m"
 		
 		return prefix + str + suffix

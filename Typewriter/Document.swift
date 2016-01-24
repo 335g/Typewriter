@@ -294,8 +294,8 @@ extension Document {
 		}
 	}
 	
-	public func intesify(x: DocumentStyle.Intensity) -> Document {
-		return style(DocumentStyle(intensity: x))
+	public func intensity(x: DocumentStyle.Intensity) -> Document {
+		return self.style(DocumentStyle(intensity: x))
 	}
 	
 	public func underline(x: DocumentStyle.Underline) -> Document {
