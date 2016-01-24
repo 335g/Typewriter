@@ -130,7 +130,3 @@ extension Document {
 public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: () -> Document) -> String {
 	return doc().prettify(rule, width: width)
 }
-
-public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: Document) -> String {
-	return doc.prettify(rule, width: width)
-}
