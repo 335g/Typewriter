@@ -15,7 +15,7 @@ public protocol DocumentType: Monoid {
 	static func column(f: Int -> Self) -> Self
 	static func nesting(f: Int -> Self) -> Self
 	func nest(i: Int) -> Self
-	
+	func style<D: DocumentStyleType>(style: D) -> Self
 	func flatten() -> Self
 	func beside(other: Self) -> Self
 }
@@ -179,6 +179,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case Nest(Int, Document)
 	case Nesting(Int -> Document)
 	case Column(Int -> Document)
+	case Style(DocumentStyleType, Document)
 }
 
 // MARK: Document : StringLiteralConvertible
@@ -259,6 +260,10 @@ extension Document {
 	
 	public func nest(i: Int) -> Document {
 		return .Nest(i, self)
+	}
+	
+	public func style<D: DocumentStyleType>(style: D) -> Document {
+		return .Style(style, self)
 	}
 	
 	public func flatten() -> Document {

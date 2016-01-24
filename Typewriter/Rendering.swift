@@ -10,6 +10,7 @@ indirect enum RenderedDocument: CustomStringConvertible {
 	case Char(Character, RenderedDocument)
 	case Text(String, RenderedDocument)
 	case Line(Int, RenderedDocument)
+	case Style(DocumentStyleType, RenderedDocument)
 }
 
 // MARK: RenderedDocument : CustomStringConvertible
@@ -25,6 +26,8 @@ extension RenderedDocument {
 			return s + doc.description
 		case let .Line(i, doc):
 			return "\n\(indentation(i))" + doc.description
+		case let .Style(style, doc):
+			return style.wrap(doc.description)
 		}
 	}
 }
@@ -60,6 +63,8 @@ public enum RenderingRule {
 					return true
 				}
 			}
+		case let .Style(_, doc):
+			return fits(width, nesting: nesting, rest: rest, document: doc)
 		}
 	}
 }
@@ -118,6 +123,8 @@ extension Document {
 						return best(indentation, column, .Cons(i, f(column), ds))
 					case let .Nesting(f):
 						return best(indentation, column, .Cons(i, f(i), ds))
+					case let .Style(style, x):
+						return .Style(style, best(indentation, column, .Cons(i, x, ds)))
 					}
 				}
 			}
