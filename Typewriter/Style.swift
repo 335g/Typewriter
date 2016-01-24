@@ -12,28 +12,28 @@ extension DocumentStyleType {
 
 public struct DocumentStyle: DocumentStyleType {
 	
-	enum Intensity: UInt8, HasCodes {
+	public enum Intensity: UInt8, HasCodes {
 		case Bold = 1
 		case Faint = 2
 	}
 	
-	enum Underline: UInt8, HasCodes {
+	public enum Underline: UInt8, HasCodes {
 		case Single = 4
 		case Double = 21
 	}
 	
-	enum Blink: UInt8, HasCodes {
+	public enum Blink: UInt8, HasCodes {
 		case Slow = 5
 		case Rapid = 6
 	}
 	
-	struct Color {
-		enum ColorInfo {
+	public struct Color {
+		public enum ColorInfo {
 			case Plain(PlainColor)
 			case Custom(CustomColor)
 			
-			struct PlainColor {
-				enum Color: UInt8 {
+			public struct PlainColor {
+				public enum Color: UInt8 {
 					case Black = 30
 					case Red
 					case Green
@@ -44,7 +44,7 @@ public struct DocumentStyle: DocumentStyleType {
 					case White
 				}
 				
-				enum Intensity {
+				public enum Intensity {
 					case Dull
 					case Vivid
 				}
@@ -53,7 +53,7 @@ public struct DocumentStyle: DocumentStyleType {
 				let intensity: Intensity
 			}
 			
-			enum CustomColor {
+			public enum CustomColor {
 				case RGB (UInt8, UInt8, UInt8)
 				case Custom (UInt8)
 			}
@@ -67,24 +67,24 @@ public struct DocumentStyle: DocumentStyleType {
 		let color: ColorInfo
 		let layer: Layer
 		
-		init(_ intensity: ColorInfo.PlainColor.Intensity, foreground c: ColorInfo.PlainColor.Color){
+		public init(_ intensity: ColorInfo.PlainColor.Intensity, foreground c: ColorInfo.PlainColor.Color){
 			let colorInfo = ColorInfo.PlainColor(color: c, intensity: intensity)
 			color = .Plain(colorInfo)
 			layer = .Foreground
 		}
 		
-		init(_ intensity: ColorInfo.PlainColor.Intensity, background c: ColorInfo.PlainColor.Color){
+		public init(_ intensity: ColorInfo.PlainColor.Intensity, background c: ColorInfo.PlainColor.Color){
 			let colorInfo = ColorInfo.PlainColor(color: c, intensity: intensity)
 			color = .Plain(colorInfo)
 			layer = .Background
 		}
 		
-		init(foregroundCustomColor: ColorInfo.CustomColor){
+		public init(foregroundCustomColor: ColorInfo.CustomColor){
 			color = .Custom(foregroundCustomColor)
 			layer = .Foreground
 		}
 		
-		init(backgroundCustomColor: ColorInfo.CustomColor){
+		public init(backgroundCustomColor: ColorInfo.CustomColor){
 			color = .Custom(backgroundCustomColor)
 			layer = .Background
 		}

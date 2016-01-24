@@ -294,9 +294,21 @@ extension Document {
 		}
 	}
 	
-	public func bold() -> Document { return style(DocumentStyle(intensity: .Bold)) }
-	public func faint() -> Document { return style(DocumentStyle(intensity: .Faint)) }
+	public func intesify(x: DocumentStyle.Intensity) -> Document {
+		return style(DocumentStyle(intensity: x))
+	}
 	
+	public func underline(x: DocumentStyle.Underline) -> Document {
+		return style(DocumentStyle(underline: x))
+	}
+	
+	public func blink(x: DocumentStyle.Blink) -> Document {
+		return style(DocumentStyle(blink: x))
+	}
+	
+	public func color(x: DocumentStyle.Color) -> Document {
+		return style(DocumentStyle(color: x))
+	}
 }
 
 // MARK: Document : Equatable
