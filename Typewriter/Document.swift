@@ -200,6 +200,12 @@ extension Document {
 // MARK: Document : DocumentType
 
 extension Document {
+	
+	// MARK: Document.ConstructError (ErrorType)
+	public enum ConstructError: ErrorType {
+		case ContainsLinebreak
+	}
+	
 	public static var empty: Document {
 		return .Empty
 	}
@@ -220,7 +226,7 @@ extension Document {
 			return .empty
 		default:
 			if x.characters.contains("\n") {
-				throw DocumentConstructError.ContainsLinebreak
+				throw Document.ConstructError.ContainsLinebreak
 			}else {
 				return .Text(x)
 			}
@@ -480,13 +486,6 @@ public extension Array where Element: DocumentType {
 		return self.fold({ $0 <> sep <-/-> $1 }).encloseNest(i, open: open, close: close)
 	}
 }
-
-// MARK: - DocumentConstructError
-
-public enum DocumentConstructError: ErrorType {
-	case ContainsLinebreak
-}
-
 
 // MARK: - Operators
 
