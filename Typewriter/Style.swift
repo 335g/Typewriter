@@ -1,12 +1,17 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
 protocol DocumentStyleType {
+	var codes: [UInt8] { get }
 	func wrap(str: String) -> String
 }
 
 extension DocumentStyleType {
 	func wrap(str: String) -> String {
-		return ""
+		let escape = "\u{001B}["
+		let prefix = escape + codes.map(String.init).joinWithSeparator(";")
+		let suffix = escape + "0m"
+		
+		return prefix + str + suffix
 	}
 }
 
@@ -89,7 +94,7 @@ public struct DocumentStyle: DocumentStyleType {
 			layer = .Background
 		}
 		
-		var codes: [UInt8] {
+		public var codes: [UInt8] {
 			switch color {
 			case let .Plain(info):
 				let layerCode: UInt8 = layer == .Foreground ? 0 : 10
