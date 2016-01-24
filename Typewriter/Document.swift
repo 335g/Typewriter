@@ -337,6 +337,8 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return lf(4) == rf(4)
 	case let (.Nesting(lf), .Nesting(rf)):
 		return lf(4) == rf(4)
+	case let (.Style(ls, ldoc), .Style(rs, rdoc)):
+		return ls == rs && ldoc == rdoc
 	default:
 		return false
 	}

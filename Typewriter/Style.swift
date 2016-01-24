@@ -15,7 +15,7 @@ extension DocumentStyleType {
 	}
 }
 
-public struct DocumentStyle: DocumentStyleType {
+public struct DocumentStyle: DocumentStyleType, Equatable {
 	
 	public enum Intensity: UInt8, HasCodes {
 		case Bold = 1
@@ -32,12 +32,12 @@ public struct DocumentStyle: DocumentStyleType {
 		case Rapid = 6
 	}
 	
-	public struct Color {
-		public enum ColorInfo {
+	public struct Color: Equatable {
+		public enum ColorInfo: Equatable {
 			case Plain(PlainColor)
 			case Custom(CustomColor)
 			
-			public struct PlainColor {
+			public struct PlainColor: Equatable {
 				public enum Color: UInt8 {
 					case Black = 30
 					case Red
@@ -58,7 +58,7 @@ public struct DocumentStyle: DocumentStyleType {
 				let intensity: Intensity
 			}
 			
-			public enum CustomColor {
+			public enum CustomColor: Equatable {
 				case RGB (UInt8, UInt8, UInt8)
 				case Custom (UInt8)
 			}
@@ -150,6 +150,45 @@ public struct DocumentStyle: DocumentStyleType {
 		
 		return style
 	}
+}
+
+public func == (lhs: DocumentStyle.Color.ColorInfo.PlainColor, rhs: DocumentStyle.Color.ColorInfo.PlainColor) -> Bool {
+	
+	return lhs.color == rhs.color && lhs.intensity == rhs.intensity
+}
+
+public func == (lhs: DocumentStyle.Color.ColorInfo.CustomColor, rhs: DocumentStyle.Color.ColorInfo.CustomColor) -> Bool {
+	
+	switch (lhs, rhs) {
+	case let (.RGB(lr, lg, lb), .RGB(rr, rg, rb)):
+		return lr == rr && lg == rg && lb == rb
+	case let (.Custom(l), .Custom(r)):
+		return l == r
+	default:
+		return false
+	}
+}
+
+public func == (lhs: DocumentStyle.Color.ColorInfo, rhs: DocumentStyle.Color.ColorInfo) -> Bool {
+	switch (lhs, rhs) {
+	case let (.Plain(l), .Plain(r)):
+		return l == r
+	case let (.Custom(l), .Custom(r)):
+		return l == r
+	default:
+		return false
+	}
+}
+
+public func == (lhs: DocumentStyle.Color, rhs: DocumentStyle.Color) -> Bool {
+	return lhs.color == rhs.color && lhs.layer == rhs.layer
+}
+
+public func == (lhs: DocumentStyle, rhs: DocumentStyle) -> Bool {
+	return lhs.intensity == rhs.intensity
+		&& lhs.blink == rhs.blink
+		&& lhs.underline == rhs.underline
+		&& lhs.color == rhs.color
 }
 
 protocol HasCodes: RawRepresentable {
