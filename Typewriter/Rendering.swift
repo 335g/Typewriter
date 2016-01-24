@@ -72,11 +72,11 @@ enum Docs {
 }
 
 extension Document {
-	public func prettyString(rule: RenderingRule, width: Int) -> String {
+	public func prettyString(rule: RenderingRule = .Oneline, width: Int) -> String {
 		return self.prettyDocument(rule, width: width).description
 	}
 	
-	internal func prettyDocument(rule: RenderingRule, width: Int) -> RenderedDocument {
+	internal func prettyDocument(rule: RenderingRule = .Oneline, width: Int) -> RenderedDocument {
 		let nicest: (Int, Int, RenderedDocument, RenderedDocument) -> RenderedDocument = { indentation, column, doc1, doc2 in
 			if rule.fits(width, nesting: min(indentation, column), rest: width - column, document: doc1) {
 				return doc1
@@ -127,10 +127,10 @@ extension Document {
 	}
 }
 
-public func prettyString(rule: RenderingRule, width: Int, doc: () -> Document) -> String {
+public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: () -> Document) -> String {
 	return doc().prettyString(rule, width: width)
 }
 
-public func prettyString(rule: RenderingRule, width: Int, doc: Document) -> String {
+public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: Document) -> String {
 	return doc.prettyString(rule, width: width)
 }
