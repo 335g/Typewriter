@@ -309,6 +309,27 @@ extension Document {
 	public func color(x: DocumentStyle.Color) -> Document {
 		return style(DocumentStyle(color: x))
 	}
+	
+	public func plain() -> Document {
+		switch self {
+		case let .Cat(x, y):
+			return .Cat(x.plain(), y.plain())
+		case let .FlatAlt(x, y):
+			return .FlatAlt(x.plain(), y.plain())
+		case let .Union(x, y):
+			return .Union(x.plain(), y.plain())
+		case let .Nest(i, x):
+			return .Nest(i, x.plain())
+		case let .Nesting(f):
+			return .Nesting({ f($0).plain() })
+		case let .Column(f):
+			return .Column({ f($0).plain() })
+		case let .Style(_, x):
+			return x.plain()
+		default:
+			return self
+		}
+	}
 }
 
 // MARK: Document : Equatable
