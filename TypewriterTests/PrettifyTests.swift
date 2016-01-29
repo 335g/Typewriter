@@ -525,4 +525,23 @@ final class PrettifyTests: XCTestCase {
 		
 		assertEqual(result, str)
 	}
+	
+	// MARK: style
+	func testPrettyStringIntensityProduceString(){
+		var result, str: String
+		let escape = "\u{001B}["
+		let suffix = escape + "0m"
+		var doc: Document
+		
+		doc = "a" <+> "b"
+		result = doc.intensity(.Bold).prettify(width: 30)
+		str = escape + "1m" + "a b" + suffix
+		assertEqual(result, str)
+		
+		doc = ("a" <+> "b").underline(.Single) <> "c"
+		result = doc.prettify(width: 30)
+		str = escape + "4m" + "a b" + suffix + "c"
+		assertEqual(result, str)
+	}
+	
 }

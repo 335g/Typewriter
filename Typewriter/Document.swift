@@ -15,7 +15,6 @@ public protocol DocumentType: Monoid {
 	static func column(f: Int -> Self) -> Self
 	static func nesting(f: Int -> Self) -> Self
 	func nest(i: Int) -> Self
-	
 	func flatten() -> Self
 	func beside(other: Self) -> Self
 }
@@ -179,6 +178,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case Nest(Int, Document)
 	case Nesting(Int -> Document)
 	case Column(Int -> Document)
+	case Style(DocumentStyle, Document)
 }
 
 // MARK: Document : StringLiteralConvertible
@@ -281,6 +281,57 @@ extension Document {
 	}
 }
 
+// MARK: Document (Style)
+
+extension Document {
+	
+	func style(x: DocumentStyle) -> Document {
+		switch self {
+		case let .Style(s, doc):
+			return .Style(s.merge(x), doc)
+		default:
+			return .Style(x, self)
+		}
+	}
+	
+	public func intensity(x: DocumentStyle.Intensity) -> Document {
+		return self.style(DocumentStyle(intensity: x))
+	}
+	
+	public func underline(x: DocumentStyle.Underline) -> Document {
+		return style(DocumentStyle(underline: x))
+	}
+	
+	public func blink(x: DocumentStyle.Blink) -> Document {
+		return style(DocumentStyle(blink: x))
+	}
+	
+	public func color(x: DocumentStyle.Color) -> Document {
+		return style(DocumentStyle(color: x))
+	}
+	
+	public func plain() -> Document {
+		switch self {
+		case let .Cat(x, y):
+			return .Cat(x.plain(), y.plain())
+		case let .FlatAlt(x, y):
+			return .FlatAlt(x.plain(), y.plain())
+		case let .Union(x, y):
+			return .Union(x.plain(), y.plain())
+		case let .Nest(i, x):
+			return .Nest(i, x.plain())
+		case let .Nesting(f):
+			return .Nesting({ f($0).plain() })
+		case let .Column(f):
+			return .Column({ f($0).plain() })
+		case let .Style(_, x):
+			return x.plain()
+		default:
+			return self
+		}
+	}
+}
+
 // MARK: Document : Equatable
 
 public func == (lhs: Document, rhs: Document) -> Bool {
@@ -307,6 +358,8 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return lf(4) == rf(4)
 	case let (.Nesting(lf), .Nesting(rf)):
 		return lf(4) == rf(4)
+	case let (.Style(ls, ldoc), .Style(rs, rdoc)):
+		return ls == rs && ldoc == rdoc
 	default:
 		return false
 	}
@@ -322,8 +375,7 @@ extension CollectionType where Index: RandomAccessIndexType {
 	}
 	
 	func foldr1(f: Element -> Element -> Element) throws -> Element {
-		let element: Element -> Element? -> Element
-		element = { x in
+		let element: Element -> Element? -> Element = { x in
 			{ m in
 				switch m {
 				case .None:
