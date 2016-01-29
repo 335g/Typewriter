@@ -1,5 +1,7 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
+// MARK: - DocumentStyleType
+
 protocol DocumentStyleType {
 	var codes: [UInt8] { get }
 	func wrap(str: String) -> String
@@ -14,6 +16,8 @@ extension DocumentStyleType {
 		return prefix + str + suffix
 	}
 }
+
+// MARK: - DocumentStyle
 
 public struct DocumentStyle: DocumentStyleType, Equatable {
 	
@@ -152,6 +156,8 @@ public struct DocumentStyle: DocumentStyleType, Equatable {
 	}
 }
 
+// MARK: DocumentStyle.Family : Equatable
+
 public func == (lhs: DocumentStyle.Color.ColorInfo.PlainColor, rhs: DocumentStyle.Color.ColorInfo.PlainColor) -> Bool {
 	
 	return lhs.color == rhs.color && lhs.intensity == rhs.intensity
@@ -190,6 +196,8 @@ public func == (lhs: DocumentStyle, rhs: DocumentStyle) -> Bool {
 		&& lhs.underline == rhs.underline
 		&& lhs.color == rhs.color
 }
+
+// MARK: - HasCodes
 
 protocol HasCodes: RawRepresentable {
 	typealias RawValue = UInt8

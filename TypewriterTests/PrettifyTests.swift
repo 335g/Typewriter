@@ -538,8 +538,9 @@ final class PrettifyTests: XCTestCase {
 		str = escape + "1m" + "a b" + suffix
 		assertEqual(result, str)
 		
-		result = doc.intensity(.Faint).prettify(width: 30)
-		str = escape + "2m" + "a b" + suffix
+		doc = ("a" <+> "b").underline(.Single) <> "c"
+		result = doc.prettify(width: 30)
+		str = escape + "4m" + "a b" + suffix + "c"
 		assertEqual(result, str)
 	}
 	
