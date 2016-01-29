@@ -76,27 +76,64 @@ public struct DocumentStyle: DocumentStyleType, Equatable {
 		let color: ColorInfo
 		let layer: Layer
 		
-		public init(_ intensity: ColorInfo.PlainColor.Intensity, foreground c: ColorInfo.PlainColor.Color){
+		
+		internal init(_ intensity: ColorInfo.PlainColor.Intensity, foreground c: ColorInfo.PlainColor.Color){
 			let colorInfo = ColorInfo.PlainColor(color: c, intensity: intensity)
 			color = .Plain(colorInfo)
 			layer = .Foreground
 		}
 		
-		public init(_ intensity: ColorInfo.PlainColor.Intensity, background c: ColorInfo.PlainColor.Color){
+		internal init(_ intensity: ColorInfo.PlainColor.Intensity, background c: ColorInfo.PlainColor.Color){
 			let colorInfo = ColorInfo.PlainColor(color: c, intensity: intensity)
 			color = .Plain(colorInfo)
 			layer = .Background
 		}
 		
-		public init(foregroundCustomColor: ColorInfo.CustomColor){
-			color = .Custom(foregroundCustomColor)
+		public init(foreground c: ColorInfo.CustomColor){
+			color = .Custom(c)
 			layer = .Foreground
 		}
 		
-		public init(backgroundCustomColor: ColorInfo.CustomColor){
-			color = .Custom(backgroundCustomColor)
+		public init(background c: ColorInfo.CustomColor){
+			color = .Custom(c)
 			layer = .Background
 		}
+		
+		public static var black: Color		{ return Color(.Dull, foreground: .Black) }
+		public static var red: Color		{ return Color(.Dull, foreground: .Red) }
+		public static var green: Color		{ return Color(.Dull, foreground: .Green) }
+		public static var yellow: Color		{ return Color(.Dull, foreground: .Yellow) }
+		public static var blue: Color		{ return Color(.Dull, foreground: .Blue) }
+		public static var magenta: Color	{ return Color(.Dull, foreground: .Magenta) }
+		public static var cyan: Color		{ return Color(.Dull, foreground: .Cyan) }
+		public static var white: Color		{ return Color(.Dull, foreground: .White) }
+		
+		public static var onBlack: Color	{ return Color(.Dull, background: .Black) }
+		public static var onRed: Color		{ return Color(.Dull, background: .Red) }
+		public static var onGreen: Color	{ return Color(.Dull, background: .Green) }
+		public static var onYellow: Color	{ return Color(.Dull, background: .Yellow) }
+		public static var onBlue: Color		{ return Color(.Dull, background: .Blue) }
+		public static var onMagenta: Color	{ return Color(.Dull, background: .Magenta) }
+		public static var onCyan: Color		{ return Color(.Dull, background: .Cyan) }
+		public static var onWhite: Color	{ return Color(.Dull, background: .White) }
+		
+		public static var vividBlack: Color		{ return Color(.Vivid, foreground: .Black) }
+		public static var vividRed: Color		{ return Color(.Vivid, foreground: .Red) }
+		public static var vividGreen: Color		{ return Color(.Vivid, foreground: .Green) }
+		public static var vividYellow: Color	{ return Color(.Vivid, foreground: .Yellow) }
+		public static var vividBlue: Color		{ return Color(.Vivid, foreground: .Blue) }
+		public static var vividMagenta: Color	{ return Color(.Vivid, foreground: .Magenta) }
+		public static var vividCyan: Color		{ return Color(.Vivid, foreground: .Cyan) }
+		public static var vividWhite: Color		{ return Color(.Vivid, foreground: .White) }
+		
+		public static var onVividBlack: Color	{ return Color(.Vivid, background: .Black) }
+		public static var onVividRed: Color		{ return Color(.Vivid, background: .Red) }
+		public static var onVividGreen: Color	{ return Color(.Vivid, background: .Green) }
+		public static var onVividYellow: Color	{ return Color(.Vivid, background: .Yellow) }
+		public static var onVividBlue: Color	{ return Color(.Vivid, background: .Blue) }
+		public static var onVividMagenta: Color	{ return Color(.Vivid, background: .Magenta) }
+		public static var onVividCyan: Color	{ return Color(.Vivid, background: .Cyan) }
+		public static var onVividWhite: Color	{ return Color(.Vivid, background: .White) }
 		
 		public var codes: [UInt8] {
 			switch color {
