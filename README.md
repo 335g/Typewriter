@@ -32,19 +32,20 @@ result = prettyString(width: 15){
 
 - **Document.string**
 
-  `Document.string` is used when you don't need auto linebreak. `"\n"` is changed to linebreak. `Document` confirm to `StringLiteralConvertible`.
+  `Document.string` is used when you don't want a new line in the middle of a sentence. `Document` confirm to `StringLiteralConvertible`.
 
   ```swift
-  let document = Document.string("abc")
+  let document = Document
+      .string("This is a sample to use Typewriter.")
 
   ///
   /// equal to
-  ///   let document: Document = "abc"
+  ///   let document: Document = "This is a sample to use Typewriter."
   ```
 
 - **Document.texts**
 
-  `Document.texts` is used when you need auto linebreak. Position sandwiching the linebreak is determined by `prettify/prettyString`'s arugments `rule: RenderingRule` & `width: Int`.
+  `Document.texts` is used when you want a newline in the middle of a sentence in an appropriate manner. Position sandwiching the linebreak is determined by `prettify/prettyString`'s arugments `rule: RenderingRule` & `width: Int`.
 
   ```swift
   let doc = Document
@@ -71,6 +72,16 @@ result = prettyString(width: 15){
   ///   "This is a\n"
   /// + "sample to use\n"
   /// + "Typewriter."
+  ```
+
+- **Operators**
+
+  `Document` is combined by operators.
+
+  ```swift
+  let a: Document = "a" <> "b"   // "ab"
+  let b: Document = "a" <+> "b"  // "a b"
+  let c: Document = "a" </-> "b" // "a\nb"
   ```
 
 ## License
