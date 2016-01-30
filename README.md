@@ -11,12 +11,12 @@
 You can get rendering pretty `String` to use `prettify/prettyString` in `Typewriter`.
 
 ```swift
-var str, result: String
 let doc = Document
 	.texts("This is a sample to use Typewriter.")
 	.fillSep()
 	.hang(2)
 
+var result: String
 result = doc.prettify()
 
 ///
@@ -47,32 +47,31 @@ result = prettyString(width: 15){
   `Document.texts` is used when you need auto linebreak. Position sandwiching the linebreak is determined by `prettify/prettyString`'s arugments `rule: RenderingRule` & `width: Int`.
 
   ```swift
-  var str, result: String
   let doc = Document
     .texts("This is a sample to use Typewriter.")
     .fillSep()
     .hang(2)
 
+  var result: String
+
   /// (1) width: 60 (default)
   result = doc.prettify()
-  str = "This is a sample to use Typewriter."
+  /// "This is a sample to use Typewriter."
 
   /// (2) width: 30
   result = doc.prettify(width: 30)
-  ///                                |
-  ///                                | boundary (30)
-  ///                                |
-  str = "This is a sample to use\n"
-      + "  Typewriter."
+  ///                                  | boundary (30)
+  ///                                  |
+  ///   "This is a sample to use\n"
+  /// + "Typewriter."
 
   /// (3) width: 15
   result = doc.prettify(width: 15)
-  ///                 |
-  ///                 | boundary (15)
-  ///                 |
-  str = "This is a\n"
-      + "  sample to use\n"
-      + "  Typewriter."
+  ///                  | boundary (15)
+  ///                  |
+  ///   "This is a\n"
+  /// + "  sample to use\n"
+  /// + "  Typewriter."
   ```
 
 ## License
