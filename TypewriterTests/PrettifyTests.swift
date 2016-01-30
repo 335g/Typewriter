@@ -11,13 +11,13 @@ final class PrettifyTests: XCTestCase {
 	func testPrettyStringFlattenProduceString(){
 		var result, str: String
 		
-		result = prettyString(width: 30){
+		result = prettyString {
 			return Document.FlatAlt("a", "b").flatten()
 		}
 		str = "b"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30){
+		result = prettyString {
 			return ("a" </+> "b" </-> "c").flatten()
 		}
 		str = "a bc"
@@ -48,7 +48,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: align
 	func testPrettyStringAlignProduceAlignedString(){
-		let result = prettyString(width: 40){
+		let result = prettyString {
 			return "This is a" <+> Document.texts("test for align combinator.")
 				.vsep()
 				.align()
@@ -63,7 +63,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: hang
 	func testPrettyStringHangProduceHangedString(){
-		let result = prettyString(width: 15){
+		let result = prettyString(width: 15) {
 			return Document.texts("This is a test for hang combinator.")
 				.fillSep()
 				.hang(4)
@@ -100,7 +100,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: enclose
 	func testPrettyStringEncloseProduceEnclosedString(){
-		let result = prettyString(width: 30){
+		let result = prettyString {
 			return Document.char("a").enclose(open: .lparen, close: .rparen)
 		}
 		let str = "(a)"
@@ -109,7 +109,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: beside (<>)
 	func testPrettyStringBesideProduceCombinedString(){
-		let result = prettyString(width: 30){
+		let result = prettyString {
 			return "a" <> "b"
 		}
 		let str = "ab"
@@ -118,7 +118,7 @@ final class PrettifyTests: XCTestCase {
 	
 	// MARK: space (<+>)
 	func testPrettyStringSpaceProducePutSpaceDocument(){
-		let result = prettyString(width: 30){
+		let result = prettyString {
 			return "a" <+> "b"
 		}
 		let str = "a b"
@@ -129,13 +129,13 @@ final class PrettifyTests: XCTestCase {
 	func testPrettyStringLineProduceWithLineDocument(){
 		var result, str: String
 		
-		result = prettyString(width: 30){
+		result = prettyString {
 			return "a" </+> "b"
 		}
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30){
+		result = prettyString {
 			return ("a" </+> "b").group()
 		}
 		str = "a b"
@@ -146,13 +146,13 @@ final class PrettifyTests: XCTestCase {
 	func testPrettyStringLinebreakProduceWithLinebreakDocument(){
 		var result, str: String
 		
-		result = prettyString(width: 30){
+		result = prettyString {
 			return "a" </-> "b"
 		}
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30){
+		result = prettyString {
 			return ("a" </-> "b").group()
 		}
 		str = "ab"
@@ -223,19 +223,19 @@ final class PrettifyTests: XCTestCase {
 	func testPrettyStringHcatProduceFoldedString(){
 		var result, str: String
 		
-		result = prettyString(width: 30, doc: [].hcat())
+		result = prettyString(doc: [].hcat())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30, doc: ["a"].hcat())
+		result = prettyString(doc: ["a"].hcat())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30, doc: ["a", "b"].hcat())
+		result = prettyString(doc: ["a", "b"].hcat())
 		str = "ab"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30, doc: ["a", "b", "c"].hcat())
+		result = prettyString(doc: ["a", "b", "c"].hcat())
 		str = "abc"
 		assertEqual(result, str)
 	}
@@ -244,24 +244,24 @@ final class PrettifyTests: XCTestCase {
 	func testPrettyStringVcatProduceFoldedString(){
 		var result, str: String
 		
-		result = prettyString(width: 30, doc: [].vcat())
+		result = prettyString(doc: [].vcat())
 		str = ""
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30, doc: ["a"].vcat())
+		result = prettyString(doc: ["a"].vcat())
 		str = "a"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30, doc: ["a", "b"].vcat())
+		result = prettyString(doc: ["a", "b"].vcat())
 		str = "a\nb"
 		assertEqual(result, str)
 		
-		result = prettyString(width: 30, doc: ["a", "b", "c"].vcat())
+		result = prettyString(doc: ["a", "b", "c"].vcat())
 		str = "a\nb\nc"
 		assertEqual(result, str)
 		
 		/// group
-		result = prettyString(width: 30){
+		result = prettyString {
 			let folded: Document = ["a", "b", "c"].vcat()
 			return folded.group()
 		}

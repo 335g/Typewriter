@@ -2,6 +2,10 @@
 
 import Prelude
 
+// MARK: - Constant
+
+let ReferenceWidth: Int = 60
+
 // MARK: - RenderedDocument
 
 indirect enum RenderedDocument: CustomStringConvertible {
@@ -82,7 +86,7 @@ enum Docs {
 }
 
 extension Document {
-	public func prettify(rule: RenderingRule = .Oneline, width: Int) -> String {
+	public func prettify(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth) -> String {
 		return self.prettyDocument(rule, width: width).description
 	}
 	
@@ -142,10 +146,10 @@ extension Document {
 	}
 }
 
-public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: () -> Document) -> String {
+public func prettyString(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth, doc: () -> Document) -> String {
 	return doc().prettify(rule, width: width)
 }
 
-public func prettyString(rule: RenderingRule = .Oneline, width: Int, doc: Document) -> String {
+public func prettyString(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth, doc: Document) -> String {
 	return doc.prettify(rule, width: width)
 }
