@@ -32,7 +32,8 @@ result = prettyString(width: 15){
 
 - **Document.string**
 
-  `Document.string` is used when you don't want a new line in the middle of a sentence. `Document` confirm to `StringLiteralConvertible`.
+  `Document.string` is used when you don't want a new line in the middle of a sentence. `Document` conform to `StringLiteralConvertible`.
+
 
   ```swift
   let document = Document
