@@ -4,7 +4,76 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square)](https://github.com/Carthage/Carthage)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 
-Typewriter is a Swift μframework for pretty printing.
+`Typewriter` is a Swift μframework for pretty printing.
+
+## Use
+
+You can get rendering pretty `String` to use `prettify/prettyString` in `Typewriter`.
+
+```swift
+var str, result: String
+let doc = Document
+	.texts("This is a sample to use Typewriter.")
+	.fillSep()
+	.hang(2)
+
+result = doc.prettify()
+
+///
+/// Trailing closure by `prettyString`
+///
+result = prettyString(width: 15){
+  return Document
+    .texts("This is a sample to use Typewriter.")
+    .fillSep()
+    .hang(2)
+}
+```
+
+- **Document.string**
+
+  `Document.string` is used when you don't need auto linebreak. `"\n"` is changed to linebreak. `Document` confirm to `StringLiteralConvertible`.
+
+  ```swift
+  let document = Document.string("abc")
+
+  ///
+  /// equal to
+  ///   let document: Document = "abc"
+  ```
+
+- **Document.texts**
+
+  `Document.texts` is used when you need auto linebreak. Position sandwiching the linebreak is determined by `prettify/prettyString`'s arugments `rule: RenderingRule` & `width: Int`.
+
+  ```swift
+  var str, result: String
+  let doc = Document
+    .texts("This is a sample to use Typewriter.")
+    .fillSep()
+    .hang(2)
+
+  /// (1) width: 60 (default)
+  result = doc.prettify()
+  str = "This is a sample to use Typewriter."
+
+  /// (2) width: 30
+  result = doc.prettify(width: 30)
+  ///                                |
+  ///                                | boundary (30)
+  ///                                |
+  str = "This is a sample to use\n"
+      + "  Typewriter."
+
+  /// (3) width: 15
+  result = doc.prettify(width: 15)
+  ///                 |
+  ///                 | boundary (15)
+  ///                 |
+  str = "This is a\n"
+      + "  sample to use\n"
+      + "  Typewriter."
+  ```
 
 ## License
 
