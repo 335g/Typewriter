@@ -23,10 +23,10 @@ result = doc.prettify()
 /// Trailing closure by `prettyString`
 ///
 result = prettyString(width: 15){
-  return Document
-    .texts("This is a sample to use Typewriter.")
-    .fillSep()
-    .hang(2)
+    return Document
+        .texts("This is a sample to use Typewriter.")
+        .fillSep()
+        .hang(2)
 }
 ```
 
@@ -42,7 +42,7 @@ result = prettyString(width: 15){
   ///   let document: Document = "abc"
   ```
 
-- **Document.texts**
+- **Document.texts**
 
   `Document.texts` is used when you need auto linebreak. Position sandwiching the linebreak is determined by `prettify/prettyString`'s arugments `rule: RenderingRule` & `width: Int`.
 
