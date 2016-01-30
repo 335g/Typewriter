@@ -50,7 +50,6 @@ result = prettyString(width: 15){
   let doc = Document
     .texts("This is a sample to use Typewriter.")
     .fillSep()
-    .hang(2)
 
   var result: String
 
@@ -70,8 +69,8 @@ result = prettyString(width: 15){
   ///                  | boundary (15)
   ///                  |
   ///   "This is a\n"
-  /// + "  sample to use\n"
-  /// + "  Typewriter."
+  /// + "sample to use\n"
+  /// + "Typewriter."
   ```
 
 ## License
