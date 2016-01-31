@@ -1,6 +1,6 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
-import Prelude
+import BaseKit
 
 // MARK: - DocumentType
 
@@ -363,39 +363,6 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 	default:
 		return false
 	}
-}
-
-// MARK: - extension CollectionType where Index: RandomAccessIndexType
-
-extension CollectionType where Index: RandomAccessIndexType {
-	typealias Element = Generator.Element
-	
-	func foldr<T>(initial: T, @noescape _ f: Element -> T -> T) -> T {
-		return self.reverse().reduce(initial){ f($0.1)($0.0) }
-	}
-	
-	func foldr1(f: Element -> Element -> Element) throws -> Element {
-		let element: Element -> Element? -> Element = { x in
-			{ m in
-				switch m {
-				case .None:
-					return x
-				case let .Some(a):
-					return f(x)(a)
-				}
-			}
-		}
-		
-		if let result = foldr(nil, element) {
-			return result
-		}else {
-			throw CollectionTypeFoldError.OnlyOne
-		}
-	}
-}
-
-enum CollectionTypeFoldError: ErrorType {
-	case OnlyOne
 }
 
 // MARK: - extension Array where Element: DocumentType

@@ -2,7 +2,7 @@
 
 import XCTest
 import Assertions
-import Prelude
+import BaseKit
 @testable import Typewriter
 
 final class PrettifyTests: XCTestCase {

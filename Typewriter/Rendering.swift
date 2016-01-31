@@ -1,6 +1,6 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
-import Prelude
+import BaseKit
 
 // MARK: - Constant
 
