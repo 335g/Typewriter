@@ -365,9 +365,38 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 	}
 }
 
-// MARK: - extension Array where Element: DocumentType
+// MARK: - extension CollectionType : Foldable
 
-public extension Array where Element: DocumentType {
+extension CollectionType {
+	func foldr<T>(initial: T, _ f: Generator.Element -> T -> T) -> T {
+		return reverse().reduce(initial, combine: uncurry(flip(f)))
+	}
+	
+	func foldr1(f: Generator.Element -> Generator.Element -> Generator.Element) throws -> Generator.Element {
+		let ifNotOptional: Generator.Element -> Generator.Element? -> Generator.Element = { x in
+			{ y in
+				switch y {
+				case .None:
+					return x
+				case let .Some(a):
+					return f(x)(a)
+				}
+			}
+		}
+		
+		guard let folded = foldr(nil, ifNotOptional) else {
+			throw FoldableError.OnlyOne
+		}
+		
+		return folded
+	}
+}
+
+// MARK: - extension CollectionType where Generator.Element: DocumentType
+
+public extension CollectionType where Generator.Element: DocumentType {
+	typealias Element = Generator.Element
+	
 	func fold(f: (Element, Element) -> Element) -> Element {
 		guard let first = self.first else {
 			return .empty
@@ -453,7 +482,8 @@ public extension Array where Element: DocumentType {
 			return open <> first <> close
 		}
 		
-		var separators = Array(count: self.count - 1, repeatedValue: separator)
+		let count: Int = self.count as! Int
+		var separators = Array(count: count - 1, repeatedValue: separator)
 		separators.insert(open, atIndex: 0)
 		
 		return (zipWith(curry(<>))(separators)(self).cat() <> close).align()
