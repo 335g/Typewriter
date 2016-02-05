@@ -6,7 +6,7 @@ public protocol Typewritable {
 	func pretty() -> Document
 }
 
-public extension Document {
+extension Document: Typewritable {
 	public func pretty() -> Document {
 		return self
 	}
