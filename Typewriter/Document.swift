@@ -365,9 +365,34 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 	}
 }
 
-// MARK: - extension Array where Element: DocumentType
+// MARK: - extension CollectionType where Generator.Element: DocumentType
 
-public extension Array where Element: DocumentType {
+public extension CollectionType where Generator.Element: DocumentType {
+	typealias Element = Generator.Element
+	
+	func foldr<T>(initial: T, _ f: Element -> T -> T) -> T {
+		return reverse().reduce(initial, combine: uncurry(flip(f)))
+	}
+	
+	func foldr1(f: Element -> Element -> Element) throws -> Element {
+		let ifNotOptional: Element -> Element? -> Element = { x in
+			{ y in
+				switch y {
+				case .None:
+					return x
+				case let .Some(a):
+					return f(x)(a)
+				}
+			}
+		}
+		
+		guard let folded = foldr(nil, ifNotOptional) else {
+			throw FoldableError.OnlyOne
+		}
+		
+		return folded
+	}
+	
 	func fold(f: (Element, Element) -> Element) -> Element {
 		guard let first = self.first else {
 			return .empty
@@ -453,7 +478,8 @@ public extension Array where Element: DocumentType {
 			return open <> first <> close
 		}
 		
-		var separators = Array(count: self.count - 1, repeatedValue: separator)
+		let count: Int = self.count as! Int
+		var separators = Array(count: count - 1, repeatedValue: separator)
 		separators.insert(open, atIndex: 0)
 		
 		return (zipWith(curry(<>))(separators)(self).cat() <> close).align()
@@ -484,7 +510,7 @@ public extension Array where Element: DocumentType {
 	///   ["100","1000","10000"].encloseSepNest(2, sep: .comma, open: .lbracket, close: .rbracket)
 	///
 	/// ** if fits **
-	///   [100,1000,10000]
+	///   [100, 1000, 10000]
 	///
 	/// ** if not fits **
 	///   [\n
@@ -502,7 +528,26 @@ public extension Array where Element: DocumentType {
 			return first.encloseNest(i, open: open, close: close)
 		}
 		
-		return self.fold({ $0 <> sep <-/-> $1 }).encloseNest(i, open: open, close: close)
+		return self.fold({ $0 <> sep <+/+> $1 }).encloseNest(i, open: open, close: close)
+	}
+}
+
+// MARK: - extension Dictionary where Key: Typewritable, Key: Comparable, Value: Typewritable
+
+public extension Dictionary where Key: Typewritable, Key: Comparable, Value: Typewritable {
+	
+	func encloseSepNest(i: Int, sep: Document, open: Document, close: Document) -> Document {
+		return self
+			.sort{ $0.0 < $1.0 }
+			.map{ $0.0.pretty() <> .colon <> .space <> $0.1.pretty() }
+			.encloseSepNest(i, sep: sep, open: open, close: close)
+	}
+	
+	///
+	/// equal encloseSepNest (CollectionType)
+	///
+	public func prettify(nest: Int) -> Document {
+		return encloseSepNest(nest, sep: .comma, open: .lbracket, close: .rbracket)
 	}
 }
 
