@@ -41,6 +41,23 @@ extension NSString: DocumentConvertible {
 	}
 }
 
+extension Optional: DocumentConvertible {
+	public var document: Document {
+		switch self {
+		case .None:
+			return "nil"
+		case let .Some(a):
+			if let obj = a as? SimpleDocumentConvertible {
+				return obj.document
+			}else if let obj = a as? DocumentConvertible {
+				return obj.document
+			}else {
+				return "\(a)".document
+			}
+		}
+	}
+}
+
 extension Int: SimpleDocumentConvertible {}
 extension Int16: SimpleDocumentConvertible {}
 extension Int32: SimpleDocumentConvertible {}
