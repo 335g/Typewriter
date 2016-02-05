@@ -510,7 +510,7 @@ public extension CollectionType where Generator.Element: DocumentType {
 	///   ["100","1000","10000"].encloseSepNest(2, sep: .comma, open: .lbracket, close: .rbracket)
 	///
 	/// ** if fits **
-	///   [100,1000,10000]
+	///   [100, 1000, 10000]
 	///
 	/// ** if not fits **
 	///   [\n
@@ -528,7 +528,26 @@ public extension CollectionType where Generator.Element: DocumentType {
 			return first.encloseNest(i, open: open, close: close)
 		}
 		
-		return self.fold({ $0 <> sep <-/-> $1 }).encloseNest(i, open: open, close: close)
+		return self.fold({ $0 <> sep <+/+> $1 }).encloseNest(i, open: open, close: close)
+	}
+}
+
+// MARK: - extension Dictionary where Key: Typewritable, Key: Comparable, Value: Typewritable
+
+public extension Dictionary where Key: Typewritable, Key: Comparable, Value: Typewritable {
+	
+	func encloseSepNest(i: Int, sep: Document, open: Document, close: Document) -> Document {
+		return self
+			.sort{ $0.0 < $1.0 }
+			.map{ $0.0.pretty() <> .colon <> .space <> $0.1.pretty() }
+			.encloseSepNest(i, sep: sep, open: open, close: close)
+	}
+	
+	///
+	/// equal encloseSepNest (CollectionType)
+	///
+	public func prettify(nest: Int) -> Document {
+		return encloseSepNest(nest, sep: .comma, open: .lbracket, close: .rbracket)
 	}
 }
 

@@ -506,7 +506,7 @@ final class PrettifyTests: XCTestCase {
 		result = prettyString(width: 30){
 			return ["a", "b", "c"].encloseSepNest(4, sep: .comma, open: .lparen, close: .rparen)
 		}
-		str = "(a,b,c)"
+		str = "(a, b, c)"
 		assertEqual(result, str)
 		
 		
@@ -523,6 +523,49 @@ final class PrettifyTests: XCTestCase {
 			+ "         10000\n"
 			+ "       )"
 		
+		assertEqual(result, str)
+	}
+	
+	// MARK: prettify (Dictionary)
+	func testPrettyStringDictPrettifyProduceFoldedString(){
+		var result, str: String
+		var dict: Dictionary<String, String>
+		
+		/// Yes Fits
+		
+		dict = [:]
+		result = prettyString(width: 30){
+			return dict.prettify(4)
+		}
+		str = "[]"
+		assertEqual(result, str)
+		
+		dict = ["a": "a0"]
+		result = prettyString(width: 30){
+			return dict.prettify(4)
+		}
+		str = "[a: a0]"
+		assertEqual(result, str)
+		
+		dict = ["a": "a0", "c": "c0", "b": "b0"]
+		result = prettyString(width: 30){
+			return dict.prettify(4)
+		}
+		str = "[a: a0, b: b0, c: c0]"
+		assertEqual(result, str)
+		
+		/// No Fits
+		
+		result = prettyString(width: 10){
+			return "prefix" <+> dict.prettify(2)
+		}
+		///             | boundary (10)
+		///             |
+		str = "prefix [\n"
+			+ "         a: a0,\n"
+			+ "         b: b0,\n"
+			+ "         c: c0\n"
+			+ "       ]"
 		assertEqual(result, str)
 	}
 	

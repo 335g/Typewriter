@@ -6,6 +6,12 @@ public protocol Typewritable {
 	func pretty() -> Document
 }
 
+public extension Document {
+	public func pretty() -> Document {
+		return self
+	}
+}
+
 // MARK: - DescriptionTypewritable
 
 public protocol DescriptionTypewritable: CustomStringConvertible, Typewritable {}
