@@ -534,12 +534,12 @@ public extension CollectionType where Generator.Element: DocumentType {
 
 // MARK: - extension Dictionary where Key: Typewritable, Key: Comparable, Value: Typewritable
 
-public extension Dictionary where Key: Typewritable, Key: Comparable, Value: Typewritable {
+public extension Dictionary where Key: DocumentConvertible, Key: Comparable, Value: DocumentConvertible {
 	
 	func encloseSepNest(i: Int, sep: Document, open: Document, close: Document) -> Document {
 		return self
 			.sort{ $0.0 < $1.0 }
-			.map{ $0.0.pretty() <> .colon <> .space <> $0.1.pretty() }
+			.map{ $0.0.document <> .colon <> .space <> $0.1.document }
 			.encloseSepNest(i, sep: sep, open: open, close: close)
 	}
 	
