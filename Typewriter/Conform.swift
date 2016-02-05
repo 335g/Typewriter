@@ -21,7 +21,7 @@ extension SimpleDocumentConvertible {
 	}
 }
 
-// MARK: - Adopted: Typewritable
+// MARK: - Conform DocumentConvertible
 
 extension String: DocumentConvertible {
 	public var document: Document {
