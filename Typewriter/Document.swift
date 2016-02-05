@@ -365,15 +365,17 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 	}
 }
 
-// MARK: - extension CollectionType : Foldable
+// MARK: - extension CollectionType where Generator.Element: DocumentType
 
-extension CollectionType {
-	func foldr<T>(initial: T, _ f: Generator.Element -> T -> T) -> T {
+public extension CollectionType where Generator.Element: DocumentType {
+	typealias Element = Generator.Element
+	
+	func foldr<T>(initial: T, _ f: Element -> T -> T) -> T {
 		return reverse().reduce(initial, combine: uncurry(flip(f)))
 	}
 	
-	func foldr1(f: Generator.Element -> Generator.Element -> Generator.Element) throws -> Generator.Element {
-		let ifNotOptional: Generator.Element -> Generator.Element? -> Generator.Element = { x in
+	func foldr1(f: Element -> Element -> Element) throws -> Element {
+		let ifNotOptional: Element -> Element? -> Element = { x in
 			{ y in
 				switch y {
 				case .None:
@@ -390,12 +392,6 @@ extension CollectionType {
 		
 		return folded
 	}
-}
-
-// MARK: - extension CollectionType where Generator.Element: DocumentType
-
-public extension CollectionType where Generator.Element: DocumentType {
-	typealias Element = Generator.Element
 	
 	func fold(f: (Element, Element) -> Element) -> Element {
 		guard let first = self.first else {
