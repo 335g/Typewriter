@@ -1,10 +1,9 @@
 # Typewriter
 
-[![Join the chat at https://gitter.im/335g/Typewriter](https://badges.gitter.im/335g/Typewriter.svg)](https://gitter.im/335g/Typewriter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Platform support](https://img.shields.io/badge/platform-iOS%20%7C%20OS%20X-lightgrey.svg?style=flat-square)](https://github.com/ReSwift/ReSwift/blob/master/LICENSE.md)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square)](https://github.com/Carthage/Carthage)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Join the chat at https://gitter.im/335g/Typewriter](https://img.shields.io/badge/GITTER-join%20chat-green.svg?style=flat-square)](https://gitter.im/335g/Typewriter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 `Typewriter` is a Swift μframework for pretty printing.
 
