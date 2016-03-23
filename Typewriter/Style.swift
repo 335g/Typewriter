@@ -237,7 +237,7 @@ public func == (lhs: DocumentStyle, rhs: DocumentStyle) -> Bool {
 // MARK: - HasCodes
 
 protocol HasCodes: RawRepresentable {
-	typealias RawValue = UInt8
+	associatedtype RawValue = UInt8
 	var codes: [RawValue] { get }
 }
 
