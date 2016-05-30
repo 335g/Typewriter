@@ -19,10 +19,8 @@
 		840607E71C532186000F0B22 /* DocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E51C532186000F0B22 /* DocumentTests.swift */; };
 		8461E1841C533EC70010852F /* PrettifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461E1831C533EC70010852F /* PrettifyTests.swift */; };
 		8461E1851C533EC70010852F /* PrettifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461E1831C533EC70010852F /* PrettifyTests.swift */; };
-		849B2B291C5E54CD005110D0 /* BaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849B2B281C5E54CD005110D0 /* BaseKit.framework */; };
-		849B2B2B1C5E54D2005110D0 /* BaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849B2B2A1C5E54D2005110D0 /* BaseKit.framework */; };
-		849B2B2C1C5E54DC005110D0 /* BaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849B2B2A1C5E54D2005110D0 /* BaseKit.framework */; };
-		849B2B2D1C5E54E2005110D0 /* BaseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 849B2B2A1C5E54D2005110D0 /* BaseKit.framework */; };
+		84B397661CFBD99D009693D3 /* Bass.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B397651CFBD99D009693D3 /* Bass.framework */; };
+		84B397681CFBD9A3009693D3 /* Bass.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B397671CFBD9A3009693D3 /* Bass.framework */; };
 		84C57F321C51190F00A9C6D6 /* Typewriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C57F311C51190F00A9C6D6 /* Typewriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */; };
 		84C57F571C511A5800A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F4D1C511A5800A9C6D6 /* Typewriter.framework */; };
@@ -53,7 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		840607D21C52CC03000F0B22 /* Prelude.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Prelude.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Typewriter-druehqgxehofaqgqftypqkjwrrwx/Build/Products/Debug/Prelude.framework"; sourceTree = "<group>"; };
 		840607D71C52CC31000F0B22 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Assertions.framework; path = Carthage/Checkouts/Assertions/build/Debug/Assertions.framework; sourceTree = "<group>"; };
 		840607DA1C52CC39000F0B22 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Assertions.framework; path = "Carthage/Checkouts/Assertions/build/Debug-iphoneos/Assertions.framework"; sourceTree = "<group>"; };
 		840607DC1C52D2F7000F0B22 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
@@ -61,8 +58,8 @@
 		840607E21C52F406000F0B22 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
 		840607E51C532186000F0B22 /* DocumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentTests.swift; sourceTree = "<group>"; };
 		8461E1831C533EC70010852F /* PrettifyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettifyTests.swift; sourceTree = "<group>"; };
-		849B2B281C5E54CD005110D0 /* BaseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseKit.framework; path = Carthage/Checkouts/BaseKit/build/Debug/BaseKit.framework; sourceTree = "<group>"; };
-		849B2B2A1C5E54D2005110D0 /* BaseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BaseKit.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Typewriter-druehqgxehofaqgqftypqkjwrrwx/Build/Products/Debug/BaseKit.framework"; sourceTree = "<group>"; };
+		84B397651CFBD99D009693D3 /* Bass.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bass.framework; path = Carthage/Checkouts/Bass/build/Debug/Bass.framework; sourceTree = "<group>"; };
+		84B397671CFBD9A3009693D3 /* Bass.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bass.framework; path = "Carthage/Checkouts/Bass/build/Debug-iphoneos/Bass.framework"; sourceTree = "<group>"; };
 		84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Typewriter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C57F311C51190F00A9C6D6 /* Typewriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Typewriter.h; sourceTree = "<group>"; };
 		84C57F331C51190F00A9C6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,7 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849B2B291C5E54CD005110D0 /* BaseKit.framework in Frameworks */,
+				84B397661CFBD99D009693D3 /* Bass.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +85,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849B2B2C1C5E54DC005110D0 /* BaseKit.framework in Frameworks */,
 				840607D81C52CC31000F0B22 /* Assertions.framework in Frameworks */,
 				84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */,
 			);
@@ -98,7 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849B2B2B1C5E54D2005110D0 /* BaseKit.framework in Frameworks */,
+				84B397681CFBD9A3009693D3 /* Bass.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +102,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849B2B2D1C5E54E2005110D0 /* BaseKit.framework in Frameworks */,
 				840607DB1C52CC39000F0B22 /* Assertions.framework in Frameworks */,
 				84C57F571C511A5800A9C6D6 /* Typewriter.framework in Frameworks */,
 			);
@@ -118,11 +113,10 @@
 		840607D51C52CC14000F0B22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				849B2B2A1C5E54D2005110D0 /* BaseKit.framework */,
-				849B2B281C5E54CD005110D0 /* BaseKit.framework */,
+				84B397671CFBD9A3009693D3 /* Bass.framework */,
+				84B397651CFBD99D009693D3 /* Bass.framework */,
 				840607DA1C52CC39000F0B22 /* Assertions.framework */,
 				840607D71C52CC31000F0B22 /* Assertions.framework */,
-				840607D21C52CC03000F0B22 /* Prelude.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -504,6 +498,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Checkouts/BaseKit/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Bass/build/Debug",
 				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Typewriter/Info.plist;
@@ -529,6 +524,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Checkouts/BaseKit/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Bass/build/Debug",
 				);
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Typewriter/Info.plist;
@@ -583,6 +579,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Bass/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Typewriter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -605,6 +605,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/Bass/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Typewriter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

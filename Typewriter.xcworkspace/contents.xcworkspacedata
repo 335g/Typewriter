@@ -8,7 +8,7 @@
       location = "group:Typewriter.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/BaseKit/BaseKit.xcodeproj">
+      location = "group:Carthage/Checkouts/Bass/Bass.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Carthage/Checkouts/Assertions/Assertions.xcodeproj">

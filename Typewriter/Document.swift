@@ -1,6 +1,6 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
-import BaseKit
+import Bass
 
 // MARK: - DocumentType
 

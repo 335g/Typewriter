@@ -7,6 +7,7 @@
     "703FC25FD86D6F44849F561FD24EEFE85B252B81" : 0,
     "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : 0,
     "E10A5B1FF6778540FB23A76B70385CC3FEA59D8A" : 0,
+    "45481943CEB6C432ADDA6C3AEA2CDA67F8F4C971" : 0,
     "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1C04D8E5-18DB-4533-B7D7-D8C8FBBA014F",
@@ -14,12 +15,18 @@
     "703FC25FD86D6F44849F561FD24EEFE85B252B81" : "Typewriter\/",
     "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : "Typewriter\/Carthage\/Checkouts\/Assertions\/",
     "E10A5B1FF6778540FB23A76B70385CC3FEA59D8A" : "Typewriter\/Carthage\/Checkouts\/BaseKit\/",
+    "45481943CEB6C432ADDA6C3AEA2CDA67F8F4C971" : "Typewriter\/Carthage\/Checkouts\/Bass\/",
     "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : "Typewriter\/Carthage\/Checkouts\/Prelude\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Typewriter",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Typewriter.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/335g\/Bass.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "45481943CEB6C432ADDA6C3AEA2CDA67F8F4C971"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:335g\/Typewriter.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
