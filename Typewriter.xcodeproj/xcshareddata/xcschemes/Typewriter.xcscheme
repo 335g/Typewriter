@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84C57F4C1C511A5800A9C6D6"
+               BlueprintIdentifier = "84C57F2D1C51190F00A9C6D6"
                BuildableName = "Typewriter.framework"
-               BlueprintName = "Typewriter-iOS"
+               BlueprintName = "Typewriter"
                ReferencedContainer = "container:Typewriter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84C57F551C511A5800A9C6D6"
-               BuildableName = "Typewriter-iOSTests.xctest"
-               BlueprintName = "Typewriter-iOSTests"
+               BlueprintIdentifier = "84C57F371C51190F00A9C6D6"
+               BuildableName = "TypewriterTests.xctest"
+               BlueprintName = "TypewriterTests"
                ReferencedContainer = "container:Typewriter.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C57F4C1C511A5800A9C6D6"
+            BlueprintIdentifier = "84C57F2D1C51190F00A9C6D6"
             BuildableName = "Typewriter.framework"
-            BlueprintName = "Typewriter-iOS"
+            BlueprintName = "Typewriter"
             ReferencedContainer = "container:Typewriter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C57F4C1C511A5800A9C6D6"
+            BlueprintIdentifier = "84C57F2D1C51190F00A9C6D6"
             BuildableName = "Typewriter.framework"
-            BlueprintName = "Typewriter-iOS"
+            BlueprintName = "Typewriter"
             ReferencedContainer = "container:Typewriter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C57F4C1C511A5800A9C6D6"
+            BlueprintIdentifier = "84C57F2D1C51190F00A9C6D6"
             BuildableName = "Typewriter.framework"
-            BlueprintName = "Typewriter-iOS"
+            BlueprintName = "Typewriter"
             ReferencedContainer = "container:Typewriter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
