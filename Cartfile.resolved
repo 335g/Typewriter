@@ -1,2 +1,2 @@
-github "antitypical/Assertions" "690f7c2df6ed4e2a2e857abc52d7c4629bccf3e9"
-github "335g/Bass" "66276c8a314fca1c40f33660ca0763392ebdf195"
+github "Quick/Nimble" "v4.0.1"
+github "Quick/Quick" "v0.9.2"

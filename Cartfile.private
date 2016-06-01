@@ -1,1 +1,2 @@
-github "antitypical/Assertions" "master"
+github "Quick/Quick"
+github "Quick/Nimble"

@@ -4,19 +4,23 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "703FC25FD86D6F44849F561FD24EEFE85B252B81" : 0,
-    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : 0,
-    "E10A5B1FF6778540FB23A76B70385CC3FEA59D8A" : 0,
+    "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64" : 0,
     "45481943CEB6C432ADDA6C3AEA2CDA67F8F4C971" : 0,
-    "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : 0
+    "703FC25FD86D6F44849F561FD24EEFE85B252B81" : 0,
+    "95438028B10BBB846574013D29F154A00556A9D1" : 0,
+    "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : 0,
+    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : 0,
+    "E10A5B1FF6778540FB23A76B70385CC3FEA59D8A" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1C04D8E5-18DB-4533-B7D7-D8C8FBBA014F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "703FC25FD86D6F44849F561FD24EEFE85B252B81" : "Typewriter\/",
-    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : "Typewriter\/Carthage\/Checkouts\/Assertions\/",
-    "E10A5B1FF6778540FB23A76B70385CC3FEA59D8A" : "Typewriter\/Carthage\/Checkouts\/BaseKit\/",
+    "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64" : "Typewriter\/Carthage\/Checkouts\/Quick\/",
     "45481943CEB6C432ADDA6C3AEA2CDA67F8F4C971" : "Typewriter\/Carthage\/Checkouts\/Bass\/",
-    "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : "Typewriter\/Carthage\/Checkouts\/Prelude\/"
+    "703FC25FD86D6F44849F561FD24EEFE85B252B81" : "Typewriter\/",
+    "95438028B10BBB846574013D29F154A00556A9D1" : "Typewriter\/Carthage\/Checkouts\/Nimble\/",
+    "E7D0F6DE7B0DD6F81CD7698305582DE29F275CF9" : "Typewriter\/Carthage\/Checkouts\/Prelude\/",
+    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : "Typewriter\/Carthage\/Checkouts\/Assertions\/",
+    "E10A5B1FF6778540FB23A76B70385CC3FEA59D8A" : "Typewriter\/Carthage\/Checkouts\/BaseKit\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Typewriter",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -36,6 +40,16 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/antitypical\/Assertions.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Quick\/Nimble.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "95438028B10BBB846574013D29F154A00556A9D1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Quick\/Quick.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/335g\/BaseKit.git",

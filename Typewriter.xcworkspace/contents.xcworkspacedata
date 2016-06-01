@@ -8,6 +8,9 @@
       location = "group:Typewriter.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/Assertions/Assertions.xcodeproj">
+      location = "group:Carthage/Checkouts/Quick/Quick.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/Nimble/Nimble.xcodeproj">
    </FileRef>
 </Workspace>

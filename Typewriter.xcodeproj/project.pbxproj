@@ -7,18 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		840607D81C52CC31000F0B22 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607D71C52CC31000F0B22 /* Assertions.framework */; };
-		840607DB1C52CC39000F0B22 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840607DA1C52CC39000F0B22 /* Assertions.framework */; };
 		840607DD1C52D2F7000F0B22 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DC1C52D2F7000F0B22 /* Operators.swift */; };
 		840607DE1C52D2F7000F0B22 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DC1C52D2F7000F0B22 /* Operators.swift */; };
 		840607E01C52E7C0000F0B22 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DF1C52E7C0000F0B22 /* Util.swift */; };
 		840607E11C52E7C0000F0B22 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607DF1C52E7C0000F0B22 /* Util.swift */; };
 		840607E31C52F406000F0B22 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E21C52F406000F0B22 /* Rendering.swift */; };
 		840607E41C52F406000F0B22 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E21C52F406000F0B22 /* Rendering.swift */; };
-		840607E61C532186000F0B22 /* DocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E51C532186000F0B22 /* DocumentTests.swift */; };
-		840607E71C532186000F0B22 /* DocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E51C532186000F0B22 /* DocumentTests.swift */; };
-		8461E1841C533EC70010852F /* PrettifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461E1831C533EC70010852F /* PrettifyTests.swift */; };
-		8461E1851C533EC70010852F /* PrettifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461E1831C533EC70010852F /* PrettifyTests.swift */; };
+		840607E61C532186000F0B22 /* DocumentSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E51C532186000F0B22 /* DocumentSpecs.swift */; };
+		840607E71C532186000F0B22 /* DocumentSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840607E51C532186000F0B22 /* DocumentSpecs.swift */; };
+		8461E1841C533EC70010852F /* PrettifySpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461E1831C533EC70010852F /* PrettifySpecs.swift */; };
+		8461E1851C533EC70010852F /* PrettifySpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8461E1831C533EC70010852F /* PrettifySpecs.swift */; };
 		84C57F321C51190F00A9C6D6 /* Typewriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 84C57F311C51190F00A9C6D6 /* Typewriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */; };
 		84C57F571C511A5800A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F4D1C511A5800A9C6D6 /* Typewriter.framework */; };
@@ -29,8 +27,14 @@
 		84D9FAE41C5CA34D006F1C1E /* Conform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D9FAE21C5CA34D006F1C1E /* Conform.swift */; };
 		84DE58651C54C0C900593B30 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DE58641C54C0C900593B30 /* Style.swift */; };
 		84DE58661C54C0C900593B30 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DE58641C54C0C900593B30 /* Style.swift */; };
-		84E3824E1CFEFD830028572A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3824D1CFEFD830028572A /* Functions.swift */; };
-		84E3824F1CFEFD830028572A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3824D1CFEFD830028572A /* Functions.swift */; };
+		84E382521CFF034A0028572A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E382501CFF034A0028572A /* Nimble.framework */; };
+		84E382531CFF034A0028572A /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E382511CFF034A0028572A /* Quick.framework */; };
+		84E382561CFF03670028572A /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E382501CFF034A0028572A /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84E382571CFF03670028572A /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E382511CFF034A0028572A /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84E3825A1CFF03750028572A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E382581CFF03750028572A /* Nimble.framework */; };
+		84E3825B1CFF03750028572A /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E382591CFF03750028572A /* Quick.framework */; };
+		84E3825D1CFF03820028572A /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E382581CFF03750028572A /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84E3825E1CFF03820028572A /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E382591CFF03750028572A /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,16 +54,37 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		84E382551CFF035D0028572A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				84E382561CFF03670028572A /* Nimble.framework in CopyFiles */,
+				84E382571CFF03670028572A /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84E3825C1CFF03790028572A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				84E3825D1CFF03820028572A /* Nimble.framework in CopyFiles */,
+				84E3825E1CFF03820028572A /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		840607D71C52CC31000F0B22 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Assertions.framework; path = Carthage/Checkouts/Assertions/build/Debug/Assertions.framework; sourceTree = "<group>"; };
-		840607DA1C52CC39000F0B22 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Assertions.framework; path = "Carthage/Checkouts/Assertions/build/Debug-iphoneos/Assertions.framework"; sourceTree = "<group>"; };
 		840607DC1C52D2F7000F0B22 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		840607DF1C52E7C0000F0B22 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		840607E21C52F406000F0B22 /* Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rendering.swift; sourceTree = "<group>"; };
-		840607E51C532186000F0B22 /* DocumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentTests.swift; sourceTree = "<group>"; };
-		8461E1831C533EC70010852F /* PrettifyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettifyTests.swift; sourceTree = "<group>"; };
-		84B397651CFBD99D009693D3 /* Bass.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bass.framework; path = Carthage/Checkouts/Bass/build/Debug/Bass.framework; sourceTree = "<group>"; };
-		84B397671CFBD9A3009693D3 /* Bass.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bass.framework; path = "Carthage/Checkouts/Bass/build/Debug-iphoneos/Bass.framework"; sourceTree = "<group>"; };
+		840607E51C532186000F0B22 /* DocumentSpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentSpecs.swift; sourceTree = "<group>"; };
+		8461E1831C533EC70010852F /* PrettifySpecs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrettifySpecs.swift; sourceTree = "<group>"; };
 		84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Typewriter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C57F311C51190F00A9C6D6 /* Typewriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Typewriter.h; sourceTree = "<group>"; };
 		84C57F331C51190F00A9C6D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,7 +95,10 @@
 		84C57F651C511ADF00A9C6D6 /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		84D9FAE21C5CA34D006F1C1E /* Conform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conform.swift; sourceTree = "<group>"; };
 		84DE58641C54C0C900593B30 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
-		84E3824D1CFEFD830028572A /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		84E382501CFF034A0028572A /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
+		84E382511CFF034A0028572A /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
+		84E382581CFF03750028572A /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		84E382591CFF03750028572A /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +113,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				840607D81C52CC31000F0B22 /* Assertions.framework in Frameworks */,
 				84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */,
+				84E382521CFF034A0028572A /* Nimble.framework in Frameworks */,
+				84E382531CFF034A0028572A /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,8 +130,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				840607DB1C52CC39000F0B22 /* Assertions.framework in Frameworks */,
 				84C57F571C511A5800A9C6D6 /* Typewriter.framework in Frameworks */,
+				84E3825A1CFF03750028572A /* Nimble.framework in Frameworks */,
+				84E3825B1CFF03750028572A /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,10 +142,10 @@
 		840607D51C52CC14000F0B22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				84B397671CFBD9A3009693D3 /* Bass.framework */,
-				84B397651CFBD99D009693D3 /* Bass.framework */,
-				840607DA1C52CC39000F0B22 /* Assertions.framework */,
-				840607D71C52CC31000F0B22 /* Assertions.framework */,
+				84E382581CFF03750028572A /* Nimble.framework */,
+				84E382591CFF03750028572A /* Quick.framework */,
+				84E382501CFF034A0028572A /* Nimble.framework */,
+				84E382511CFF034A0028572A /* Quick.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -151,7 +181,6 @@
 				84DE58641C54C0C900593B30 /* Style.swift */,
 				840607DF1C52E7C0000F0B22 /* Util.swift */,
 				84D9FAE21C5CA34D006F1C1E /* Conform.swift */,
-				84E3824D1CFEFD830028572A /* Functions.swift */,
 				84C57F331C51190F00A9C6D6 /* Info.plist */,
 			);
 			path = Typewriter;
@@ -161,8 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				84C57F3F1C51190F00A9C6D6 /* Info.plist */,
-				840607E51C532186000F0B22 /* DocumentTests.swift */,
-				8461E1831C533EC70010852F /* PrettifyTests.swift */,
+				840607E51C532186000F0B22 /* DocumentSpecs.swift */,
+				8461E1831C533EC70010852F /* PrettifySpecs.swift */,
 			);
 			path = TypewriterTests;
 			sourceTree = "<group>";
@@ -214,6 +243,7 @@
 				84C57F341C51190F00A9C6D6 /* Sources */,
 				84C57F351C51190F00A9C6D6 /* Frameworks */,
 				84C57F361C51190F00A9C6D6 /* Resources */,
+				84E382551CFF035D0028572A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -250,6 +280,7 @@
 				84C57F521C511A5800A9C6D6 /* Sources */,
 				84C57F531C511A5800A9C6D6 /* Frameworks */,
 				84C57F541C511A5800A9C6D6 /* Resources */,
+				84E3825C1CFF03790028572A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -346,7 +377,6 @@
 				84C57F661C511ADF00A9C6D6 /* Document.swift in Sources */,
 				840607E31C52F406000F0B22 /* Rendering.swift in Sources */,
 				840607E01C52E7C0000F0B22 /* Util.swift in Sources */,
-				84E3824E1CFEFD830028572A /* Functions.swift in Sources */,
 				840607DD1C52D2F7000F0B22 /* Operators.swift in Sources */,
 				84D9FAE31C5CA34D006F1C1E /* Conform.swift in Sources */,
 				84DE58651C54C0C900593B30 /* Style.swift in Sources */,
@@ -357,8 +387,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8461E1841C533EC70010852F /* PrettifyTests.swift in Sources */,
-				840607E61C532186000F0B22 /* DocumentTests.swift in Sources */,
+				8461E1841C533EC70010852F /* PrettifySpecs.swift in Sources */,
+				840607E61C532186000F0B22 /* DocumentSpecs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +399,6 @@
 				84C57F671C511ADF00A9C6D6 /* Document.swift in Sources */,
 				840607E41C52F406000F0B22 /* Rendering.swift in Sources */,
 				840607E11C52E7C0000F0B22 /* Util.swift in Sources */,
-				84E3824F1CFEFD830028572A /* Functions.swift in Sources */,
 				840607DE1C52D2F7000F0B22 /* Operators.swift in Sources */,
 				84D9FAE41C5CA34D006F1C1E /* Conform.swift in Sources */,
 				84DE58661C54C0C900593B30 /* Style.swift in Sources */,
@@ -380,8 +409,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8461E1851C533EC70010852F /* PrettifyTests.swift in Sources */,
-				840607E71C532186000F0B22 /* DocumentTests.swift in Sources */,
+				8461E1851C533EC70010852F /* PrettifySpecs.swift in Sources */,
+				840607E71C532186000F0B22 /* DocumentSpecs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +535,7 @@
 				INFOPLIST_FILE = Typewriter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.Typewriter;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
@@ -532,6 +562,7 @@
 				INFOPLIST_FILE = Typewriter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.Typewriter;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
@@ -546,6 +577,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -563,6 +595,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -587,6 +620,7 @@
 				);
 				INFOPLIST_FILE = Typewriter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.335g.Typewriter-iOS";
 				PRODUCT_NAME = "$(PROJECT_NAME)";
@@ -613,6 +647,7 @@
 				);
 				INFOPLIST_FILE = Typewriter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.335g.Typewriter-iOS";
 				PRODUCT_NAME = "$(PROJECT_NAME)";
@@ -631,6 +666,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -650,6 +686,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Checkouts/Assertions/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = TypewriterTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
