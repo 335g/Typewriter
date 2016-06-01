@@ -1,10 +1,8 @@
 //  Copyright © 2016 Yoshiki Kudo. All rights reserved.
 
-import Bass
-
 // MARK: - DocumentType
 
-public protocol DocumentType: Monoid {
+public protocol DocumentType {
 	static var empty: Self { get }
 	static func char(x: Character) -> Self
 	static func text(x: String) throws -> Self
@@ -374,35 +372,12 @@ public extension CollectionType where Generator.Element: DocumentType {
 		return reverse().reduce(initial, combine: uncurry(flip(f)))
 	}
 	
-	func foldr1(f: Element -> Element -> Element) throws -> Element {
-		let ifNotOptional: Element -> Element? -> Element = { x in
-			{ y in
-				switch y {
-				case .None:
-					return x
-				case let .Some(a):
-					return f(x)(a)
-				}
-			}
-		}
-		
-		guard let folded = foldr(nil, ifNotOptional) else {
-			throw FoldableError.OnlyOne
-		}
-		
-		return folded
-	}
-	
 	func fold(f: (Element, Element) -> Element) -> Element {
 		guard let first = self.first else {
 			return .empty
 		}
 		
-		if let result = try? foldr1(curry(f)) {
-			return result
-		}else {
-			return first
-		}
+		return foldr(first, curry(f))
 	}
 	
 	///
