@@ -44,9 +44,9 @@ extension NSString: DocumentConvertible {
 extension Optional: DocumentConvertible {
 	public var document: Document {
 		switch self {
-		case .None:
+		case .none:
 			return "nil"
-		case let .Some(a):
+		case let .some(a):
 			if let obj = a as? SimpleDocumentConvertible {
 				return obj.document
 			}else if let obj = a as? DocumentConvertible {
@@ -73,11 +73,10 @@ extension Double: SimpleDocumentConvertible {}
 extension Array: SimpleDocumentConvertible {}
 extension ArraySlice: SimpleDocumentConvertible {}
 extension Bool: SimpleDocumentConvertible {}
-extension ClosedInterval: SimpleDocumentConvertible {}
-extension HalfOpenInterval: SimpleDocumentConvertible {}
+extension ClosedRange: SimpleDocumentConvertible {}
+extension Range: SimpleDocumentConvertible {}
 extension UnicodeScalar: SimpleDocumentConvertible {}
 extension String.UnicodeScalarView: SimpleDocumentConvertible {}
 extension String.UTF16View: SimpleDocumentConvertible {}
 extension String.UTF8View: SimpleDocumentConvertible {}
 extension Set: SimpleDocumentConvertible {}
-extension Range: SimpleDocumentConvertible {}

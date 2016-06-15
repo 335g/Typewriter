@@ -4,17 +4,17 @@
 
 public protocol DocumentType {
 	static var empty: Self { get }
-	static func char(x: Character) -> Self
-	static func text(x: String) throws -> Self
+	static func char(_ x: Character) -> Self
+	static func text(_ x: String) throws -> Self
 	static var hardline: Self { get }
 	static var line: Self { get }
 	static var linebreak: Self { get }
-	static func union(x: Self, _ y: Self) -> Self
-	static func column(f: Int -> Self) -> Self
-	static func nesting(f: Int -> Self) -> Self
-	func nest(i: Int) -> Self
+	static func union(_ x: Self, _ y: Self) -> Self
+	static func column(f: (Int) -> Self) -> Self
+	static func nesting(f: (Int) -> Self) -> Self
+	func nest(_ i: Int) -> Self
 	func flatten() -> Self
-	func beside(other: Self) -> Self
+	func beside(_ other: Self) -> Self
 }
 
 // MARK: DocumentType : Monoid
@@ -50,14 +50,14 @@ extension DocumentType {
 	public static var backslash: Self	{ return .char("\\") }
 	public static var equals: Self		{ return .char("=") }
 	
-	public static func string(str: String) -> Self {
+	public static func string(_ str: String) -> Self {
 		return str.characters
 			.split{ $0 == "\n" }
 			.map{ try! Self.text(String($0)) }
 			.vsep()
 	}
 	
-	public static func texts(str: String) -> [Self] {
+	public static func texts(_ str: String) -> [Self] {
 		return str.characters
 			.split{ $0 == " " }
 			.map{ Self.string(String($0)) }
@@ -71,16 +71,16 @@ extension DocumentType {
 	///
 	/// `enclose` enclose document in `open` and `close`
 	///
-	public func enclose(open open: Self, close: Self) -> Self {
+	public func enclosed(open: Self, close: Self) -> Self {
 		return open <> self <> close
 	}
 	
-	public func squotes() -> Self { return self.enclose(open: .squote, close: .squote) }
-	public func dquotes() -> Self { return self.enclose(open: .dquote, close: .dquote) }
-	public func parens() -> Self { return self.enclose(open: .lparen, close: .rparen) }
-	public func braces() -> Self { return self.enclose(open: .lbrace, close: .rbrace) }
-	public func angles() -> Self { return self.enclose(open: .langle, close: .rangle) }
-	public func brackets() -> Self { return self.enclose(open: .lbracket, close: .rbracket) }
+	public func squotes() -> Self { return enclosed(open: .squote, close: .squote) }
+	public func dquotes() -> Self { return enclosed(open: .dquote, close: .dquote) }
+	public func parens() -> Self { return enclosed(open: .lparen, close: .rparen) }
+	public func braces() -> Self { return enclosed(open: .lbrace, close: .rbrace) }
+	public func angles() -> Self { return enclosed(open: .langle, close: .rangle) }
+	public func brackets() -> Self { return enclosed(open: .lbracket, close: .rbracket) }
 	
 	///
 	/// `encloseNest` enclose document in `open` and `close` with nest, if not fits.
@@ -96,23 +96,23 @@ extension DocumentType {
 	///     abc\n
 	///   ]
 	///
-	public func encloseNest(i: Int, open: Self, close: Self) -> Self {
+	public func enclosed(nest i: Int, open: Self, close: Self) -> Self {
 		return ((open <-/-> self).hang(i) <-/-> close).align()
 	}
 	
-	public func squotesNest(i: Int) -> Self { return self.encloseNest(i, open: .squote, close: .squote) }
-	public func dquotesNest(i: Int) -> Self { return self.encloseNest(i, open: .dquote, close: .dquote) }
-	public func parensNest(i: Int) -> Self { return self.encloseNest(i, open: .lparen, close: .rparen) }
-	public func bracesNest(i: Int) -> Self { return self.encloseNest(i, open: .lbrace, close: .rbrace) }
-	public func anglesNest(i: Int) -> Self { return self.encloseNest(i, open: .langle, close: .rangle) }
-	public func bracketsNest(i: Int) -> Self { return self.encloseNest(i, open: .lbracket, close: .rbracket) }
+	public func squotesNest(_ i: Int) -> Self { return enclosed(nest: i, open: .squote, close: .squote) }
+	public func dquotesNest(_ i: Int) -> Self { return enclosed(nest: i, open: .dquote, close: .dquote) }
+	public func parensNest(_ i: Int) -> Self { return enclosed(nest: i, open: .lparen, close: .rparen) }
+	public func bracesNest(_ i: Int) -> Self { return enclosed(nest: i, open: .lbrace, close: .rbrace) }
+	public func anglesNest(_ i: Int) -> Self { return enclosed(nest: i, open: .langle, close: .rangle) }
+	public func bracketsNest(_ i: Int) -> Self { return enclosed(nest: i, open: .lbracket, close: .rbracket) }
 	
 	///
 	/// `align` renders document with the nesting level set to current column.
 	///
 	public func align() -> Self {
-		return .column({ k in
-			.nesting({ i in self.nest(k - i) })
+		return .column(f: { k in
+			.nesting(f: { i in self.nest(k - i) })
 		})
 	}
 	
@@ -120,14 +120,14 @@ extension DocumentType {
 	/// `hang` implements hanging indentation.
 	/// Document obtained renders document with a nesting level set to the indentation for some text.
 	///
-	public func hang(i: Int) -> Self {
+	public func hang(_ i: Int) -> Self {
 		return self.nest(i).align()
 	}
 	
 	///
 	/// `indent` indents document with `i` spaces.
 	///
-	public func indent(i: Int) -> Self {
+	public func indent(_ i: Int) -> Self {
 		return (.string(spaces(i)) <> self).hang(i)
 	}
 }
@@ -174,8 +174,8 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case FlatAlt(Document, Document)
 	case Union(Document, Document)
 	case Nest(Int, Document)
-	case Nesting(Int -> Document)
-	case Column(Int -> Document)
+	case Nesting((Int) -> Document)
+	case Column((Int) -> Document)
 	case Style(DocumentStyle, Document)
 }
 
@@ -200,7 +200,7 @@ extension Document {
 extension Document {
 	
 	// MARK: Document.ConstructError (ErrorType)
-	public enum ConstructError: ErrorType {
+	public enum ConstructError: ErrorProtocol {
 		case ContainsLinebreak
 	}
 	
@@ -208,7 +208,7 @@ extension Document {
 		return .Empty
 	}
 	
-	public static func char(x: Character) -> Document {
+	public static func char(_ x: Character) -> Document {
 		switch x {
 		case "\n":
 			return .Line
@@ -218,7 +218,7 @@ extension Document {
 		}
 	}
 	
-	public static func text(x: String) throws -> Document {
+	public static func text(_ x: String) throws -> Document {
 		switch x {
 		case "":
 			return .empty
@@ -243,19 +243,19 @@ extension Document {
 		return .FlatAlt(.hardline, .empty)
 	}
 	
-	public static func union(x: Document, _ y: Document) -> Document {
+	public static func union(_ x: Document, _ y: Document) -> Document {
 		return .Union(x, y)
 	}
 	
-	public static func column(f: Int -> Document) -> Document {
+	public static func column(f: (Int) -> Document) -> Document {
 		return .Column(f)
 	}
 	
-	public static func nesting(f: Int -> Document) -> Document {
+	public static func nesting(f: (Int) -> Document) -> Document {
 		return .Nesting(f)
 	}
 	
-	public func nest(i: Int) -> Document {
+	public func nest(_ i: Int) -> Document {
 		return .Nest(i, self)
 	}
 	
@@ -274,7 +274,7 @@ extension Document {
 		}
 	}
 	
-	public func beside(doc: Document) -> Document {
+	public func beside(_ doc: Document) -> Document {
 		return .Cat(self, doc)
 	}
 }
@@ -283,7 +283,7 @@ extension Document {
 
 extension Document {
 	
-	func style(x: DocumentStyle) -> Document {
+	func style(_ x: DocumentStyle) -> Document {
 		switch self {
 		case let .Style(s, doc):
 			return .Style(s.merge(x), doc)
@@ -365,37 +365,37 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 
 // MARK: - extension CollectionType where Generator.Element: DocumentType
 
-enum FoldableError: ErrorType {
+enum FoldableError: ErrorProtocol {
 	case OnlyOne
 }
 
-public extension CollectionType where Generator.Element: DocumentType {
-	typealias Element = Generator.Element
+public extension Collection where Iterator.Element: DocumentType {
+	typealias Element = Iterator.Element
 	
-	func foldr<T>(initial: T, _ f: Element -> T -> T) -> T {
-		return reverse().reduce(initial, combine: uncurry(flip(f)))
+	func foldr<T>(initial: T, f: (Element) -> (T) -> T) -> T {
+		return reversed().reduce(initial, combine: uncurry(flip(f)))
 	}
 	
-	func foldr1(f: Element -> Element -> Element) throws -> Element {
-		let ifNotOptional: Element -> Element? -> Element = { x in
+	func foldr1(_ f: (Element) -> (Element) -> Element) throws -> Element {
+		let ifNotOptional: (Element) -> (Element?) -> Element = { x in
 			{ y in
 				switch y {
-				case .None:
+				case .none:
 					return x
-				case let .Some(a):
+				case let .some(a):
 					return f(x)(a)
 				}
 			}
 		}
 		
-		guard let folded = foldr(nil, ifNotOptional) else {
+		guard let folded = foldr(initial: nil, f: ifNotOptional) else {
 			throw FoldableError.OnlyOne
 		}
 		
 		return folded
 	}
 	
-	func fold(f: (Element, Element) -> Element) -> Element {
+	func fold(_ f: (Element, Element) -> Element) -> Element {
 		guard let first = self.first else {
 			return .empty
 		}
@@ -471,7 +471,7 @@ public extension CollectionType where Generator.Element: DocumentType {
 	/// `separator` separates the documents.
 	/// And encloses them in `open`(`close`).
 	///
-	public func encloseSep(separator: Element, open: Element, close: Element) -> Element {
+	public func enclosed(separator: Element, open: Element, close: Element) -> Element {
 		guard let first = self.first else {
 			return open <> close
 		}
@@ -481,8 +481,8 @@ public extension CollectionType where Generator.Element: DocumentType {
 		}
 		
 		let count: Int = self.count as! Int
-		var separators = Array(count: count - 1, repeatedValue: separator)
-		separators.insert(open, atIndex: 0)
+		var separators = Array(repeating: separator, count: count - 1)
+		separators.insert(open, at: 0)
 		
 		return (zipWith(curry(<>))(separators)(self).cat() <> close).align()
 	}
@@ -492,7 +492,7 @@ public extension CollectionType where Generator.Element: DocumentType {
 	/// And encloses them in square brackets.
 	///
 	public func list() -> Element {
-		return encloseSep(.comma, open: .lbracket, close: .rbracket)
+		return enclosed(separator: .comma, open: .lbracket, close: .rbracket)
 	}
 	
 	///
@@ -500,7 +500,7 @@ public extension CollectionType where Generator.Element: DocumentType {
 	/// And encloses them in parenthesis.
 	///
 	public func tuple() -> Element {
-		return encloseSep(.comma, open: .lparen, close: .rparen)
+		return enclosed(separator: .comma, open: .lparen, close: .rparen)
 	}
 	
 	///
@@ -521,16 +521,16 @@ public extension CollectionType where Generator.Element: DocumentType {
 	///     10000
 	///   ]\n
 	///
-	public func encloseSepNest(i: Int, sep: Element, open: Element, close: Element) -> Element {
+	public func enclosed(nest: Int, separator: Element, open: Element, close: Element) -> Element {
 		guard let first = self.first else {
 			return open <> close
 		}
 		
 		guard self.count != 1 else {
-			return first.encloseNest(i, open: open, close: close)
+			return first.enclosed(nest: nest, open: open, close: close)
 		}
 		
-		return self.fold({ $0 <> sep <+/+> $1 }).encloseNest(i, open: open, close: close)
+		return self.fold({ $0 <> separator <+/+> $1 }).enclosed(nest: nest, open: open, close: close)
 	}
 }
 
@@ -538,18 +538,18 @@ public extension CollectionType where Generator.Element: DocumentType {
 
 public extension Dictionary where Key: DocumentConvertible, Key: Comparable, Value: DocumentConvertible {
 	
-	func encloseSepNest(i: Int, sep: Document, open: Document, close: Document) -> Document {
+	func enclosed(nest: Int, separator: Document, open: Document, close: Document) -> Document {
 		return self
-			.sort{ $0.0 < $1.0 }
-			.map{ $0.0.document <> .colon <> .space <> $0.1.document }
-			.encloseSepNest(i, sep: sep, open: open, close: close)
+			.sorted(isOrderedBefore: { $0.0 < $1.0 })
+			.map{ $0.document <> .colon <> .space <> $1.document }
+			.enclosed(nest: nest, separator: separator, open: open, close: close)
 	}
 	
 	///
 	/// equal encloseSepNest (CollectionType)
 	///
 	public func prettify(nest: Int) -> Document {
-		return encloseSepNest(nest, sep: .comma, open: .lbracket, close: .rbracket)
+		return enclosed(nest: nest, separator: .comma, open: .lbracket, close: .rbracket)
 	}
 }
 

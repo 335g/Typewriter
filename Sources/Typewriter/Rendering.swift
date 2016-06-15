@@ -40,7 +40,7 @@ public enum RenderingRule {
 	case Oneline
 	case EndIndentation
 	
-	internal func fits(width: Int, nesting: Int, rest: Int, document: RenderedDocument) -> (Int, Bool) {
+	internal func fits(_ width: Int, nesting: Int, rest: Int, document: RenderedDocument) -> (Int, Bool) {
 		guard rest >= 0 else {
 			return (rest, false)
 		}
@@ -85,7 +85,7 @@ enum Docs {
 
 extension Document {
 	public func prettify(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth) -> String {
-		return self.prettyDocument(rule, width: width).description
+		return self.prettyDocument(rule: rule, width: width).description
 	}
 	
 	internal func prettyDocument(rule: RenderingRule = .Oneline, width: Int) -> RenderedDocument {
@@ -96,7 +96,7 @@ extension Document {
 				return doc2
 			}
 		}
-		let best: (Int, Int, Docs) -> (Int, Int, RenderedDocument) = fix{ best in
+		let best: (Int, Int, Docs) -> (Int, Int, RenderedDocument) = fix { best in
 			{ indentation, column, docs in
 				switch docs {
 				case .Nil:
@@ -105,35 +105,58 @@ extension Document {
 					switch d {
 					case .Fail:
 						return (0, 0, .Fail)
+						
 					case .Empty:
-						return best(indentation, column, ds)
+						let x = (indentation, column, ds)
+						return best(x)
+						
 					case let .Char(c):
-						return (indentation, column + 1, .Char(c, best(indentation, column + 1, ds).2))
+						let x = (indentation, column + 1, ds)
+						return (indentation, column + 1, .Char(c, best(x).2))
+						
 					case let .Text(str):
-						let count = str.characters.count
-						return (indentation, column + count, .Text(str, best(indentation, column + count, ds).2))
+						let newColumn = str.characters.count + column
+						let x = (indentation, newColumn, ds)
+						return (indentation, newColumn, .Text(str, best(x).2))
+						
 					case .Line:
-						return (i, i, .Line(i, best(i, i, ds).2))
+						let x = (i, i, ds)
+						return (i, i, .Line(i, best(x).2))
+						
 					case let .FlatAlt(x, _):
-						return best(indentation, column, .Cons(i, x, ds))
+						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
+						return best(y)
+					
 					case let .Cat(x, y):
-						return best(indentation, column, .Cons(i, x, .Cons(i, y, ds)))
+						let z: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Cons(i, y, ds)))
+						return best(z)
+						
 					case let .Nest(j, x):
-						return best(indentation, column, .Cons(i+j, x, ds))
+						let y: (Int, Int, Docs) = (indentation, column, .Cons(i + j, x, ds))
+						return best(y)
+						
 					case let .Union(x, y):
+						let x2: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
+						let y2: (Int, Int, Docs) = (indentation, column, .Cons(i, y, ds))
 						let nicest = nicest(
 							indentation,
 							column,
-							best(indentation, column, .Cons(i, x, ds)).2,
-							best(indentation, column, .Cons(i, y, ds)).2
+							best(x2).2,
+							best(y2).2
 						)
 						return (indentation, column, nicest)
+						
 					case let .Column(f):
-						return best(indentation, column, .Cons(i, f(column), ds))
+						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(column), ds))
+						return best(x)
+						
 					case let .Nesting(f):
-						return best(indentation, column, .Cons(i, f(i), ds))
+						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(i), ds))
+						return best(x)
+						
 					case let .Style(style, x):
-						let pre = best(indentation, column, .Cons(i, x, .Nil))
+						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Nil))
+						let pre = best(y)
 						return (indentation, column, .Style(style, pre.2, best(pre.0, pre.1, ds).2))
 					}
 				}
@@ -145,9 +168,9 @@ extension Document {
 }
 
 public func prettyString(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth, doc: () -> Document) -> String {
-	return doc().prettify(rule, width: width)
+	return doc().prettify(rule: rule, width: width)
 }
 
 public func prettyString(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth, doc: Document) -> String {
-	return doc.prettify(rule, width: width)
+	return doc.prettify(rule: rule, width: width)
 }

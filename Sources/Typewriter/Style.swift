@@ -4,13 +4,13 @@
 
 protocol DocumentStyleType {
 	var codes: [UInt8] { get }
-	func wrap(str: String) -> String
+	func wrap(_ str: String) -> String
 }
 
 extension DocumentStyleType {
-	func wrap(str: String) -> String {
+	func wrap(_ str: String) -> String {
 		let escape = "\u{001B}["
-		let prefix = escape + codes.map(String.init).joinWithSeparator(";") + "m"
+		let prefix = escape + codes.map(String.init).joined(separator: ";") + "m"
 		let suffix = escape + "0m"
 		
 		return prefix + str + suffix
@@ -167,11 +167,11 @@ public struct DocumentStyle: DocumentStyleType, Equatable {
 	}
 	
 	var codes: [UInt8] {
-		let defaultValue: [UInt8]? -> [UInt8] = { x in
+		let defaultValue: ([UInt8]?) -> [UInt8] = { x in
 			switch x {
-			case .None:
+			case .none:
 				return []
-			case let .Some(a):
+			case let .some(a):
 				return a
 			}
 		}
@@ -181,7 +181,7 @@ public struct DocumentStyle: DocumentStyleType, Equatable {
 			+ defaultValue(color?.codes)
 	}
 	
-	func merge(x: DocumentStyle) -> DocumentStyle {
+	func merge(_ x: DocumentStyle) -> DocumentStyle {
 		var style = self
 		
 		if let intensity = x.intensity	{ style.intensity = intensity }
