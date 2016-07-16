@@ -172,8 +172,8 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case lineDoc
 	case catDoc(Document, Document)
 	case flatAltDoc(Document, Document)
-	case Union(Document, Document)
-	case Nest(Int, Document)
+	case unionDoc(Document, Document)
+	case nestDoc(Int, Document)
 	case Nesting((Int) -> Document)
 	case Column((Int) -> Document)
 	case Style(DocumentStyle, Document)
@@ -244,7 +244,7 @@ extension Document {
 	}
 	
 	public static func union(_ x: Document, _ y: Document) -> Document {
-		return .Union(x, y)
+		return .unionDoc(x, y)
 	}
 	
 	public static func column(f: (Int) -> Document) -> Document {
@@ -256,7 +256,7 @@ extension Document {
 	}
 	
 	public func nest(_ i: Int) -> Document {
-		return .Nest(i, self)
+		return .nestDoc(i, self)
 	}
 	
 	public func flatten() -> Document {
@@ -267,7 +267,7 @@ extension Document {
 			return x
 		case .lineDoc:
 			return .fail
-		case let .Union(x, _):
+		case let .unionDoc(x, _):
 			return x.flatten()
 		default:
 			return self
@@ -314,10 +314,10 @@ extension Document {
 			return .catDoc(x.plain(), y.plain())
 		case let .flatAltDoc(x, y):
 			return .flatAltDoc(x.plain(), y.plain())
-		case let .Union(x, y):
-			return .Union(x.plain(), y.plain())
-		case let .Nest(i, x):
-			return .Nest(i, x.plain())
+		case let .unionDoc(x, y):
+			return .unionDoc(x.plain(), y.plain())
+		case let .nestDoc(i, x):
+			return .nestDoc(i, x.plain())
 		case let .Nesting(f):
 			return .Nesting({ f($0).plain() })
 		case let .Column(f):
@@ -344,13 +344,13 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return l == r
 	case (.lineDoc, .lineDoc):
 		return true
-	case let (.Nest(li, ldoc), .Nest(ri, rdoc)):
+	case let (.nestDoc(li, ldoc), .nestDoc(ri, rdoc)):
 		return li == ri && ldoc == rdoc
 	case let (.catDoc(lx, ly), .catDoc(rx, ry)):
 		return lx == rx && ly == ry
 	case let (.flatAltDoc(lx, ly), .flatAltDoc(rx, ry)):
 		return lx == rx && ly == ry
-	case let (.Union(lx, ly), .Union(rx, ry)):
+	case let (.unionDoc(lx, ly), .unionDoc(rx, ry)):
 		return lx == rx && ly == ry
 	case let (.Column(lf), .Column(rf)):
 		return lf(4) == rf(4)

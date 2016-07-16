@@ -13,7 +13,7 @@ final class PrettifySpec: QuickSpec {
 				var result, str: String
 				
 				result = prettyString {
-					return Document.FlatAlt("a", "b").flatten()
+					return Document.flatAltDoc("a", "b").flatten()
 				}
 				str = "b"
 				expect(result) == str

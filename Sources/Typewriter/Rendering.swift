@@ -123,7 +123,7 @@ extension Document {
 						let x = (i, i, ds)
 						return (i, i, .Line(i, best(x).2))
 						
-					case let .FlatAlt(x, _):
+					case let .flatAltDoc(x, _):
 						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
 						return best(y)
 					
@@ -131,11 +131,11 @@ extension Document {
 						let z: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Cons(i, y, ds)))
 						return best(z)
 						
-					case let .Nest(j, x):
+					case let .nestDoc(j, x):
 						let y: (Int, Int, Docs) = (indentation, column, .Cons(i + j, x, ds))
 						return best(y)
 						
-					case let .Union(x, y):
+					case let .unionDoc(x, y):
 						let x2: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
 						let y2: (Int, Int, Docs) = (indentation, column, .Cons(i, y, ds))
 						let nicest = nicest(
