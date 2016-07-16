@@ -106,20 +106,20 @@ extension Document {
 					case .fail:
 						return (0, 0, .Fail)
 						
-					case .Empty:
+					case .emptyDoc:
 						let x = (indentation, column, ds)
 						return best(x)
 						
-					case let .Char(c):
+					case let .charDoc(c):
 						let x = (indentation, column + 1, ds)
 						return (indentation, column + 1, .Char(c, best(x).2))
 						
-					case let .Text(str):
+					case let .textDoc(str):
 						let newColumn = str.characters.count + column
 						let x = (indentation, newColumn, ds)
 						return (indentation, newColumn, .Text(str, best(x).2))
 						
-					case .Line:
+					case .lineDoc:
 						let x = (i, i, ds)
 						return (i, i, .Line(i, best(x).2))
 						

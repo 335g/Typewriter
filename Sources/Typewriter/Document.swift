@@ -169,7 +169,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case emptyDoc
 	case charDoc(Character)
 	case textDoc(String)
-	case Line
+	case lineDoc
 	case Cat(Document, Document)
 	case FlatAlt(Document, Document)
 	case Union(Document, Document)
@@ -211,7 +211,7 @@ extension Document {
 	public static func char(_ x: Character) -> Document {
 		switch x {
 		case "\n":
-			return .Line
+			return .lineDoc
 			
 		default:
 			return .charDoc(x)
@@ -232,7 +232,7 @@ extension Document {
 	}
 	
 	public static var hardline: Document {
-		return .Line
+		return .lineDoc
 	}
 	
 	public static var line: Document {
@@ -265,7 +265,7 @@ extension Document {
 			return .Cat(x.flatten(), y.flatten())
 		case let .FlatAlt(_, x):
 			return x
-		case .Line:
+		case .lineDoc:
 			return .fail
 		case let .Union(x, _):
 			return x.flatten()
@@ -342,7 +342,7 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return l == r
 	case let (.textDoc(l), .textDoc(r)):
 		return l == r
-	case (.Line, .Line):
+	case (.lineDoc, .lineDoc):
 		return true
 	case let (.Nest(li, ldoc), .Nest(ri, rdoc)):
 		return li == ri && ldoc == rdoc
