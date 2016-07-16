@@ -165,7 +165,7 @@ extension DocumentType {
 // MARK: - Document
 
 public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable {
-	case Fail
+	case fail
 	case Empty
 	case Char(Character)
 	case Text(String)
@@ -266,7 +266,7 @@ extension Document {
 		case let .FlatAlt(_, x):
 			return x
 		case .Line:
-			return .Fail
+			return .fail
 		case let .Union(x, _):
 			return x.flatten()
 		default:
@@ -334,7 +334,7 @@ extension Document {
 
 public func == (lhs: Document, rhs: Document) -> Bool {
 	switch (lhs, rhs) {
-	case (.Fail, .Fail):
+	case (.fail, .fail):
 		return true
 	case (.Empty, .Empty):
 		return true

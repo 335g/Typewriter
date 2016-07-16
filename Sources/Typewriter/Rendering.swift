@@ -103,7 +103,7 @@ extension Document {
 					return (0, 0, .Empty)
 				case let .Cons(i, d, ds):
 					switch d {
-					case .Fail:
+					case .fail:
 						return (0, 0, .Fail)
 						
 					case .Empty:
