@@ -170,7 +170,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case charDoc(Character)
 	case textDoc(String)
 	case lineDoc
-	case Cat(Document, Document)
+	case catDoc(Document, Document)
 	case FlatAlt(Document, Document)
 	case Union(Document, Document)
 	case Nest(Int, Document)
@@ -261,8 +261,8 @@ extension Document {
 	
 	public func flatten() -> Document {
 		switch self {
-		case let .Cat(x, y):
-			return .Cat(x.flatten(), y.flatten())
+		case let .catDoc(x, y):
+			return .catDoc(x.flatten(), y.flatten())
 		case let .FlatAlt(_, x):
 			return x
 		case .lineDoc:
@@ -275,7 +275,7 @@ extension Document {
 	}
 	
 	public func beside(_ doc: Document) -> Document {
-		return .Cat(self, doc)
+		return .catDoc(self, doc)
 	}
 }
 
@@ -310,8 +310,8 @@ extension Document {
 	
 	public func plain() -> Document {
 		switch self {
-		case let .Cat(x, y):
-			return .Cat(x.plain(), y.plain())
+		case let .catDoc(x, y):
+			return .catDoc(x.plain(), y.plain())
 		case let .FlatAlt(x, y):
 			return .FlatAlt(x.plain(), y.plain())
 		case let .Union(x, y):
@@ -346,7 +346,7 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return true
 	case let (.Nest(li, ldoc), .Nest(ri, rdoc)):
 		return li == ri && ldoc == rdoc
-	case let (.Cat(lx, ly), .Cat(rx, ry)):
+	case let (.catDoc(lx, ly), .catDoc(rx, ry)):
 		return lx == rx && ly == ry
 	case let (.FlatAlt(lx, ly), .FlatAlt(rx, ry)):
 		return lx == rx && ly == ry

@@ -127,7 +127,7 @@ extension Document {
 						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
 						return best(y)
 					
-					case let .Cat(x, y):
+					case let .catDoc(x, y):
 						let z: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Cons(i, y, ds)))
 						return best(z)
 						
