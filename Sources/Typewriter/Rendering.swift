@@ -7,12 +7,12 @@ let ReferenceWidth: Int = 60
 // MARK: - RenderedDocument
 
 indirect enum RenderedDocument: CustomStringConvertible {
-	case Fail
-	case Empty
-	case Char(Character, RenderedDocument)
-	case Text(String, RenderedDocument)
-	case Line(Int, RenderedDocument)
-	case Style(DocumentStyle, RenderedDocument, RenderedDocument)
+	case fail
+	case empty
+	case char(Character, RenderedDocument)
+	case text(String, RenderedDocument)
+	case line(Int, RenderedDocument)
+	case style(DocumentStyle, RenderedDocument, RenderedDocument)
 }
 
 // MARK: RenderedDocument : CustomStringConvertible
@@ -20,15 +20,15 @@ indirect enum RenderedDocument: CustomStringConvertible {
 extension RenderedDocument {
 	var description: String {
 		switch self {
-		case .Fail, .Empty:
+		case .fail, .empty:
 			return ""
-		case let .Char(c, doc):
+		case let .char(c, doc):
 			return String(c) + doc.description
-		case let .Text(s, doc):
+		case let .text(s, doc):
 			return s + doc.description
-		case let .Line(i, doc):
+		case let .line(i, doc):
 			return "\n\(indentation(i))" + doc.description
-		case let .Style(style, x, y):
+		case let .style(style, x, y):
 			return style.wrap(x.description) + y.description
 		}
 	}
@@ -46,15 +46,15 @@ public enum RenderingRule {
 		}
 		
 		switch document {
-		case .Fail:
+		case .fail:
 			return (rest, false)
-		case .Empty:
+		case .empty:
 			return (rest, true)
-		case let .Char(_, doc):
+		case let .char(_, doc):
 			return fits(width, nesting: nesting, rest: rest - 1, document: doc)
-		case let .Text(s, doc):
+		case let .text(s, doc):
 			return fits(width, nesting: nesting, rest: rest - s.characters.count, document: doc)
-		case let .Line(i, doc):
+		case let .line(i, doc):
 			switch self {
 			case .Oneline:
 				return (rest, true)
@@ -65,7 +65,7 @@ public enum RenderingRule {
 					return (rest, true)
 				}
 			}
-		case let .Style(_, doc1, doc2):
+		case let .style(_, doc1, doc2):
 			let (nextRest, fits) = self.fits(width, nesting: nesting, rest: rest, document: doc1)
 			if fits {
 				return self.fits(width, nesting: nesting, rest: nextRest, document: doc2)
@@ -100,11 +100,11 @@ extension Document {
 			{ indentation, column, docs in
 				switch docs {
 				case .Nil:
-					return (0, 0, .Empty)
+					return (0, 0, .empty)
 				case let .Cons(i, d, ds):
 					switch d {
 					case .fail:
-						return (0, 0, .Fail)
+						return (0, 0, .fail)
 						
 					case .emptyDoc:
 						let x = (indentation, column, ds)
@@ -112,16 +112,16 @@ extension Document {
 						
 					case let .charDoc(c):
 						let x = (indentation, column + 1, ds)
-						return (indentation, column + 1, .Char(c, best(x).2))
+						return (indentation, column + 1, .char(c, best(x).2))
 						
 					case let .textDoc(str):
 						let newColumn = str.characters.count + column
 						let x = (indentation, newColumn, ds)
-						return (indentation, newColumn, .Text(str, best(x).2))
+						return (indentation, newColumn, .text(str, best(x).2))
 						
 					case .lineDoc:
 						let x = (i, i, ds)
-						return (i, i, .Line(i, best(x).2))
+						return (i, i, .line(i, best(x).2))
 						
 					case let .flatAltDoc(x, _):
 						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
@@ -157,7 +157,7 @@ extension Document {
 					case let .styleDoc(style, x):
 						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Nil))
 						let pre = best(y)
-						return (indentation, column, .Style(style, pre.2, best(pre.0, pre.1, ds).2))
+						return (indentation, column, .style(style, pre.2, best(pre.0, pre.1, ds).2))
 					}
 				}
 			}

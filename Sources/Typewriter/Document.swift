@@ -282,7 +282,6 @@ extension Document {
 // MARK: Document (Style)
 
 extension Document {
-	
 	func style(_ x: DocumentStyle) -> Document {
 		switch self {
 		case let .styleDoc(s, doc):
