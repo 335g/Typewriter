@@ -146,7 +146,7 @@ extension Document {
 						)
 						return (indentation, column, nicest)
 						
-					case let .Column(f):
+					case let .columnDoc(f):
 						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(column), ds))
 						return best(x)
 						
