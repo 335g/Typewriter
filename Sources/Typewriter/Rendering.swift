@@ -154,7 +154,7 @@ extension Document {
 						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(i), ds))
 						return best(x)
 						
-					case let .Style(style, x):
+					case let .styleDoc(style, x):
 						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Nil))
 						let pre = best(y)
 						return (indentation, column, .Style(style, pre.2, best(pre.0, pre.1, ds).2))

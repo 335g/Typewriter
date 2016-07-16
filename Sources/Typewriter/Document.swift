@@ -176,7 +176,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case nestDoc(Int, Document)
 	case nestingDoc((Int) -> Document)
 	case columnDoc((Int) -> Document)
-	case Style(DocumentStyle, Document)
+	case styleDoc(DocumentStyle, Document)
 }
 
 // MARK: Document : StringLiteralConvertible
@@ -285,10 +285,10 @@ extension Document {
 	
 	func style(_ x: DocumentStyle) -> Document {
 		switch self {
-		case let .Style(s, doc):
-			return .Style(s.merge(x), doc)
+		case let .styleDoc(s, doc):
+			return .styleDoc(s.merge(x), doc)
 		default:
-			return .Style(x, self)
+			return .styleDoc(x, self)
 		}
 	}
 	
@@ -322,7 +322,7 @@ extension Document {
 			return .nestingDoc({ f($0).plain() })
 		case let .columnDoc(f):
 			return .columnDoc({ f($0).plain() })
-		case let .Style(_, x):
+		case let .styleDoc(_, x):
 			return x.plain()
 		default:
 			return self
@@ -356,7 +356,7 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return lf(4) == rf(4)
 	case let (.nestingDoc(lf), .nestingDoc(rf)):
 		return lf(4) == rf(4)
-	case let (.Style(ls, ldoc), .Style(rs, rdoc)):
+	case let (.styleDoc(ls, ldoc), .styleDoc(rs, rdoc)):
 		return ls == rs && ldoc == rdoc
 	default:
 		return false
