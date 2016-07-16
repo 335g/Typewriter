@@ -168,7 +168,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case fail
 	case emptyDoc
 	case charDoc(Character)
-	case Text(String)
+	case textDoc(String)
 	case Line
 	case Cat(Document, Document)
 	case FlatAlt(Document, Document)
@@ -226,7 +226,7 @@ extension Document {
 			if x.characters.contains("\n") {
 				throw Document.ConstructError.ContainsLinebreak
 			}else {
-				return .Text(x)
+				return .textDoc(x)
 			}
 		}
 	}
@@ -340,7 +340,7 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return true
 	case let (.charDoc(l), .charDoc(r)):
 		return l == r
-	case let (.Text(l), .Text(r)):
+	case let (.textDoc(l), .textDoc(r)):
 		return l == r
 	case (.Line, .Line):
 		return true
