@@ -150,7 +150,7 @@ extension Document {
 						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(column), ds))
 						return best(x)
 						
-					case let .Nesting(f):
+					case let .nestingDoc(f):
 						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(i), ds))
 						return best(x)
 						
