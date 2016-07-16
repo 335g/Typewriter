@@ -7,12 +7,12 @@ let ReferenceWidth: Int = 60
 // MARK: - RenderedDocument
 
 indirect enum RenderedDocument: CustomStringConvertible {
-	case Fail
-	case Empty
-	case Char(Character, RenderedDocument)
-	case Text(String, RenderedDocument)
-	case Line(Int, RenderedDocument)
-	case Style(DocumentStyle, RenderedDocument, RenderedDocument)
+	case fail
+	case empty
+	case char(Character, RenderedDocument)
+	case text(String, RenderedDocument)
+	case line(Int, RenderedDocument)
+	case style(DocumentStyle, RenderedDocument, RenderedDocument)
 }
 
 // MARK: RenderedDocument : CustomStringConvertible
@@ -20,15 +20,15 @@ indirect enum RenderedDocument: CustomStringConvertible {
 extension RenderedDocument {
 	var description: String {
 		switch self {
-		case .Fail, .Empty:
+		case .fail, .empty:
 			return ""
-		case let .Char(c, doc):
+		case let .char(c, doc):
 			return String(c) + doc.description
-		case let .Text(s, doc):
+		case let .text(s, doc):
 			return s + doc.description
-		case let .Line(i, doc):
+		case let .line(i, doc):
 			return "\n\(indentation(i))" + doc.description
-		case let .Style(style, x, y):
+		case let .style(style, x, y):
 			return style.wrap(x.description) + y.description
 		}
 	}
@@ -40,21 +40,21 @@ public enum RenderingRule {
 	case Oneline
 	case EndIndentation
 	
-	internal func fits(width: Int, nesting: Int, rest: Int, document: RenderedDocument) -> (Int, Bool) {
+	internal func fits(_ width: Int, nesting: Int, rest: Int, document: RenderedDocument) -> (Int, Bool) {
 		guard rest >= 0 else {
 			return (rest, false)
 		}
 		
 		switch document {
-		case .Fail:
+		case .fail:
 			return (rest, false)
-		case .Empty:
+		case .empty:
 			return (rest, true)
-		case let .Char(_, doc):
+		case let .char(_, doc):
 			return fits(width, nesting: nesting, rest: rest - 1, document: doc)
-		case let .Text(s, doc):
+		case let .text(s, doc):
 			return fits(width, nesting: nesting, rest: rest - s.characters.count, document: doc)
-		case let .Line(i, doc):
+		case let .line(i, doc):
 			switch self {
 			case .Oneline:
 				return (rest, true)
@@ -65,7 +65,7 @@ public enum RenderingRule {
 					return (rest, true)
 				}
 			}
-		case let .Style(_, doc1, doc2):
+		case let .style(_, doc1, doc2):
 			let (nextRest, fits) = self.fits(width, nesting: nesting, rest: rest, document: doc1)
 			if fits {
 				return self.fits(width, nesting: nesting, rest: nextRest, document: doc2)
@@ -85,7 +85,7 @@ enum Docs {
 
 extension Document {
 	public func prettify(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth) -> String {
-		return self.prettyDocument(rule, width: width).description
+		return self.prettyDocument(rule: rule, width: width).description
 	}
 	
 	internal func prettyDocument(rule: RenderingRule = .Oneline, width: Int) -> RenderedDocument {
@@ -96,45 +96,68 @@ extension Document {
 				return doc2
 			}
 		}
-		let best: (Int, Int, Docs) -> (Int, Int, RenderedDocument) = fix{ best in
+		let best: (Int, Int, Docs) -> (Int, Int, RenderedDocument) = fix { best in
 			{ indentation, column, docs in
 				switch docs {
 				case .Nil:
-					return (0, 0, .Empty)
+					return (0, 0, .empty)
 				case let .Cons(i, d, ds):
 					switch d {
-					case .Fail:
-						return (0, 0, .Fail)
-					case .Empty:
-						return best(indentation, column, ds)
-					case let .Char(c):
-						return (indentation, column + 1, .Char(c, best(indentation, column + 1, ds).2))
-					case let .Text(str):
-						let count = str.characters.count
-						return (indentation, column + count, .Text(str, best(indentation, column + count, ds).2))
-					case .Line:
-						return (i, i, .Line(i, best(i, i, ds).2))
-					case let .FlatAlt(x, _):
-						return best(indentation, column, .Cons(i, x, ds))
-					case let .Cat(x, y):
-						return best(indentation, column, .Cons(i, x, .Cons(i, y, ds)))
-					case let .Nest(j, x):
-						return best(indentation, column, .Cons(i+j, x, ds))
-					case let .Union(x, y):
+					case .fail:
+						return (0, 0, .fail)
+						
+					case .emptyDoc:
+						let x = (indentation, column, ds)
+						return best(x)
+						
+					case let .charDoc(c):
+						let x = (indentation, column + 1, ds)
+						return (indentation, column + 1, .char(c, best(x).2))
+						
+					case let .textDoc(str):
+						let newColumn = str.characters.count + column
+						let x = (indentation, newColumn, ds)
+						return (indentation, newColumn, .text(str, best(x).2))
+						
+					case .lineDoc:
+						let x = (i, i, ds)
+						return (i, i, .line(i, best(x).2))
+						
+					case let .flatAltDoc(x, _):
+						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
+						return best(y)
+					
+					case let .catDoc(x, y):
+						let z: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Cons(i, y, ds)))
+						return best(z)
+						
+					case let .nestDoc(j, x):
+						let y: (Int, Int, Docs) = (indentation, column, .Cons(i + j, x, ds))
+						return best(y)
+						
+					case let .unionDoc(x, y):
+						let x2: (Int, Int, Docs) = (indentation, column, .Cons(i, x, ds))
+						let y2: (Int, Int, Docs) = (indentation, column, .Cons(i, y, ds))
 						let nicest = nicest(
 							indentation,
 							column,
-							best(indentation, column, .Cons(i, x, ds)).2,
-							best(indentation, column, .Cons(i, y, ds)).2
+							best(x2).2,
+							best(y2).2
 						)
 						return (indentation, column, nicest)
-					case let .Column(f):
-						return best(indentation, column, .Cons(i, f(column), ds))
-					case let .Nesting(f):
-						return best(indentation, column, .Cons(i, f(i), ds))
-					case let .Style(style, x):
-						let pre = best(indentation, column, .Cons(i, x, .Nil))
-						return (indentation, column, .Style(style, pre.2, best(pre.0, pre.1, ds).2))
+						
+					case let .columnDoc(f):
+						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(column), ds))
+						return best(x)
+						
+					case let .nestingDoc(f):
+						let x: (Int, Int, Docs) = (indentation, column, .Cons(i, f(i), ds))
+						return best(x)
+						
+					case let .styleDoc(style, x):
+						let y: (Int, Int, Docs) = (indentation, column, .Cons(i, x, .Nil))
+						let pre = best(y)
+						return (indentation, column, .style(style, pre.2, best(pre.0, pre.1, ds).2))
 					}
 				}
 			}
@@ -145,9 +168,9 @@ extension Document {
 }
 
 public func prettyString(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth, doc: () -> Document) -> String {
-	return doc().prettify(rule, width: width)
+	return doc().prettify(rule: rule, width: width)
 }
 
 public func prettyString(rule: RenderingRule = .Oneline, width: Int = ReferenceWidth, doc: Document) -> String {
-	return doc.prettify(rule, width: width)
+	return doc.prettify(rule: rule, width: width)
 }

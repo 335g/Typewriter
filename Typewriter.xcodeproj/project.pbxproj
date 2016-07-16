@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		84885D5D1CFF21EA00918F05 /* Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84885D581CFF21EA00918F05 /* Base.xcconfig */; };
-		84885D5F1CFF21EA00918F05 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84885D591CFF21EA00918F05 /* Debug.xcconfig */; };
-		84885D611CFF21EA00918F05 /* Typewriter.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84885D5A1CFF21EA00918F05 /* Typewriter.xcconfig */; };
-		84885D631CFF21EA00918F05 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84885D5B1CFF21EA00918F05 /* Release.xcconfig */; };
-		84885D651CFF21EA00918F05 /* Test.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84885D5C1CFF21EA00918F05 /* Test.xcconfig */; };
 		84C57F391C51190F00A9C6D6 /* Typewriter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C57F2E1C51190F00A9C6D6 /* Typewriter.framework */; };
 		84E382521CFF034A0028572A /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E382501CFF034A0028572A /* Nimble.framework */; };
 		84E382531CFF034A0028572A /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84E382511CFF034A0028572A /* Quick.framework */; };
@@ -19,13 +14,11 @@
 		84E382571CFF03670028572A /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84E382511CFF034A0028572A /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84F141C01D0CF19600CF3FC4 /* Conform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141B81D0CF19600CF3FC4 /* Conform.swift */; };
 		84F141C11D0CF19600CF3FC4 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141B91D0CF19600CF3FC4 /* Document.swift */; };
-		84F141C21D0CF19600CF3FC4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F141BA1D0CF19600CF3FC4 /* Info.plist */; };
 		84F141C31D0CF19600CF3FC4 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141BB1D0CF19600CF3FC4 /* Operators.swift */; };
 		84F141C41D0CF19600CF3FC4 /* Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141BC1D0CF19600CF3FC4 /* Rendering.swift */; };
 		84F141C51D0CF19600CF3FC4 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141BD1D0CF19600CF3FC4 /* Style.swift */; };
 		84F141C61D0CF19600CF3FC4 /* Typewriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 84F141BE1D0CF19600CF3FC4 /* Typewriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84F141C71D0CF19600CF3FC4 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141BF1D0CF19600CF3FC4 /* Util.swift */; };
-		84F141C91D0CF1C400CF3FC4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84F141C81D0CF1C400CF3FC4 /* Info.plist */; };
 		84F141CC1D0CF1CD00CF3FC4 /* DocumentSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141CA1D0CF1CD00CF3FC4 /* DocumentSpecs.swift */; };
 		84F141CD1D0CF1CD00CF3FC4 /* PrettifySpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F141CB1D0CF1CD00CF3FC4 /* PrettifySpecs.swift */; };
 /* End PBXBuildFile section */
@@ -228,12 +221,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Yoshiki Kudo";
 				TargetAttributes = {
 					84C57F2D1C51190F00A9C6D6 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 6SLQZACQ63;
+						ProvisioningStyle = Manual;
 					};
 					84C57F371C51190F00A9C6D6 = {
 						CreatedOnToolsVersion = 7.2;
@@ -263,12 +257,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84885D631CFF21EA00918F05 /* Release.xcconfig in Resources */,
-				84885D611CFF21EA00918F05 /* Typewriter.xcconfig in Resources */,
-				84885D5F1CFF21EA00918F05 /* Debug.xcconfig in Resources */,
-				84885D5D1CFF21EA00918F05 /* Base.xcconfig in Resources */,
-				84885D651CFF21EA00918F05 /* Test.xcconfig in Resources */,
-				84F141C21D0CF19600CF3FC4 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +264,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84F141C91D0CF1C400CF3FC4 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +410,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.Typewriter;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = 6SLQZACQ63/;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -447,7 +435,9 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.Typewriter;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = 6SLQZACQ63/;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -483,6 +473,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.335g.TypewriterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};

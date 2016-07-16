@@ -13,7 +13,7 @@ final class DocumentSpec: QuickSpec {
 		describe("empty"){
 			it("should produce .Empty"){
 				let a: Document = .empty
-				let b: Document = .Empty
+				let b: Document = .emptyDoc
 				
 				expect(a) == b
 			}
@@ -22,14 +22,14 @@ final class DocumentSpec: QuickSpec {
 		describe("char"){
 			it("should produce .Char"){
 				let a: Document = .char("a")
-				let b: Document = .Char("a")
+				let b: Document = .charDoc("a")
 				
 				expect(a) == b
 			}
 			
 			it("should produce .Line with `\n`"){
 				let a: Document = .char("\n")
-				let b: Document = .Line
+				let b: Document = .lineDoc
 				
 				expect(a) == b
 			}
@@ -37,8 +37,8 @@ final class DocumentSpec: QuickSpec {
 		
 		describe("text"){
 			it("should produce .Text"){
-				if let a = try? Document.text("a") {
-					let b: Document = .Text("a")
+				if let a = try? Document.textDoc("a") {
+					let b: Document = .textDoc("a")
 					
 					expect(a) == b
 					
@@ -51,7 +51,7 @@ final class DocumentSpec: QuickSpec {
 		describe("string"){
 			it("should produce .Text(s)"){
 				let a: Document = .string("This is a test \nfor string constructor.")
-				let b: Document = .Text("This is a test ") </+> .Text("for string constructor.")
+				let b: Document = .textDoc("This is a test ") </+> .textDoc("for string constructor.")
 				
 				expect(a) == b
 			}
@@ -71,7 +71,7 @@ final class DocumentSpec: QuickSpec {
 		describe("<>"){
 			it("should produce .Cat"){
 				let a: Document = .char("a") <> .char("b")
-				let b: Document = .Cat(.Char("a"), .Char("b"))
+				let b: Document = .catDoc(.charDoc("a"), .charDoc("b"))
 				
 				expect(a) == b
 			}
@@ -80,9 +80,9 @@ final class DocumentSpec: QuickSpec {
 		describe("<+>"){
 			it("should produce .Cat"){
 				let a: Document = .char("a") <+> .char("b")
-				let b: Document = .Cat(
-					.Char("a"),
-					.Cat(.space, .Char("b"))
+				let b: Document = .catDoc(
+					.charDoc("a"),
+					.catDoc(.space, .charDoc("b"))
 				)
 				
 				expect(a) == b
@@ -92,9 +92,9 @@ final class DocumentSpec: QuickSpec {
 		describe("</+>"){
 			it("should produce .Cat"){
 				let a: Document = .char("a") </+> .char("b")
-				let b: Document = .Cat(
-					.Char("a"),
-					.Cat(.line, .Char("b"))
+				let b: Document = .catDoc(
+					.charDoc("a"),
+					.catDoc(.line, .charDoc("b"))
 				)
 				
 				expect(a) == b
@@ -104,9 +104,9 @@ final class DocumentSpec: QuickSpec {
 		describe("</->"){
 			it("should produce .Cat"){
 				let a: Document = .char("a") </-> .char("b")
-				let b: Document = .Cat(
-					.Char("a"),
-					.Cat(.linebreak, .Char("b"))
+				let b: Document = .catDoc(
+					.charDoc("a"),
+					.catDoc(.linebreak, .charDoc("b"))
 				)
 				
 				expect(a) == b
@@ -116,9 +116,9 @@ final class DocumentSpec: QuickSpec {
 		describe("<+/+>"){
 			it("should produce .Cat"){
 				let a: Document = .char("a") <+/+> .char("b")
-				let b: Document = .Cat(
-					.Char("a"),
-					.Cat(.softline, .Char("b"))
+				let b: Document = .catDoc(
+					.charDoc("a"),
+					.catDoc(.softline, .charDoc("b"))
 				)
 				
 				expect(a) == b
@@ -128,9 +128,9 @@ final class DocumentSpec: QuickSpec {
 		describe("<-/->"){
 			it("should produce .Cat"){
 				let a: Document = .char("a") <-/-> .char("b")
-				let b: Document = .Cat(
-					.Char("a"),
-					.Cat(.softbreak, .Char("b"))
+				let b: Document = .catDoc(
+					.charDoc("a"),
+					.catDoc(.softbreak, .charDoc("b"))
 				)
 				
 				expect(a) == b
@@ -184,7 +184,7 @@ final class DocumentSpec: QuickSpec {
 				let c1: Document = [a, b].vcat()
 				let c2: Document = a </-> b
 				let c3: Document = a.beside(
-					Document.FlatAlt(.hardline, empty).beside(b)
+					Document.flatAltDoc(.hardline, empty).beside(b)
 				)
 				expect(c1) == c2
 				expect(c1) == c3
@@ -192,9 +192,9 @@ final class DocumentSpec: QuickSpec {
 				let d1: Document = [a, b, c].vcat()
 				let d2: Document = a </-> b </-> c
 				let d3: Document = a.beside(
-					Document.FlatAlt(.hardline, empty).beside(
+					Document.flatAltDoc(.hardline, empty).beside(
 						b.beside(
-							Document.FlatAlt(.hardline, empty).beside(c)
+							Document.flatAltDoc(.hardline, empty).beside(c)
 						)
 					)
 				)
@@ -210,17 +210,17 @@ final class DocumentSpec: QuickSpec {
 				let b: Document = .char("b")
 				
 				let a1: Document = [].cat()
-				let a2: Document = .Union(empty.flatten(), empty)
+				let a2: Document = .unionDoc(empty.flatten(), empty)
 				expect(a1) == a2
 				
 				let b1: Document = [a].cat()
 				let b2: Document = [a].vcat()
-				let b3: Document = .Union(b2.flatten(), b2)
+				let b3: Document = .unionDoc(b2.flatten(), b2)
 				expect(b1) == b3
 				
 				let c1: Document = [a, b].cat()
 				let c2: Document = [a, b].vcat()
-				let c3: Document = .Union(c2.flatten(), c2)
+				let c3: Document = .unionDoc(c2.flatten(), c2)
 				expect(c1) == c3
 			}
 		}
@@ -243,7 +243,7 @@ final class DocumentSpec: QuickSpec {
 				let c1: Document = [a, b].fillCat()
 				let c2: Document = a <-/-> b
 				let c3: Document = a.beside(
-					Document.Union(linebreak.flatten(), linebreak).beside(b)
+					Document.unionDoc(linebreak.flatten(), linebreak).beside(b)
 				)
 				expect(c1) == c2
 				expect(c1) == c3
@@ -251,9 +251,9 @@ final class DocumentSpec: QuickSpec {
 				let d1: Document = [a, b, c].fillCat()
 				let d2: Document = a <-/-> b <-/-> c
 				let d3: Document = a.beside(
-					Document.Union(linebreak.flatten(), linebreak).beside(
+					Document.unionDoc(linebreak.flatten(), linebreak).beside(
 						b.beside(
-							Document.Union(linebreak.flatten(), linebreak).beside(c)
+							Document.unionDoc(linebreak.flatten(), linebreak).beside(c)
 						)
 					)
 				)
@@ -315,7 +315,7 @@ final class DocumentSpec: QuickSpec {
 				let c1: Document = [a, b].vsep()
 				let c2: Document = a </+> b
 				let c3: Document = a.beside(
-					Document.FlatAlt(.hardline, .space).beside(b)
+					Document.flatAltDoc(.hardline, .space).beside(b)
 				)
 				expect(c1) == c2
 				expect(c1) == c3
@@ -323,9 +323,9 @@ final class DocumentSpec: QuickSpec {
 				let d1: Document = [a, b, c].vsep()
 				let d2: Document = a </+> b </+> c
 				let d3: Document = a.beside(
-					Document.FlatAlt(.hardline, .space).beside(
+					Document.flatAltDoc(.hardline, .space).beside(
 						b.beside(
-							Document.FlatAlt(.hardline, .space).beside(c)
+							Document.flatAltDoc(.hardline, .space).beside(c)
 						)
 					)
 				)
@@ -341,17 +341,17 @@ final class DocumentSpec: QuickSpec {
 				let b: Document = .char("b")
 				
 				let a1: Document = [].sep()
-				let a2: Document = .Union(empty.flatten(), empty)
+				let a2: Document = .unionDoc(empty.flatten(), empty)
 				expect(a1) == a2
 				
 				let b1: Document = [a].sep()
 				let b2: Document = [a].vsep()
-				let b3: Document = .Union(b2.flatten(), b2)
+				let b3: Document = .unionDoc(b2.flatten(), b2)
 				expect(b1) == b3
 				
 				let c1: Document = [a, b].sep()
 				let c2: Document = [a, b].vsep()
-				let c3: Document = .Union(c2.flatten(), c2)
+				let c3: Document = .unionDoc(c2.flatten(), c2)
 				expect(c1) == c3
 			}
 		}
@@ -374,7 +374,7 @@ final class DocumentSpec: QuickSpec {
 				let c1: Document = [a, b].fillSep()
 				let c2: Document = a <+/+> b
 				let c3: Document = a.beside(
-					Document.Union(line.flatten(), line).beside(b)
+					Document.unionDoc(line.flatten(), line).beside(b)
 				)
 				expect(c1) == c2
 				expect(c1) == c3
@@ -382,9 +382,9 @@ final class DocumentSpec: QuickSpec {
 				let d1: Document = [a, b, c].fillSep()
 				let d2: Document = a <+/+> b <+/+> c
 				let d3: Document = a.beside(
-					Document.Union(line.flatten(), line).beside(
+					Document.unionDoc(line.flatten(), line).beside(
 						b.beside(
-							Document.Union(line.flatten(), line).beside(c)
+							Document.unionDoc(line.flatten(), line).beside(c)
 						)
 					)
 				)
