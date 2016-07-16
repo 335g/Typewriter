@@ -171,7 +171,7 @@ public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable
 	case textDoc(String)
 	case lineDoc
 	case catDoc(Document, Document)
-	case FlatAlt(Document, Document)
+	case flatAltDoc(Document, Document)
 	case Union(Document, Document)
 	case Nest(Int, Document)
 	case Nesting((Int) -> Document)
@@ -236,11 +236,11 @@ extension Document {
 	}
 	
 	public static var line: Document {
-		return .FlatAlt(.hardline, .space)
+		return .flatAltDoc(.hardline, .space)
 	}
 	
 	public static var linebreak: Document {
-		return .FlatAlt(.hardline, .empty)
+		return .flatAltDoc(.hardline, .empty)
 	}
 	
 	public static func union(_ x: Document, _ y: Document) -> Document {
@@ -263,7 +263,7 @@ extension Document {
 		switch self {
 		case let .catDoc(x, y):
 			return .catDoc(x.flatten(), y.flatten())
-		case let .FlatAlt(_, x):
+		case let .flatAltDoc(_, x):
 			return x
 		case .lineDoc:
 			return .fail
@@ -312,8 +312,8 @@ extension Document {
 		switch self {
 		case let .catDoc(x, y):
 			return .catDoc(x.plain(), y.plain())
-		case let .FlatAlt(x, y):
-			return .FlatAlt(x.plain(), y.plain())
+		case let .flatAltDoc(x, y):
+			return .flatAltDoc(x.plain(), y.plain())
 		case let .Union(x, y):
 			return .Union(x.plain(), y.plain())
 		case let .Nest(i, x):
@@ -348,7 +348,7 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return li == ri && ldoc == rdoc
 	case let (.catDoc(lx, ly), .catDoc(rx, ry)):
 		return lx == rx && ly == ry
-	case let (.FlatAlt(lx, ly), .FlatAlt(rx, ry)):
+	case let (.flatAltDoc(lx, ly), .flatAltDoc(rx, ry)):
 		return lx == rx && ly == ry
 	case let (.Union(lx, ly), .Union(rx, ry)):
 		return lx == rx && ly == ry
