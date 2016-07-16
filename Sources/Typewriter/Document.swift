@@ -167,7 +167,7 @@ extension DocumentType {
 public indirect enum Document: DocumentType, StringLiteralConvertible, Equatable {
 	case fail
 	case emptyDoc
-	case Char(Character)
+	case charDoc(Character)
 	case Text(String)
 	case Line
 	case Cat(Document, Document)
@@ -214,7 +214,7 @@ extension Document {
 			return .Line
 			
 		default:
-			return .Char(x)
+			return .charDoc(x)
 		}
 	}
 	
@@ -338,7 +338,7 @@ public func == (lhs: Document, rhs: Document) -> Bool {
 		return true
 	case (.emptyDoc, .emptyDoc):
 		return true
-	case let (.Char(l), .Char(r)):
+	case let (.charDoc(l), .charDoc(r)):
 		return l == r
 	case let (.Text(l), .Text(r)):
 		return l == r
